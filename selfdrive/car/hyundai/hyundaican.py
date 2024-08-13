@@ -149,15 +149,15 @@ def create_lfahda_mfc(packer, enabled, CP, frame, lat_active, lateral_paused, bl
     #"HDA_VSetReq": hda_set_speed,
     "HDA_Icon_State": 2 if enabled else 0,
   }
-  # if can_canfd_hybrid:
-  #   values["COUNTER"] = frame % 0xF
+  if can_canfd_hybrid:
+    values["COUNTER"] = frame % 0xF
 
-  #   dat = packer.make_can_msg("LFAHDA_MFC", bus, values)[2]
+    dat = packer.make_can_msg("LFAHDA_MFC", bus, values)[2]
 
-  #   # CRC Checksum
-  #   checksum = hyundai_checksum(dat[1:8])
+    # CRC Checksum
+    checksum = hyundai_checksum(dat[1:8])
 
-  #   values["CHECKSUM"] = checksum
+    values["CHECKSUM"] = checksum
 
   return packer.make_can_msg("LFAHDA_MFC", bus, values)
 
