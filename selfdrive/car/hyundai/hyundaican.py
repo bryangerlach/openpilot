@@ -151,7 +151,7 @@ def create_lfahda_mfc(packer, enabled, CP, frame, lat_active, lateral_paused, bl
   if can_canfd_hybrid:
     values["COUNTER"] = frame % 0xF
 
-    dat = packer.make_can_msg("LFAHDA_MFC", bus, values)[2]
+    dat = packer.make_can_msg("LFAHDA_MFC", bus, values)[1]
     print(dat)
     print(bus)
 
