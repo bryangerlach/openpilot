@@ -144,16 +144,14 @@ def create_lfahda_mfc(packer, enabled, CP, frame, lat_active, lateral_paused, bl
   bus = CanBus(CP).ECAN if can_canfd_hybrid else 0
   values = {
     "LFA_Icon_State": 2 if lat_active else 3 if blinking_icon else 1 if lateral_paused else 0,
-    "HDA_Active": 1 if hda_set_speed else 0,
+    #"HDA_Active": 1 if hda_set_speed else 0,
     "HDA_Icon_State": 2 if hda_set_speed else 0,
-    "HDA_VSetReq": hda_set_speed,
+    #"HDA_VSetReq": hda_set_speed,
   }
   if can_canfd_hybrid:
     values["COUNTER"] = frame % 0xF
 
     dat = packer.make_can_msg("LFAHDA_MFC", bus, values)[1]
-    print(dat)
-    print(bus)
 
     # CRC Checksum
     checksum = hyundai_checksum(dat[1:8])
