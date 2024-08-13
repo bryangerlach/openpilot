@@ -153,6 +153,7 @@ def create_lfahda_mfc(packer, enabled, CP, frame, lat_active, lateral_paused, bl
     values["COUNTER"] = frame % 0xF
 
     dat = packer.make_can_msg("LFAHDA_MFC", bus, values)[2]
+    print(dat)
 
     # CRC Checksum
     checksum = hyundai_checksum(dat[1:8])
