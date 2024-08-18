@@ -419,6 +419,14 @@ class Controls:
       # Check for mismatch between openpilot and car's PCM
       cruise_mismatch = CS.cruiseState.enabled and not self.enabled
       self.cruise_mismatch_counter = self.cruise_mismatch_counter + 1 if cruise_mismatch else 0
+      print("**********************************************************************************************************************")
+      print("self.cruise_mismatch_counter, cruise_mismatch, CS.cruiseState.enabled, self.enabled")
+      print(self.cruise_mismatch_counter)
+      print(cruise_mismatch)
+      print(CS.cruiseState.enabled)
+      print(self.enabled)
+      print("**********************************************************************************************************************")
+
       if self.cruise_mismatch_counter > int(6. / DT_CTRL):
         self.events.add(EventName.cruiseMismatch)
 
@@ -495,6 +503,7 @@ class Controls:
     if self.enabled and any(not ps.controlsAllowed for ps in self.sm['pandaStates']
            if ps.safetyModel not in IGNORED_SAFETY_MODES):
       self.mismatch_counter += 1
+      print("adding to mismatch here")
 
     return CS
 
