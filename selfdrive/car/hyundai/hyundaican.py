@@ -9,7 +9,7 @@ def create_lkas11(packer, frame, CP, apply_steer, steer_req,
                   left_lane, right_lane,
                   left_lane_depart, right_lane_depart,
                   lateral_paused, blinking_icon):
-  can_canfd_hybrid = CP.flags & HyundaiFlags.CAN_CANFD_HYBRID
+  can_canfd_hybrid = True
   bus = CanBus(CP).ECAN if can_canfd_hybrid else 0
 
   lkas11_sigs = [
