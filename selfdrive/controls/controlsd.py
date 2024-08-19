@@ -327,17 +327,17 @@ class Controls:
 
       # safety mismatch allows some time for pandad to set the safety mode and publish it back from panda
       if (safety_mismatch and self.sm.frame*DT_CTRL > 10.) or pandaState.safetyRxChecksInvalid or self.mismatch_counter >= 200:
-        print("**********************************************************************************************************************")
-        print("**********************************************************************************************************************")
-        print("**********************************************************************************************************************")
-        print("mismatch_counter,safety_mismatch,sm.frame,safetyrxchecksinvalid")
-        print(self.mismatch_counter)
-        print(safety_mismatch)
-        print(self.sm.frame*DT_CTRL)
-        print(pandaState.safetyRxChecksInvalid)
-        print("**********************************************************************************************************************")
-        print("**********************************************************************************************************************")
-        print("**********************************************************************************************************************")
+        # print("**********************************************************************************************************************")
+        # print("**********************************************************************************************************************")
+        # print("**********************************************************************************************************************")
+        # print("mismatch_counter,safety_mismatch,sm.frame,safetyrxchecksinvalid")
+        # print(self.mismatch_counter)
+        # print(safety_mismatch)
+        # print(self.sm.frame*DT_CTRL)
+        # print(pandaState.safetyRxChecksInvalid)
+        # print("**********************************************************************************************************************")
+        # print("**********************************************************************************************************************")
+        # print("**********************************************************************************************************************")
         self.events.add(EventName.controlsMismatch)
 
       if log.PandaState.FaultType.relayMalfunction in pandaState.faults:
@@ -419,13 +419,13 @@ class Controls:
       # Check for mismatch between openpilot and car's PCM
       cruise_mismatch = CS.cruiseState.enabled and not self.enabled
       self.cruise_mismatch_counter = self.cruise_mismatch_counter + 1 if cruise_mismatch else 0
-      print("**********************************************************************************************************************")
-      print("self.cruise_mismatch_counter, cruise_mismatch, CS.cruiseState.enabled, self.enabled")
-      print(self.cruise_mismatch_counter)
-      print(cruise_mismatch)
-      print(CS.cruiseState.enabled)
-      print(self.enabled)
-      print("**********************************************************************************************************************")
+      # print("**********************************************************************************************************************")
+      # print("self.cruise_mismatch_counter, cruise_mismatch, CS.cruiseState.enabled, self.enabled")
+      # print(self.cruise_mismatch_counter)
+      # print(cruise_mismatch)
+      # print(CS.cruiseState.enabled)
+      # print(self.enabled)
+      # print("**********************************************************************************************************************")
 
       if self.cruise_mismatch_counter > int(6. / DT_CTRL):
         self.events.add(EventName.cruiseMismatch)
