@@ -1,4 +1,5 @@
 [lfs]
     url = "http://localhost:8080"
+		locksverify = false
 [http]
     sslverify = false
