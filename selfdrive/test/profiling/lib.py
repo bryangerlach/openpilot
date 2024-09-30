@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from collections import defaultdict, deque
+=======
+from collections import defaultdict
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from cereal.services import SERVICE_LIST
 import cereal.messaging as messaging
 import capnp
@@ -45,7 +49,11 @@ class SubMaster(messaging.SubMaster):
     self.rcv_frame = {s: 0 for s in services}
     self.valid = {s: True for s in services}
     self.freq_ok = {s: True for s in services}
+<<<<<<< HEAD
     self.recv_dts = {s: deque([0.0] * messaging.AVG_FREQ_HISTORY, maxlen=messaging.AVG_FREQ_HISTORY) for s in services}
+=======
+    self.freq_tracker = {s: messaging.FrequencyTracker(SERVICE_LIST[s].frequency, SERVICE_LIST[s].frequency, False) for s in services}
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self.logMonoTime = {}
     self.sock = {}
     self.freq = {}

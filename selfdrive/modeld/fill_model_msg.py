@@ -3,13 +3,19 @@ import capnp
 import numpy as np
 from cereal import log
 from openpilot.selfdrive.modeld.constants import ModelConstants, Plan, Meta
+<<<<<<< HEAD
 from openpilot.selfdrive.modeld.custom_model_metadata import ModelCapabilities
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 SEND_RAW_PRED = os.getenv('SEND_RAW_PRED')
 
 ConfidenceClass = log.ModelDataV2.ConfidenceClass
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 class PublishState:
   def __init__(self):
     self.disengage_buffer = np.zeros(ModelConstants.CONFIDENCE_BUFFER_LEN*ModelConstants.DISENGAGE_WIDTH, dtype=np.float32)
@@ -53,9 +59,13 @@ def fill_xyz_poly(builder, degree, x, y, z):
 def fill_model_msg(base_msg: capnp._DynamicStructBuilder, extended_msg: capnp._DynamicStructBuilder,
                    net_output_data: dict[str, np.ndarray], publish_state: PublishState,
                    vipc_frame_id: int, vipc_frame_id_extra: int, frame_id: int, frame_drop: float,
+<<<<<<< HEAD
                    timestamp_eof: int, timestamp_llk: int, model_execution_time: float,
                    nav_enabled: bool, valid: bool,
                    custom_model_valid: bool, custom_model_capabilities: ModelCapabilities) -> None:
+=======
+                   timestamp_eof: int, model_execution_time: float, valid: bool) -> None:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   frame_age = frame_id - vipc_frame_id if frame_id > vipc_frame_id else 0
   frame_drop_perc = frame_drop * 100
   extended_msg.valid = valid
@@ -66,11 +76,18 @@ def fill_model_msg(base_msg: capnp._DynamicStructBuilder, extended_msg: capnp._D
   driving_model_data.frameId = vipc_frame_id
   driving_model_data.frameIdExtra = vipc_frame_id_extra
   driving_model_data.frameDropPerc = frame_drop_perc
+<<<<<<< HEAD
 
   action = driving_model_data.action
   model_use_lateral_planner = custom_model_valid and custom_model_capabilities & ModelCapabilities.LateralPlannerSolution
   if not model_use_lateral_planner:
     action.desiredCurvature = float(net_output_data['desired_curvature'][0,0])
+=======
+  driving_model_data.modelExecutionTime = model_execution_time
+
+  action = driving_model_data.action
+  action.desiredCurvature = float(net_output_data['desired_curvature'][0,0])
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   modelV2 = extended_msg.modelV2
   modelV2.frameId = vipc_frame_id
@@ -78,12 +95,16 @@ def fill_model_msg(base_msg: capnp._DynamicStructBuilder, extended_msg: capnp._D
   modelV2.frameAge = frame_age
   modelV2.frameDropPerc = frame_drop_perc
   modelV2.timestampEof = timestamp_eof
+<<<<<<< HEAD
   model_use_nav = custom_model_valid and custom_model_capabilities & ModelCapabilities.NoO
   if model_use_nav:
     modelV2.locationMonoTimeDEPRECATED = timestamp_llk
   modelV2.modelExecutionTime = model_execution_time
   if model_use_nav:
     modelV2.navEnabledDEPRECATED = nav_enabled
+=======
+  modelV2.modelExecutionTime = model_execution_time
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   # plan
   position = modelV2.position
@@ -97,11 +118,22 @@ def fill_model_msg(base_msg: capnp._DynamicStructBuilder, extended_msg: capnp._D
   orientation_rate = modelV2.orientationRate
   fill_xyzt(orientation_rate, ModelConstants.T_IDXS, *net_output_data['plan'][0,:,Plan.ORIENTATION_RATE].T)
 
+<<<<<<< HEAD
+=======
+  # temporal pose
+  temporal_pose = modelV2.temporalPose
+  temporal_pose.trans = net_output_data['plan'][0,0,Plan.VELOCITY].tolist()
+  temporal_pose.transStd = net_output_data['plan_stds'][0,0,Plan.VELOCITY].tolist()
+  temporal_pose.rot = net_output_data['plan'][0,0,Plan.ORIENTATION_RATE].tolist()
+  temporal_pose.rotStd = net_output_data['plan_stds'][0,0,Plan.ORIENTATION_RATE].tolist()
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   # poly path
   poly_path = driving_model_data.path
   fill_xyz_poly(poly_path, ModelConstants.POLY_PATH_DEGREE, *net_output_data['plan'][0,:,Plan.POSITION].T)
 
   # lateral planning
+<<<<<<< HEAD
   if model_use_lateral_planner:
     solution = modelV2.lateralPlannerSolutionDEPRECATED
     solution.x, solution.y, solution.yaw, solution.yawRate = [net_output_data['lat_planner_solution'][0,:,i].tolist() for i in range(4)]
@@ -109,6 +141,10 @@ def fill_model_msg(base_msg: capnp._DynamicStructBuilder, extended_msg: capnp._D
   else:
     action = modelV2.action
     action.desiredCurvature = float(net_output_data['desired_curvature'][0,0])
+=======
+  action = modelV2.action
+  action.desiredCurvature = float(net_output_data['desired_curvature'][0,0])
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   # times at X_IDXS according to model plan
   PLAN_T_IDXS = [np.nan] * ModelConstants.IDX_N
@@ -172,6 +208,11 @@ def fill_model_msg(base_msg: capnp._DynamicStructBuilder, extended_msg: capnp._D
   disengage_predictions.brake3MetersPerSecondSquaredProbs = net_output_data['meta'][0,Meta.HARD_BRAKE_3].tolist()
   disengage_predictions.brake4MetersPerSecondSquaredProbs = net_output_data['meta'][0,Meta.HARD_BRAKE_4].tolist()
   disengage_predictions.brake5MetersPerSecondSquaredProbs = net_output_data['meta'][0,Meta.HARD_BRAKE_5].tolist()
+<<<<<<< HEAD
+=======
+  disengage_predictions.gasPressProbs = net_output_data['meta'][0,Meta.GAS_PRESS].tolist()
+  disengage_predictions.brakePressProbs = net_output_data['meta'][0,Meta.BRAKE_PRESS].tolist()
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   publish_state.prev_brake_5ms2_probs[:-1] = publish_state.prev_brake_5ms2_probs[1:]
   publish_state.prev_brake_5ms2_probs[-1] = net_output_data['meta'][0,Meta.HARD_BRAKE_5][0]
@@ -181,6 +222,7 @@ def fill_model_msg(base_msg: capnp._DynamicStructBuilder, extended_msg: capnp._D
     (publish_state.prev_brake_3ms2_probs > ModelConstants.FCW_THRESHOLDS_3MS2).all()
   meta.hardBrakePredicted = hard_brake_predicted.item()
 
+<<<<<<< HEAD
   # temporal pose
   temporal_pose = modelV2.temporalPose
   temporal_pose.trans = net_output_data['sim_pose'][0,:3].tolist()
@@ -188,6 +230,8 @@ def fill_model_msg(base_msg: capnp._DynamicStructBuilder, extended_msg: capnp._D
   temporal_pose.rot = net_output_data['sim_pose'][0,3:].tolist()
   temporal_pose.rotStd = net_output_data['sim_pose_stds'][0,3:].tolist()
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   # confidence
   if vipc_frame_id % (2*ModelConstants.MODEL_FREQ) == 0:
     # any disengage prob

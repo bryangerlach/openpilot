@@ -1,6 +1,12 @@
 Version 0.9.8 (2024-XX-XX)
 ========================
+<<<<<<< HEAD
 * Added toggle to enable driver monitoring even when openpilot is not engaged
+=======
+* New Tomb Raider driving model
+* Added toggle to enable driver monitoring even when openpilot is not engaged
+* New Toyota TSS2 longitudinal tune
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 Version 0.9.7 (2024-06-13)
 ========================

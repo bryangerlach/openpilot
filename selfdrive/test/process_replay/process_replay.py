@@ -17,12 +17,21 @@ import cereal.messaging as messaging
 from cereal import car
 from cereal.services import SERVICE_LIST
 from msgq.visionipc import VisionIpcServer, get_endpoint_name as vipc_get_endpoint_name
+<<<<<<< HEAD
+=======
+from opendbc.car import structs
+from opendbc.car.car_helpers import get_car, interfaces
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.common.params import Params
 from openpilot.common.prefix import OpenpilotPrefix
 from openpilot.common.timeout import Timeout
 from openpilot.common.realtime import DT_CTRL
 from panda.python import ALTERNATIVE_EXPERIENCE
+<<<<<<< HEAD
 from openpilot.selfdrive.car.car_helpers import get_car, interfaces
+=======
+from openpilot.selfdrive.car.card import can_comm_callbacks, convert_to_capnp
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.system.manager.process_config import managed_processes
 from openpilot.selfdrive.test.process_replay.vision_meta import meta_from_camera_state, available_streams
 from openpilot.selfdrive.test.process_replay.migration import migrate_all
@@ -335,36 +344,67 @@ def card_fingerprint_callback(rc, pm, msgs, fingerprint):
 
     m = canmsgs.pop(0)
     rc.send_sync(pm, "can", m.as_builder().to_bytes())
+<<<<<<< HEAD
     rc.wait_for_next_recv(False)
+=======
+    rc.wait_for_next_recv(True)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 
 def get_car_params_callback(rc, pm, msgs, fingerprint):
   params = Params()
   if fingerprint:
+<<<<<<< HEAD
     CarInterface, _, _ = interfaces[fingerprint]
+=======
+    CarInterface, _, _, _ = interfaces[fingerprint]
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     CP = CarInterface.get_non_essential_params(fingerprint)
   else:
     can = DummySocket()
     sendcan = DummySocket()
 
     canmsgs = [msg for msg in msgs if msg.which() == "can"]
+<<<<<<< HEAD
     has_cached_cp = params.get("CarParamsCache") is not None
+=======
+    cached_params_raw = params.get("CarParamsCache")
+    has_cached_cp = cached_params_raw is not None
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     assert len(canmsgs) != 0, "CAN messages are required for fingerprinting"
     assert os.environ.get("SKIP_FW_QUERY", False) or has_cached_cp, \
             "CarParamsCache is required for fingerprinting. Make sure to keep carParams msgs in the logs."
 
     for m in canmsgs[:300]:
       can.send(m.as_builder().to_bytes())
+<<<<<<< HEAD
     _, CP = get_car(can, sendcan, Params().get_bool("ExperimentalLongitudinalEnabled"))
+=======
+    can_callbacks = can_comm_callbacks(can, sendcan)
+
+    cached_params = None
+    if has_cached_cp:
+      with car.CarParams.from_bytes(cached_params_raw) as _cached_params:
+        cached_params = structs.CarParams(carName=_cached_params.carName, carFw=_cached_params.carFw, carVin=_cached_params.carVin)
+
+    CP = get_car(*can_callbacks, lambda obd: None, Params().get_bool("ExperimentalLongitudinalEnabled"), cached_params=cached_params).CP
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
     if not params.get_bool("DisengageOnAccelerator"):
       CP.alternativeExperience |= ALTERNATIVE_EXPERIENCE.DISABLE_DISENGAGE_ON_GAS
 
+<<<<<<< HEAD
   params.put("CarParams", CP.to_bytes())
   return CP
 
 
 def controlsd_rcv_callback(msg, cfg, frame):
+=======
+  params.put("CarParams", convert_to_capnp(CP).to_bytes())
+
+
+def selfdrived_rcv_callback(msg, cfg, frame):
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   return (frame - 1) == 0 or msg.which() == 'carState'
 
 
@@ -443,6 +483,7 @@ class FrequencyBasedRcvCallback:
     return bool(len(resp_sockets))
 
 
+<<<<<<< HEAD
 def controlsd_config_callback(params, cfg, lr):
   controlsState = None
   initialized = False
@@ -459,6 +500,9 @@ def controlsd_config_callback(params, cfg, lr):
 
 
 def locationd_config_pubsub_callback(params, cfg, lr):
+=======
+def selfdrived_config_callback(params, cfg, lr):
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   ublox = params.get_bool("UbloxAvailable")
   sub_keys = ({"gpsLocation", } if ublox else {"gpsLocationExternal", })
 
@@ -467,6 +511,7 @@ def locationd_config_pubsub_callback(params, cfg, lr):
 
 CONFIGS = [
   ProcessConfig(
+<<<<<<< HEAD
     proc_name="controlsd",
     pubs=[
       "carState", "deviceState", "pandaStates", "peripheralState", "liveCalibration", "driverMonitoringState",
@@ -479,13 +524,45 @@ CONFIGS = [
     config_callback=controlsd_config_callback,
     init_callback=get_car_params_callback,
     should_recv_callback=controlsd_rcv_callback,
+=======
+    proc_name="selfdrived",
+    pubs=[
+      "carState", "deviceState", "pandaStates", "peripheralState", "liveCalibration", "driverMonitoringState",
+      "longitudinalPlan", "livePose", "liveParameters", "radarState",
+      "modelV2", "driverCameraState", "roadCameraState", "wideRoadCameraState", "managerState",
+      "liveTorqueParameters", "accelerometer", "gyroscope", "carOutput",
+      "gpsLocationExternal", "gpsLocation", "controlsState", "carControl", "driverAssistance",
+    ],
+    subs=["selfdriveState", "onroadEvents"],
+    ignore=["logMonoTime"],
+    config_callback=selfdrived_config_callback,
+    init_callback=get_car_params_callback,
+    should_recv_callback=selfdrived_rcv_callback,
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     tolerance=NUMPY_TOLERANCE,
     processing_time=0.004,
   ),
   ProcessConfig(
+<<<<<<< HEAD
     proc_name="card",
     pubs=["pandaStates", "carControl", "onroadEvents", "can"],
     subs=["sendcan", "carState", "carParams", "carOutput"],
+=======
+    proc_name="controlsd",
+    pubs=["liveParameters", "liveTorqueParameters", "modelV2", "selfdriveState",
+          "liveCalibration", "livePose", "longitudinalPlan", "carState", "carOutput",
+          "driverMonitoringState", "onroadEvents", "driverAssistance"],
+    subs=["carControl", "controlsState"],
+    ignore=["logMonoTime", ],
+    init_callback=get_car_params_callback,
+    should_recv_callback=MessageBasedRcvCallback("selfdriveState"),
+    tolerance=NUMPY_TOLERANCE,
+  ),
+  ProcessConfig(
+    proc_name="card",
+    pubs=["pandaStates", "carControl", "onroadEvents", "can"],
+    subs=["sendcan", "carState", "carParams", "carOutput", "liveTracks"],
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     ignore=["logMonoTime", "carState.cumLagMs"],
     init_callback=card_fingerprint_callback,
     should_recv_callback=card_rcv_callback,
@@ -495,6 +572,7 @@ CONFIGS = [
   ),
   ProcessConfig(
     proc_name="radard",
+<<<<<<< HEAD
     pubs=["can", "carState", "modelV2"],
     subs=["radarState", "liveTracks"],
     ignore=["logMonoTime", "radarState.cumLagMs"],
@@ -506,6 +584,18 @@ CONFIGS = [
     proc_name="plannerd",
     pubs=["modelV2", "carControl", "carState", "controlsState", "radarState"],
     subs=["longitudinalPlan"],
+=======
+    pubs=["liveTracks", "carState", "modelV2"],
+    subs=["radarState"],
+    ignore=["logMonoTime"],
+    init_callback=get_car_params_callback,
+    should_recv_callback=FrequencyBasedRcvCallback("modelV2"),
+  ),
+  ProcessConfig(
+    proc_name="plannerd",
+    pubs=["modelV2", "carControl", "carState", "controlsState", "radarState", "selfdriveState"],
+    subs=["longitudinalPlan", "driverAssistance"],
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     ignore=["logMonoTime", "longitudinalPlan.processingDelay", "longitudinalPlan.solverExecutionTime"],
     init_callback=get_car_params_callback,
     should_recv_callback=FrequencyBasedRcvCallback("modelV2"),
@@ -520,7 +610,11 @@ CONFIGS = [
   ),
   ProcessConfig(
     proc_name="dmonitoringd",
+<<<<<<< HEAD
     pubs=["driverStateV2", "liveCalibration", "carState", "modelV2", "controlsState"],
+=======
+    pubs=["driverStateV2", "liveCalibration", "carState", "modelV2", "selfdriveState"],
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     subs=["driverMonitoringState"],
     ignore=["logMonoTime"],
     should_recv_callback=FrequencyBasedRcvCallback("driverStateV2"),
@@ -529,6 +623,7 @@ CONFIGS = [
   ProcessConfig(
     proc_name="locationd",
     pubs=[
+<<<<<<< HEAD
       "cameraOdometry", "accelerometer", "gyroscope", "gpsLocationExternal",
       "liveCalibration", "carState", "gpsLocation"
     ],
@@ -536,6 +631,15 @@ CONFIGS = [
     ignore=["logMonoTime"],
     config_callback=locationd_config_pubsub_callback,
     tolerance=NUMPY_TOLERANCE,
+=======
+      "cameraOdometry", "accelerometer", "gyroscope", "liveCalibration", "carState"
+    ],
+    subs=["livePose"],
+    ignore=["logMonoTime"],
+    should_recv_callback=MessageBasedRcvCallback("cameraOdometry"),
+    tolerance=NUMPY_TOLERANCE,
+    unlocked_pubs=["accelerometer", "gyroscope"],
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   ),
   ProcessConfig(
     proc_name="paramsd",
@@ -566,7 +670,11 @@ CONFIGS = [
     proc_name="modeld",
     pubs=["deviceState", "roadCameraState", "wideRoadCameraState", "liveCalibration", "driverMonitoringState"],
     subs=["modelV2", "drivingModelData", "cameraOdometry"],
+<<<<<<< HEAD
     ignore=["logMonoTime", "modelV2.frameDropPerc", "modelV2.modelExecutionTime"],
+=======
+    ignore=["logMonoTime", "modelV2.frameDropPerc", "modelV2.modelExecutionTime", "drivingModelData.frameDropPerc", "drivingModelData.modelExecutionTime"],
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     should_recv_callback=ModeldCameraSyncRcvCallback(),
     tolerance=NUMPY_TOLERANCE,
     processing_time=0.020,
@@ -580,7 +688,11 @@ CONFIGS = [
     proc_name="dmonitoringmodeld",
     pubs=["liveCalibration", "driverCameraState"],
     subs=["driverStateV2"],
+<<<<<<< HEAD
     ignore=["logMonoTime", "driverStateV2.modelExecutionTime", "driverStateV2.dspExecutionTime"],
+=======
+    ignore=["logMonoTime", "driverStateV2.modelExecutionTime", "driverStateV2.gpuExecutionTime"],
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     should_recv_callback=dmonitoringmodeld_rcv_callback,
     tolerance=NUMPY_TOLERANCE,
     processing_time=0.020,
@@ -654,7 +766,11 @@ def replay_process(
   else:
     cfgs = [cfg]
 
+<<<<<<< HEAD
   all_msgs = migrate_all(lr, old_logtime=True,
+=======
+  all_msgs = migrate_all(lr,
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
                          manager_states=True,
                          panda_states=any("pandaStates" in cfg.pubs for cfg in cfgs),
                          camera_states=any(len(cfg.vision_pubs) != 0 for cfg in cfgs))
@@ -808,8 +924,13 @@ def check_openpilot_enabled(msgs: LogIterable) -> bool:
     if msg.which() == "carParams":
       if msg.carParams.notCar:
         return True
+<<<<<<< HEAD
     elif msg.which() == "controlsState":
       if msg.controlsState.active:
+=======
+    elif msg.which() == "selfdriveState":
+      if msg.selfdriveState.active:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         cur_enabled_count += 1
       else:
         cur_enabled_count = 0

@@ -5,13 +5,22 @@ import cProfile
 import pprofile
 import pyprof2calltree
 
+<<<<<<< HEAD
+=======
+from opendbc.car.toyota.values import CAR as TOYOTA
+from opendbc.car.honda.values import CAR as HONDA
+from opendbc.car.volkswagen.values import CAR as VW
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.common.params import Params
 from openpilot.tools.lib.logreader import LogReader
 from openpilot.selfdrive.test.profiling.lib import SubMaster, PubMaster, SubSocket, ReplayDone
 from openpilot.selfdrive.test.process_replay.process_replay import CONFIGS
+<<<<<<< HEAD
 from openpilot.selfdrive.car.toyota.values import CAR as TOYOTA
 from openpilot.selfdrive.car.honda.values import CAR as HONDA
 from openpilot.selfdrive.car.volkswagen.values import CAR as VW
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 BASE_URL = "https://commadataci.blob.core.windows.net/openpilotci/"
 

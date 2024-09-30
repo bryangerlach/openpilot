@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+<<<<<<< HEAD
 import platform
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 import base64
 import hashlib
 import io
@@ -15,7 +18,10 @@ import sys
 import tempfile
 import threading
 import time
+<<<<<<< HEAD
 import gzip
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 import zstandard as zstd
 from dataclasses import asdict, dataclass, replace
 from datetime import datetime
@@ -106,7 +112,10 @@ cancelled_uploads: set[str] = set()
 cur_upload_items: dict[int, UploadItem | None] = {}
 
 
+<<<<<<< HEAD
 # TODO-SP: adapt zst for sunnylink
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 def strip_zst_extension(fn: str) -> str:
   if fn.endswith('.zst'):
     return fn[:-4]
@@ -181,7 +190,10 @@ def jsonrpc_handler(end_event: threading.Event) -> None:
       elif "id" in data and ("result" in data or "error" in data):
         log_recv_queue.put_nowait(data)
       else:
+<<<<<<< HEAD
         cloudlog.event("athena.jsonrpc_handler.invalid_request", error=True, data=data)
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         raise Exception("not a valid request or response")
     except queue.Empty:
       pass
@@ -333,6 +345,7 @@ def getVersion() -> dict[str, str]:
   }
 
 
+<<<<<<< HEAD
 @dispatcher.add_method
 def setNavDestination(latitude: int = 0, longitude: int = 0, place_name: str = None, place_details: str = None) -> dict[str, int]:
   destination = {
@@ -346,6 +359,8 @@ def setNavDestination(latitude: int = 0, longitude: int = 0, place_name: str = N
   return {"success": 1}
 
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 def scan_dir(path: str, prefix: str) -> list[str]:
   files = []
   # only walk directories that match the prefix
@@ -555,7 +570,11 @@ def takeSnapshot() -> str | dict[str, str] | None:
     raise Exception("not available while camerad is started")
 
 
+<<<<<<< HEAD
 def get_logs_to_send_sorted(log_attr_name=LOG_ATTR_NAME) -> list[str]:
+=======
+def get_logs_to_send_sorted() -> list[str]:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   # TODO: scan once then use inotify to detect file creation/deletion
   curr_time = int(time.time())
   logs = []
@@ -563,7 +582,11 @@ def get_logs_to_send_sorted(log_attr_name=LOG_ATTR_NAME) -> list[str]:
     log_path = os.path.join(Paths.swaglog_root(), log_entry)
     time_sent = 0
     try:
+<<<<<<< HEAD
       value = getxattr(log_path, log_attr_name)
+=======
+      value = getxattr(log_path, LOG_ATTR_NAME)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       if value is not None:
         time_sent = int.from_bytes(value, sys.byteorder)
     except (ValueError, TypeError):
@@ -575,6 +598,7 @@ def get_logs_to_send_sorted(log_attr_name=LOG_ATTR_NAME) -> list[str]:
   return sorted(logs)[:-1]
 
 
+<<<<<<< HEAD
 def add_log_to_queue(log_path, log_id, is_sunnylink = False):
   MAX_SIZE_KB = 32
   MAX_SIZE_BYTES = MAX_SIZE_KB * 1024
@@ -638,6 +662,10 @@ def log_handler(end_event: threading.Event, log_attr_name=LOG_ATTR_NAME) -> None
   if PC:
     cloudlog.debug("athena.log_handler: Not supported on PC")
     time.sleep(1)
+=======
+def log_handler(end_event: threading.Event) -> None:
+  if PC:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     return
 
   log_files = []
@@ -646,7 +674,11 @@ def log_handler(end_event: threading.Event, log_attr_name=LOG_ATTR_NAME) -> None
     try:
       curr_scan = time.monotonic()
       if curr_scan - last_scan > 10:
+<<<<<<< HEAD
         log_files = get_logs_to_send_sorted(log_attr_name)
+=======
+        log_files = get_logs_to_send_sorted()
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         last_scan = curr_scan
 
       # send one log
@@ -657,10 +689,25 @@ def log_handler(end_event: threading.Event, log_attr_name=LOG_ATTR_NAME) -> None
         try:
           curr_time = int(time.time())
           log_path = os.path.join(Paths.swaglog_root(), log_entry)
+<<<<<<< HEAD
           setxattr(log_path, log_attr_name, int.to_bytes(curr_time, 4, sys.byteorder))
 
           add_log_to_queue(log_path, log_entry, is_sunnylink)
           curr_log = log_entry
+=======
+          setxattr(log_path, LOG_ATTR_NAME, int.to_bytes(curr_time, 4, sys.byteorder))
+          with open(log_path) as f:
+            jsonrpc = {
+              "method": "forwardLogs",
+              "params": {
+                "logs": f.read()
+              },
+              "jsonrpc": "2.0",
+              "id": log_entry
+            }
+            low_priority_send_queue.put_nowait(json.dumps(jsonrpc))
+            curr_log = log_entry
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         except OSError:
           pass  # file could be deleted by log rotation
 
@@ -677,7 +724,11 @@ def log_handler(end_event: threading.Event, log_attr_name=LOG_ATTR_NAME) -> None
           if log_entry and log_success:
             log_path = os.path.join(Paths.swaglog_root(), log_entry)
             try:
+<<<<<<< HEAD
               setxattr(log_path, log_attr_name, LOG_ATTR_VALUE_MAX_UNIX_TIME)
+=======
+              setxattr(log_path, LOG_ATTR_NAME, LOG_ATTR_VALUE_MAX_UNIX_TIME)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
             except OSError:
               pass  # file could be deleted by log rotation
           if curr_log == log_entry:
@@ -812,12 +863,17 @@ def ws_manage(ws: WebSocket, end_event: threading.Event) -> None:
   onroad_prev = None
   sock = ws.sock
 
+<<<<<<< HEAD
   while not end_event.wait(5):
+=======
+  while True:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     onroad = params.get_bool("IsOnroad")
     if onroad != onroad_prev:
       onroad_prev = onroad
 
       if sock is not None:
+<<<<<<< HEAD
         if platform.system() == 'Darwin':  # macOS
           sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
           sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPALIVE, 7 if onroad else 30)
@@ -830,6 +886,19 @@ def ws_manage(ws: WebSocket, end_event: threading.Event) -> None:
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 7 if onroad else 10)
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 2 if onroad else 3)
 
+=======
+        # While not sending data, onroad, we can expect to time out in 7 + (7 * 2) = 21s
+        #                         offroad, we can expect to time out in 30 + (10 * 3) = 60s
+        # FIXME: TCP_USER_TIMEOUT is effectively 2x for some reason (32s), so it's mostly unused
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_USER_TIMEOUT, 16000 if onroad else 0)
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, 7 if onroad else 30)
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 7 if onroad else 10)
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 2 if onroad else 3)
+
+    if end_event.wait(5):
+      break
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 def backoff(retries: int) -> int:
   return random.randrange(0, min(128, int(2 ** retries)))

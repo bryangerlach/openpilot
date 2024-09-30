@@ -16,7 +16,10 @@ enum ParamKeyType {
   CLEAR_ON_OFFROAD_TRANSITION = 0x10,
   DONT_LOG = 0x20,
   DEVELOPMENT_ONLY = 0x40,
+<<<<<<< HEAD
   BACKUP = 0x80,
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   ALL = 0xFFFFFFFF
 };
 

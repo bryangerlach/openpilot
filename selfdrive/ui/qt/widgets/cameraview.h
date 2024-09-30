@@ -23,6 +23,7 @@
 #endif
 
 #include "msgq/visionipc/visionipc_client.h"
+<<<<<<< HEAD
 #include "system/camerad/cameras/camera_common.h"
 #ifdef SUNNYPILOT
 #include "selfdrive/ui/sunnypilot/ui.h"
@@ -32,17 +33,30 @@
 
 const int FRAME_BUFFER_SIZE = 5;
 static_assert(FRAME_BUFFER_SIZE <= YUV_BUFFER_COUNT);
+=======
+#include "selfdrive/ui/ui.h"
+
+const int FRAME_BUFFER_SIZE = 5;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 class CameraWidget : public QOpenGLWidget, protected QOpenGLFunctions {
   Q_OBJECT
 
 public:
   using QOpenGLWidget::QOpenGLWidget;
+<<<<<<< HEAD
   explicit CameraWidget(std::string stream_name, VisionStreamType stream_type, bool zoom, QWidget* parent = nullptr);
   ~CameraWidget();
   void setBackgroundColor(const QColor &color) { bg = color; }
   void setFrameId(int frame_id) { draw_frame_id = frame_id; }
   void setStreamType(VisionStreamType type, bool reverse = false) { requested_stream_type = type; is_reverse = reverse;}
+=======
+  explicit CameraWidget(std::string stream_name, VisionStreamType stream_type, QWidget* parent = nullptr);
+  ~CameraWidget();
+  void setBackgroundColor(const QColor &color) { bg = color; }
+  void setFrameId(int frame_id) { draw_frame_id = frame_id; }
+  void setStreamType(VisionStreamType type) { requested_stream_type = type; }
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   VisionStreamType getStreamType() { return active_stream_type; }
   void stopVipcThread();
 
@@ -55,21 +69,32 @@ signals:
 protected:
   void paintGL() override;
   void initializeGL() override;
+<<<<<<< HEAD
   void resizeGL(int w, int h) override { updateFrameMat(); }
   void showEvent(QShowEvent *event) override;
   void mouseReleaseEvent(QMouseEvent *event) override { emit clicked(); }
   virtual void updateFrameMat();
   void updateCalibration(const mat3 &calib);
+=======
+  void showEvent(QShowEvent *event) override;
+  void mouseReleaseEvent(QMouseEvent *event) override { emit clicked(); }
+  virtual mat4 calcFrameMatrix();
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   void vipcThread();
   void clearFrames();
 
   int glWidth();
   int glHeight();
 
+<<<<<<< HEAD
   bool zoomed_view;
   GLuint frame_vao, frame_vbo, frame_ibo;
   GLuint textures[2];
   mat4 frame_mat = {};
+=======
+  GLuint frame_vao, frame_vbo, frame_ibo;
+  GLuint textures[2];
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   std::unique_ptr<QOpenGLShaderProgram> program;
   QColor bg = QColor("#000000");
 
@@ -85,6 +110,7 @@ protected:
   std::atomic<VisionStreamType> requested_stream_type;
   std::set<VisionStreamType> available_streams;
   QThread *vipc_thread = nullptr;
+<<<<<<< HEAD
 
   // Calibration
   float x_offset = 0;
@@ -93,6 +119,8 @@ protected:
   mat3 calibration = DEFAULT_CALIBRATION;
   mat3 intrinsic_matrix = FCAM_INTRINSIC_MATRIX;
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   std::recursive_mutex frame_lock;
   std::deque<std::pair<uint32_t, VisionBuf*>> frames;
   uint32_t draw_frame_id = 0;
@@ -102,9 +130,12 @@ protected slots:
   void vipcConnected(VisionIpcClient *vipc_client);
   void vipcFrameReceived();
   void availableStreamsUpdated(std::set<VisionStreamType> streams);
+<<<<<<< HEAD
 
 private:
   bool is_reverse = false;
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 };
 
 Q_DECLARE_METATYPE(std::set<VisionStreamType>);

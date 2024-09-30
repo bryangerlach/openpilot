@@ -49,6 +49,7 @@ static kj::Array<capnp::word> build_boot_log() {
 }
 
 int main(int argc, char** argv) {
+<<<<<<< HEAD
   if (argc > 1) {
     std::string arg1(argv[1]);
     if (arg1 == "--started") {
@@ -81,6 +82,24 @@ int main(int argc, char** argv) {
     // Write out bootlog param to match routes with bootlog
     Params().put("CurrentBootlog", id.c_str());
   }
+=======
+  const std::string id = logger_get_identifier("BootCount");
+  const std::string path = Path::log_root() + "/boot/" + id;
+  LOGW("bootlog to %s", path.c_str());
+
+  // Open bootlog
+  bool r = util::create_directories(Path::log_root() + "/boot/", 0775);
+  assert(r);
+
+  RawFile file(path.c_str());
+  // Write initdata
+  file.write(logger_build_init_data().asBytes());
+  // Write bootlog
+  file.write(build_boot_log().asBytes());
+
+  // Write out bootlog param to match routes with bootlog
+  Params().put("CurrentBootlog", id.c_str());
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   return 0;
 }

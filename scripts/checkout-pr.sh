@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/bin/bash
+=======
+#!/usr/bin/env bash
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 set -e
 
 if [ $# -eq 0 ]; then

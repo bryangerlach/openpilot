@@ -6,12 +6,16 @@
 #include <QTextEdit>
 #include <set>
 
+<<<<<<< HEAD
 #ifdef SUNNYPILOT
 #include "selfdrive/ui/sunnypilot/qt/widgets/controls.h"
 #define ElidedLabel ElidedLabelSP
 #else
 #include "selfdrive/ui/qt/widgets/controls.h"
 #endif
+=======
+#include "selfdrive/ui/qt/widgets/controls.h"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 #include "tools/cabana/binaryview.h"
 #include "tools/cabana/chart/chartswidget.h"
 #include "tools/cabana/historylog.h"

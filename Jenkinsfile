@@ -26,7 +26,10 @@ export SOURCE_DIR=${env.SOURCE_DIR}
 export GIT_BRANCH=${env.GIT_BRANCH}
 export GIT_COMMIT=${env.GIT_COMMIT}
 export AZURE_TOKEN='${env.AZURE_TOKEN}'
+<<<<<<< HEAD
 export MAPBOX_TOKEN='${env.MAPBOX_TOKEN}'
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 # only use 1 thread for tici tests since most require HIL
 export PYTEST_ADDOPTS="-n 0"
 
@@ -96,6 +99,7 @@ def deviceStage(String stageName, String deviceType, List extra_env, def steps) 
   }
 }
 
+<<<<<<< HEAD
 def pcStage(String stageName, Closure body) {
   node {
   stage(stageName) {
@@ -139,6 +143,13 @@ def setupCredentials() {
   ]) {
     env.AZURE_TOKEN = "${AZURE_TOKEN}"
     env.MAPBOX_TOKEN = "${MAPBOX_TOKEN}"
+=======
+def setupCredentials() {
+  withCredentials([
+    string(credentialsId: 'azure_token', variable: 'AZURE_TOKEN'),
+  ]) {
+    env.AZURE_TOKEN = "${AZURE_TOKEN}"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   }
 }
 
@@ -186,7 +197,11 @@ node {
           ["build openpilot", "cd system/manager && ./build.py"],
           ["check dirty", "release/check-dirty.sh"],
           ["onroad tests", "pytest selfdrive/test/test_onroad.py -s"],
+<<<<<<< HEAD
           ["time to onroad", "pytest selfdrive/test/test_time_to_onroad.py"],
+=======
+          //["time to onroad", "pytest selfdrive/test/test_time_to_onroad.py"],
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         ])
       },
       'HW + Unit Tests': {

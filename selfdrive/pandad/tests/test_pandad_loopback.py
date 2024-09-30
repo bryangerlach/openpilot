@@ -8,11 +8,18 @@ from pprint import pprint
 
 import cereal.messaging as messaging
 from cereal import car, log
+<<<<<<< HEAD
+=======
+from opendbc.car.can_definitions import CanData
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.common.retry import retry
 from openpilot.common.params import Params
 from openpilot.common.timeout import Timeout
 from openpilot.selfdrive.pandad import can_list_to_can_capnp
+<<<<<<< HEAD
 from openpilot.selfdrive.car import make_can_msg
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.system.hardware import TICI
 from openpilot.selfdrive.test.helpers import phone_only, with_processes
 
@@ -60,7 +67,11 @@ def send_random_can_messages(sendcan, count, num_pandas=1):
       if (addr, dat) in sent_msgs[bus]:
         continue
       sent_msgs[bus].add((addr, dat))
+<<<<<<< HEAD
       to_send.append(make_can_msg(addr, dat, bus))
+=======
+      to_send.append(CanData(addr, dat, bus))
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     sendcan.send(can_list_to_can_capnp(to_send, msgtype='sendcan'))
   return sent_msgs
 

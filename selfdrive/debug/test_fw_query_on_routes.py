@@ -6,11 +6,19 @@ import argparse
 import os
 import traceback
 from tqdm import tqdm
+<<<<<<< HEAD
 from openpilot.tools.lib.logreader import LogReader, ReadMode
 from openpilot.tools.lib.route import SegmentRange
 from openpilot.selfdrive.car.car_helpers import interface_names
 from openpilot.selfdrive.car.fingerprints import MIGRATION
 from openpilot.selfdrive.car.fw_versions import VERSIONS, match_fw_to_car
+=======
+from opendbc.car.car_helpers import interface_names
+from opendbc.car.fingerprints import MIGRATION
+from opendbc.car.fw_versions import VERSIONS, match_fw_to_car
+from openpilot.tools.lib.logreader import LogReader, ReadMode
+from openpilot.tools.lib.route import SegmentRange
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 
 NO_API = "NO_API" in os.environ

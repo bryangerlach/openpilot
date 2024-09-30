@@ -2,6 +2,7 @@
 
 **Hardware needed**: device running openpilot, laptop, joystick (optional)
 
+<<<<<<< HEAD
 With joystickd, you can connect your laptop to your comma device over the network and debug controls using a joystick or keyboard.
 joystickd uses [inputs](https://pypi.org/project/inputs) which supports many common gamepads and joysticks.
 
@@ -15,12 +16,28 @@ SSH into your comma device and start joystickd with the following command:
 
 ```shell
 tools/joystick/joystickd.py --keyboard
+=======
+With joystick_control, you can connect your laptop to your comma device over the network and debug controls using a joystick or keyboard.
+joystick_control uses [inputs](https://pypi.org/project/inputs) which supports many common gamepads and joysticks.
+
+## Usage
+
+The car must be off, and openpilot must be offroad before starting `joystick_control`.
+
+### Using a keyboard
+
+SSH into your comma device and start joystick_control with the following command:
+
+```shell
+tools/joystick/joystick_control.py --keyboard
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 ```
 
 The available buttons and axes will print showing their key mappings. In general, the WASD keys control gas and brakes and steering torque in 5% increments.
 
 ### Joystick on your comma three
 
+<<<<<<< HEAD
 Plug the joystick into your comma three aux USB-C port. Then, SSH into the device and start `joystickd.py`.
 
 ### Joystick on your laptop
@@ -29,6 +46,16 @@ In order to use a joystick over the network, we need to run joystickd locally fr
 
 1. Connect a joystick to your PC.
 2. Connect your laptop to your comma device's hotspot and open a new SSH shell. Since joystickd is being run on your laptop, we need to write a parameter to let controlsd know to start in joystick debug mode:
+=======
+Plug the joystick into your comma three aux USB-C port. Then, SSH into the device and start `joystick_control.py`.
+
+### Joystick on your laptop
+
+In order to use a joystick over the network, we need to run joystick_control locally from your laptop and have it send `testJoystick` packets over the network to the comma device.
+
+1. Connect a joystick to your PC.
+2. Connect your laptop to your comma device's hotspot and open a new SSH shell. Since joystick_control is being run on your laptop, we need to write a parameter to let controlsd know to start in joystick debug mode:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
    ```shell
    # on your comma device
    echo -n "1" > /data/params/d/JoystickDebugMode
@@ -38,11 +65,19 @@ In order to use a joystick over the network, we need to run joystickd locally fr
    # on your comma device
    cereal/messaging/bridge {LAPTOP_IP} testJoystick
    ```
+<<<<<<< HEAD
 4. Start joystickd on your laptop in ZMQ mode.
    ```shell
    # on your laptop
    export ZMQ=1
    tools/joystick/joystickd.py
+=======
+4. Start joystick_control on your laptop in ZMQ mode.
+   ```shell
+   # on your laptop
+   export ZMQ=1
+   tools/joystick/joystick_control.py
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
    ```
 
 ---

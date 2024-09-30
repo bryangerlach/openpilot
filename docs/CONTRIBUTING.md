@@ -1,6 +1,12 @@
 # How to contribute
 
+<<<<<<< HEAD
 Our software is open source so you can solve your own problems without needing help from others. And if you solve a problem and are so kind, you can upstream it for the rest of the world to use. Check out our [post about externalization](https://blog.comma.ai/a-2020-theme-externalization/). Development activity is coordinated through our GitHub Issues, [GitHub Discussions](https://github.com/commaai/openpilot/discussions), and [Discord](https://discord.comma.ai).
+=======
+Our software is open source so you can solve your own problems without needing help from others. And if you solve a problem and are so kind, you can upstream it for the rest of the world to use. Check out our [post about externalization](https://blog.comma.ai/a-2020-theme-externalization/).
+
+Development is coordinated through [Discord](https://discord.comma.ai) and GitHub.
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 ### Getting Started
 
@@ -11,7 +17,12 @@ Our software is open source so you can solve your own problems without needing h
 
 ## What contributions are we looking for?
 
+<<<<<<< HEAD
 **openpilot's priorities are [safety](SAFETY.md), stability, quality, and features, in that order.** openpilot is part of comma's mission to *solve self-driving cars while delivering shippable intermediaries*, and **all** development is towards that goal. 
+=======
+**openpilot's priorities are [safety](SAFETY.md), stability, quality, and features, in that order.**
+openpilot is part of comma's mission to *solve self-driving cars while delivering shippable intermediaries*, and all development is towards that goal. 
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 ### What gets merged?
 
@@ -27,6 +38,7 @@ All of these are examples of good PRs:
 
 ### What doesn't get merged?
 
+<<<<<<< HEAD
 * **arbitrary style changes**: code is art, and it's up to the author to make it beautiful
 * **500+ line PRs**: clean it up, break it up into smaller PRs, or both
 * **PRs without a clear goal**: every PR must have a singular and clear goal
@@ -45,6 +57,23 @@ Most car-related contributions require access to that car, plus a comma device i
 ## Pull Requests
 
 Pull requests should be against the master branch. If you're unsure about a contribution, feel free to open a discussion, issue, or draft PR to discuss the problem you're trying to solve.
+=======
+* **style changes**: code is art, and it's up to the author to make it beautiful 
+* **500+ line PRs**: clean it up, break it up into smaller PRs, or both
+* **PRs without a clear goal**: every PR must have a singular and clear goal
+* **UI design**: we do not have a good review process for this yet
+* **New features**: We believe openpilot is mostly feature-complete, and the rest is a matter of refinement and fixing bugs. As a result of this, most feature PRs will be immediately closed, however the beauty of open source is that forks can and do offer features that upstream openpilot doesn't.
+* **Negative expected value**: This a class of PRs that makes an improvement, but the risk or validation costs more than the improvement. The risk can be mitigated by first getting a failing test merged.
+
+### First contribution
+
+[Projects / openpilot bounties](https://github.com/orgs/commaai/projects/26/views/1?pane=info) is the best place to get started and goes in-depth on what's expected when working on a bounty.
+There's lot of bounties that don't require a comma 3/3X or a car.
+
+## Pull Requests
+
+Pull requests should be against the master branch.
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 A good pull request has all of the following:
 * a clearly stated purpose

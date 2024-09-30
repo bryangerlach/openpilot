@@ -58,14 +58,23 @@ jobs:
               const jobName = job.name.split(" / ")[2];
               const runRegex = /\((.*?)\)/;
               const run = job.name.match(runRegex)[1];
+<<<<<<< HEAD
               report[jobName] = report[jobName] || { successes: [], failures: [], cancelled: [] };
+=======
+              report[jobName] = report[jobName] || { successes: [], failures: [], canceled: [] };
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
               switch (job.conclusion) {
                 case "success":
                   report[jobName].successes.push({ "run_number": run, "link": job.html_url}); break;
                 case "failure":
                   report[jobName].failures.push({ "run_number": run, "link": job.html_url }); break;
+<<<<<<< HEAD
                 case "cancelled":
                   report[jobName].cancelled.push({ "run_number": run, "link": job.html_url }); break;
+=======
+                case "canceled":
+                  report[jobName].canceled.push({ "run_number": run, "link": job.html_url }); break;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
               }
             });
             return JSON.stringify({"jobs": report});

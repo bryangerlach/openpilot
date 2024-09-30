@@ -7,10 +7,17 @@ from openpilot.tools.lib.url_file import URLFile
 DATA_ENDPOINT = os.getenv("DATA_ENDPOINT", "http://data-raw.comma.internal/")
 
 
+<<<<<<< HEAD
 def internal_source_available():
   try:
     hostname = urlparse(DATA_ENDPOINT).hostname
     port = urlparse(DATA_ENDPOINT).port or 80
+=======
+def internal_source_available(url=DATA_ENDPOINT):
+  try:
+    hostname = urlparse(url).hostname
+    port = urlparse(url).port or 80
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s:
       s.connect((hostname, port))
     return True

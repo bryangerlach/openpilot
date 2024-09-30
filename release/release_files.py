@@ -34,7 +34,11 @@ blacklist = [
   ".github/",
   ".devcontainer/",
   "Darwin/",
+<<<<<<< HEAD
   ".vscode/",
+=======
+  ".vscode",
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   # common things
   "LICENSE",
@@ -48,6 +52,7 @@ blacklist = [
   ".gitmodules",
 ]
 
+<<<<<<< HEAD
 # Sunnypilot blacklist
 sunnypilot_blacklist = [
   "system/loggerd/sunnylink_uploader.py",  # Temporarily, until we are ready to roll it out widely
@@ -94,6 +99,14 @@ blacklist += sunnypilot_blacklist
 whitelist = [
   "^tools/lib/(?!.*__pycache__).*$",
   "tools/bodyteleop/(?!.*__pycache__).*$",
+=======
+# gets you through the blacklist
+whitelist = [
+  "tools/lib/",
+  "tools/bodyteleop/",
+  "tools/joystick/",
+  "tools/longitudinal_maneuvers/",
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   "tinygrad_repo/openpilot/compile2.py",
   "tinygrad_repo/extra/onnx.py",
@@ -160,6 +173,7 @@ whitelist = [
   "opendbc_repo/dbc/toyota_tss2_adas.dbc",
   "opendbc_repo/dbc/vw_golf_mk4.dbc",
   "opendbc_repo/dbc/vw_mqb_2010.dbc",
+<<<<<<< HEAD
   "opendbc_repo/dbc/tesla_can.dbc",
   "opendbc_repo/dbc/tesla_radar_bosch_generated.dbc",
   "opendbc_repo/dbc/tesla_radar_continental_generated.dbc",
@@ -207,6 +221,10 @@ sunnypilot_whitelist = [
 # Merge the whitelists
 whitelist += sunnypilot_whitelist
 
+=======
+]
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 if __name__ == "__main__":
   for f in Path(ROOT).rglob("**/*"):

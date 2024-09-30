@@ -25,8 +25,13 @@ static Geodetic to_radians(Geodetic geodetic){
 }
 
 
+<<<<<<< HEAD
 ECEF geodetic2ecef(Geodetic g){
   g = to_radians(g);
+=======
+ECEF geodetic2ecef(const Geodetic &geodetic) {
+  auto g = to_radians(geodetic);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   double xi = sqrt(1.0 - esq * pow(sin(g.lat), 2));
   double x = (a / xi + g.alt) * cos(g.lat) * cos(g.lon);
   double y = (a / xi + g.alt) * cos(g.lat) * sin(g.lon);
@@ -34,7 +39,11 @@ ECEF geodetic2ecef(Geodetic g){
   return {x, y, z};
 }
 
+<<<<<<< HEAD
 Geodetic ecef2geodetic(ECEF e){
+=======
+Geodetic ecef2geodetic(const ECEF &e) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   // Convert from ECEF to geodetic using Ferrari's methods
   // https://en.wikipedia.org/wiki/Geographic_coordinate_conversion#Ferrari.27s_solution
   double x = e.x;
@@ -61,10 +70,17 @@ Geodetic ecef2geodetic(ECEF e){
   return to_degrees({lat, lon, h});
 }
 
+<<<<<<< HEAD
 LocalCoord::LocalCoord(Geodetic g, ECEF e){
   init_ecef <<  e.x, e.y, e.z;
 
   g = to_radians(g);
+=======
+LocalCoord::LocalCoord(const Geodetic &geodetic, const ECEF &e) {
+  init_ecef <<  e.x, e.y, e.z;
+
+  auto g = to_radians(geodetic);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   ned2ecef_matrix <<
     -sin(g.lat)*cos(g.lon), -sin(g.lon), -cos(g.lat)*cos(g.lon),
@@ -73,7 +89,11 @@ LocalCoord::LocalCoord(Geodetic g, ECEF e){
   ecef2ned_matrix = ned2ecef_matrix.transpose();
 }
 
+<<<<<<< HEAD
 NED LocalCoord::ecef2ned(ECEF e) {
+=======
+NED LocalCoord::ecef2ned(const ECEF &e) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   Eigen::Vector3d ecef;
   ecef << e.x, e.y, e.z;
 
@@ -81,7 +101,11 @@ NED LocalCoord::ecef2ned(ECEF e) {
   return {ned[0], ned[1], ned[2]};
 }
 
+<<<<<<< HEAD
 ECEF LocalCoord::ned2ecef(NED n) {
+=======
+ECEF LocalCoord::ned2ecef(const NED &n) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   Eigen::Vector3d ned;
   ned << n.n, n.e, n.d;
 
@@ -89,12 +113,20 @@ ECEF LocalCoord::ned2ecef(NED n) {
   return {ecef[0], ecef[1], ecef[2]};
 }
 
+<<<<<<< HEAD
 NED LocalCoord::geodetic2ned(Geodetic g) {
+=======
+NED LocalCoord::geodetic2ned(const Geodetic &g) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   ECEF e = ::geodetic2ecef(g);
   return ecef2ned(e);
 }
 
+<<<<<<< HEAD
 Geodetic LocalCoord::ned2geodetic(NED n){
+=======
+Geodetic LocalCoord::ned2geodetic(const NED &n) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   ECEF e = ned2ecef(n);
   return ::ecef2geodetic(e);
 }

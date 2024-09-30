@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 #!/bin/bash -e
+=======
+#!/usr/bin/env bash
+set -e
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 SRC=/tmp/openpilot/
 SRC_CLONE=/tmp/openpilot-clone/
@@ -209,7 +214,11 @@ if [ ! -f "$SRC_CLONE/rewrite-branches-done" ]; then
     MERGE_BASE=$(git merge-base master origin/$BRANCH) || true
     if [ -n "$MERGE_BASE" ]; then
       echo "Rewriting branch: $BRANCH"
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       # create a new branch based on the new master
       NEW_MERGE_BASE=$(grep "^$MERGE_BASE " "commit-map.txt" | awk '{print $2}')
       if [ -z "$NEW_MERGE_BASE" ]; then
@@ -217,10 +226,17 @@ if [ ! -f "$SRC_CLONE/rewrite-branches-done" ]; then
         continue
       fi
       git checkout -b ${BRANCH}_new $NEW_MERGE_BASE
+<<<<<<< HEAD
       
       # get the range of commits unique to this branch
       COMMITS=$(git rev-list --reverse $MERGE_BASE..origin/${BRANCH})
       
+=======
+
+      # get the range of commits unique to this branch
+      COMMITS=$(git rev-list --reverse $MERGE_BASE..origin/${BRANCH})
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       HAS_ERROR=0
 
       # simple delimiter
@@ -263,7 +279,11 @@ if [ ! -f "$SRC_CLONE/rewrite-branches-done" ]; then
           git commit --amend -m "$(git log -1 --pretty=%B)" -m "Former-commit-id: $COMMIT" > /dev/null
         fi
       done
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       # force push the new branch
       if [ $HAS_ERROR -eq 0 ]; then
         # git lfs goes haywire here, so we need to install and uninstall
@@ -271,7 +291,11 @@ if [ ! -f "$SRC_CLONE/rewrite-branches-done" ]; then
         git lfs uninstall --local > /dev/null
         git push -f origin ${BRANCH}_new:${BRANCH}
       fi
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       # clean up local branch
       git checkout master > /dev/null
       git branch -D ${BRANCH}_new > /dev/null
@@ -318,7 +342,11 @@ if [ ! -f "$SRC_CLONE/validation-done" ]; then
 
     # echo -ne "[$CURRENT_COMMIT_NUMBER/$TOTAL_COMMITS] Comparing old commit $OLD_COMMIT_SHORT ($OLD_DATE) with new commit $NEW_COMMIT_SHORT ($NEW_DATE)"\\r
     echo "[$CURRENT_COMMIT_NUMBER/$TOTAL_COMMITS] Comparing old commit $OLD_COMMIT_SHORT ($OLD_DATE) with new commit $NEW_COMMIT_SHORT ($NEW_DATE)"
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     # generate lists of files and their hashes for the old and new commits, excluding ignored files
     OLD_FILES=$(git ls-tree -r $OLD_COMMIT | grep -vE "$(IFS='|'; echo "${VALIDATE_IGNORE_FILES[*]}")")
     NEW_FILES=$(git ls-tree -r $NEW_COMMIT | grep -vE "$(IFS='|'; echo "${VALIDATE_IGNORE_FILES[*]}")")

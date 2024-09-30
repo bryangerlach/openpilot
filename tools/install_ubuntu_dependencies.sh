@@ -59,10 +59,13 @@ function install_ubuntu_common_requirements() {
     ocl-icd-libopencl1 \
     ocl-icd-opencl-dev \
     portaudio19-dev \
+<<<<<<< HEAD
     qml-module-qtquick2 \
     qtmultimedia5-dev \
     qtlocation5-dev \
     qtpositioning5-dev \
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     qttools5-dev-tools \
     libqt5svg5-dev \
     libqt5serialbus5-dev  \
@@ -70,6 +73,7 @@ function install_ubuntu_common_requirements() {
     libqt5opengl5-dev
 }
 
+<<<<<<< HEAD
 # Install extra packages
 function install_extra_packages() {
   echo "Installing extra packages..."
@@ -90,6 +94,8 @@ function install_extra_packages() {
     locales
 }
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 # Install Ubuntu 24.04 LTS packages
 function install_ubuntu_lts_latest_requirements() {
   install_ubuntu_common_requirements
@@ -138,6 +144,7 @@ if [ -f "/etc/os-release" ]; then
       fi
   esac
 
+<<<<<<< HEAD
   # Install extra packages
   if [[ -z "$INSTALL_EXTRA_PACKAGES" && -n "$INTERACTIVE" ]]; then
     read -p "Base setup done. Do you want to install extra development packages? [Y/n]: " -n 1 -r
@@ -149,6 +156,24 @@ if [ -f "/etc/os-release" ]; then
   if [[ "$INSTALL_EXTRA_PACKAGES" == "yes" ]]; then
     install_extra_packages
   fi
+=======
+  if [[ -d "/etc/udev/rules.d/" ]]; then
+    # Setup panda udev rules
+    $SUDO tee /etc/udev/rules.d/12-panda_jungle.rules > /dev/null <<EOF
+SUBSYSTEM=="usb", ATTRS{idVendor}=="bbaa", ATTRS{idProduct}=="ddcf", MODE="0666"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="bbaa", ATTRS{idProduct}=="ddef", MODE="0666"
+EOF
+
+    # Setup jungle udev rules
+    $SUDO tee /etc/udev/rules.d/11-panda.rules > /dev/null <<EOF
+SUBSYSTEM=="usb", ATTRS{idVendor}=="bbaa", ATTRS{idProduct}=="ddcc", MODE="0666"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="bbaa", ATTRS{idProduct}=="ddee", MODE="0666"
+EOF
+
+  $SUDO udevadm control --reload-rules && $SUDO udevadm trigger || true
+  fi
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 else
   echo "No /etc/os-release in the system. Make sure you're running on Ubuntu, or similar."
   exit 1

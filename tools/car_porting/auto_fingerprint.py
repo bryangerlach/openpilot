@@ -4,8 +4,13 @@ import argparse
 from collections import defaultdict
 from openpilot.selfdrive.debug.format_fingerprints import format_brand_fw_versions
 
+<<<<<<< HEAD
 from openpilot.selfdrive.car.fingerprints import MIGRATION
 from openpilot.selfdrive.car.fw_versions import MODEL_TO_BRAND, match_fw_to_car
+=======
+from opendbc.car.fingerprints import MIGRATION
+from opendbc.car.fw_versions import MODEL_TO_BRAND, match_fw_to_car
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.tools.lib.logreader import LogReader, ReadMode
 
 if __name__ == "__main__":

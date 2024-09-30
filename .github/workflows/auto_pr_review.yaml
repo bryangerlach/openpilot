@@ -35,11 +35,20 @@ jobs:
         already-exists-comment: "Your PR should be made against the `master` branch"
 
     # Welcome comment
+<<<<<<< HEAD
     - name: comment
       uses: thollander/actions-comment-pull-request@fabd468d3a1a0b97feee5f6b9e499eab0dd903f6
       if: github.event.pull_request.head.repo.full_name != 'commaai/openpilot'
       with:
         message: |
+=======
+    - name: "First timers PR"
+      uses: actions/first-interaction@v1
+      if: github.event.pull_request.head.repo.full_name != 'commaai/openpilot'
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        pr-message: |
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
             <!-- _(run_id **${{ github.run_id }}**)_ -->
             Thanks for contributing to openpilot! In order for us to review your PR as quickly as possible, check the following:
             * Convert your PR to a draft unless it's ready to review
@@ -49,5 +58,9 @@ jobs:
               * all the tests are passing
               * the change is [something we merge](https://github.com/commaai/openpilot/blob/master/docs/CONTRIBUTING.md#what-gets-merged)
               * include a route or your device' dongle ID if relevant
+<<<<<<< HEAD
         comment_tag: run_id
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+=======
+      
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

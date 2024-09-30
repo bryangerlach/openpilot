@@ -8,10 +8,15 @@ from libc.string cimport memcpy
 from msgq.visionipc.visionipc cimport cl_mem
 from msgq.visionipc.visionipc_pyx cimport VisionBuf, CLContext as BaseCLContext
 from .commonmodel cimport CL_DEVICE_TYPE_DEFAULT, cl_get_device_id, cl_create_context
+<<<<<<< HEAD
 from .commonmodel cimport mat3, sigmoid as cppSigmoid, ModelFrame as cppModelFrame
 
 def sigmoid(x):
   return cppSigmoid(x)
+=======
+from .commonmodel cimport mat3, ModelFrame as cppModelFrame
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 cdef class CLContext(BaseCLContext):
   def __cinit__(self):

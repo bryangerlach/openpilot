@@ -4,6 +4,16 @@
 #include <deque>
 #include <functional>
 #include <string>
+<<<<<<< HEAD
+=======
+#include "cereal/messaging/messaging.h"
+
+enum CameraType {
+  RoadCam = 0,
+  DriverCam,
+  WideRoadCam
+};
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 enum class ReplyMsgType {
   Info,

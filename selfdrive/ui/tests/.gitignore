@@ -1,4 +1,8 @@
 test
 test_translations
+<<<<<<< HEAD
 ui_snapshot
 test_ui/report
+=======
+test_ui/report_1
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

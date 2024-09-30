@@ -16,14 +16,22 @@ from openpilot.common.dict_helpers import strip_deprecated_keys
 from openpilot.common.filter_simple import FirstOrderFilter
 from openpilot.common.params import Params
 from openpilot.common.realtime import DT_HW
+<<<<<<< HEAD
 from openpilot.selfdrive.controls.lib.alertmanager import set_offroad_alert
+=======
+from openpilot.selfdrive.selfdrived.alertmanager import set_offroad_alert
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.system.hardware import HARDWARE, TICI, AGNOS
 from openpilot.system.loggerd.config import get_available_percent
 from openpilot.system.statsd import statlog
 from openpilot.common.swaglog import cloudlog
 from openpilot.system.hardware.power_monitoring import PowerMonitoring
 from openpilot.system.hardware.fan_controller import TiciFanController
+<<<<<<< HEAD
 from openpilot.system.version import terms_version, terms_version_sp, training_version
+=======
+from openpilot.system.version import terms_version, training_version
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 ThermalStatus = log.DeviceState.ThermalStatus
 NetworkType = log.DeviceState.NetworkType
@@ -153,8 +161,11 @@ def hw_state_thread(end_event, hw_queue):
           cloudlog.warning("configuring modem")
           HARDWARE.configure_modem()
           modem_configured = True
+<<<<<<< HEAD
           if Params().get_bool("HotspotOnBoot") and Params().get_bool("HotspotOnBootConfirmed"):
             os.system('nmcli con up Hotspot')
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
         prev_hw_state = hw_state
       except Exception:
@@ -166,7 +177,11 @@ def hw_state_thread(end_event, hw_queue):
 
 def hardware_thread(end_event, hw_queue) -> None:
   pm = messaging.PubMaster(['deviceState'])
+<<<<<<< HEAD
   sm = messaging.SubMaster(["peripheralState", "gpsLocationExternal", "controlsState", "pandaStates"], poll="pandaStates")
+=======
+  sm = messaging.SubMaster(["peripheralState", "gpsLocationExternal", "selfdriveState", "pandaStates"], poll="pandaStates")
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   count = 0
 
@@ -298,7 +313,10 @@ def hardware_thread(end_event, hw_queue) -> None:
     startup_conditions["up_to_date"] = params.get("Offroad_ConnectivityNeeded") is None or params.get_bool("DisableUpdates") or params.get_bool("SnoozeUpdate")
     startup_conditions["not_uninstalling"] = not params.get_bool("DoUninstall")
     startup_conditions["accepted_terms"] = params.get("HasAcceptedTerms") == terms_version
+<<<<<<< HEAD
     startup_conditions["accepted_terms"] = params.get("HasAcceptedTermsSP") == terms_version_sp
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
     # with 2% left, we killall, otherwise the phone will take a long time to boot
     startup_conditions["free_space"] = msg.deviceState.freeSpacePercent > 2
@@ -312,12 +330,15 @@ def hardware_thread(end_event, hw_queue) -> None:
     # ensure device is fully booted
     startup_conditions["device_booted"] = startup_conditions.get("device_booted", False) or HARDWARE.booted()
 
+<<<<<<< HEAD
     # user-forced status
     force_offroad = params.get_bool("ForceOffroad")
     startup_conditions["not_force_offroad"] = not force_offroad
     onroad_conditions["not_force_offroad"] = not force_offroad
     set_offroad_alert("Offroad_ForceStatus", force_offroad)
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     # if the temperature enters the danger zone, go offroad to cool down
     onroad_conditions["device_temp_good"] = thermal_status < ThermalStatus.danger
     extra_text = f"{offroad_comp_temp:.1f}C"
@@ -350,8 +371,13 @@ def hardware_thread(end_event, hw_queue) -> None:
       engaged_prev = False
       HARDWARE.set_power_save(not should_start)
 
+<<<<<<< HEAD
     if sm.updated['controlsState']:
       engaged = sm['controlsState'].enabled
+=======
+    if sm.updated['selfdriveState']:
+      engaged = sm['selfdriveState'].enabled
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       if engaged != engaged_prev:
         params.put_bool("IsEngaged", engaged)
         engaged_prev = engaged

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/bin/bash
+=======
+#!/usr/bin/env bash
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 # install depends
 sudo apt update
@@ -11,4 +15,8 @@ echo "deb https://download.mono-project.com/repo/ubuntu stable-xenial main" | su
 sudo apt update
 sudo apt-get install -y mono-complete
 
+<<<<<<< HEAD
 echo "Setup successful, you should now be able to run the profiler with cd SnapdragonProfiler and ./run_sdp.sh"
+=======
+echo "Setup successful, you should now be able to run the profiler with cd SnapdragonProfiler and ./run_sdp.sh"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

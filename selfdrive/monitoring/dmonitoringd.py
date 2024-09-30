@@ -12,10 +12,17 @@ def dmonitoringd_thread():
   set_realtime_priority(2)
 
   params = Params()
+<<<<<<< HEAD
   pm = messaging.PubMaster(['driverMonitoringState', 'driverMonitoringStateSP'])
   sm = messaging.SubMaster(['driverStateV2', 'liveCalibration', 'carState', 'controlsState', 'modelV2'], poll='driverStateV2')
 
   DM = DriverMonitoring(rhd_saved=params.get_bool("IsRhdDetected"), always_on=params.get_bool("AlwaysOnDM"), hands_on_wheel_monitoring=params.get_bool("HandsOnWheelMonitoring"))
+=======
+  pm = messaging.PubMaster(['driverMonitoringState'])
+  sm = messaging.SubMaster(['driverStateV2', 'liveCalibration', 'carState', 'selfdriveState', 'modelV2'], poll='driverStateV2')
+
+  DM = DriverMonitoring(rhd_saved=params.get_bool("IsRhdDetected"), always_on=params.get_bool("AlwaysOnDM"))
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   # 20Hz <- dmonitoringmodeld
   while True:
@@ -32,6 +39,7 @@ def dmonitoringd_thread():
     dat = DM.get_state_packet(valid=valid)
     pm.send('driverMonitoringState', dat)
 
+<<<<<<< HEAD
     sp_dat = DM.get_sp_state_packet(valid=valid)
     pm.send('driverMonitoringStateSP', sp_dat)
 
@@ -39,6 +47,11 @@ def dmonitoringd_thread():
     if sm['driverStateV2'].frameId % 40 == 1:
       DM.always_on = params.get_bool("AlwaysOnDM")
       DM.hands_on_wheel_monitoring = params.get_bool("HandsOnWheelMonitoring")
+=======
+    # load live always-on toggle
+    if sm['driverStateV2'].frameId % 40 == 1:
+      DM.always_on = params.get_bool("AlwaysOnDM")
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
     # save rhd virtual toggle every 5 mins
     if (sm['driverStateV2'].frameId % 6000 == 0 and

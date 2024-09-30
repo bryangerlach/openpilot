@@ -45,7 +45,10 @@ public:
     MessageId id;
     QString name;
     QString node;
+<<<<<<< HEAD
     bool active;
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     bool operator==(const Item &other) const {
       return id == other.id && name == other.name && node == other.node;
     }

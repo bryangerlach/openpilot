@@ -3,7 +3,10 @@
 from libcpp cimport bool
 from libcpp.string cimport string
 from libcpp.vector cimport vector
+<<<<<<< HEAD
 from libcpp.map cimport map
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 cdef extern from "common/params.h":
   cpdef enum ParamKeyType:
@@ -12,7 +15,10 @@ cdef extern from "common/params.h":
     CLEAR_ON_ONROAD_TRANSITION
     CLEAR_ON_OFFROAD_TRANSITION
     DEVELOPMENT_ONLY
+<<<<<<< HEAD
     BACKUP
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     ALL
 
   cdef cppclass c_Params "Params":
@@ -28,7 +34,10 @@ cdef extern from "common/params.h":
     string getParamPath(string) nogil
     void clearAll(ParamKeyType)
     vector[string] allKeys()
+<<<<<<< HEAD
     map[string, string] readAll()
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 
 def ensure_bytes(v):
@@ -119,6 +128,9 @@ cdef class Params:
 
   def all_keys(self):
     return self.p.allKeys()
+<<<<<<< HEAD
 
   def read_all(self):
     return self.p.readAll()
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

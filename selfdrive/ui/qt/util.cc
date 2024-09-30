@@ -26,13 +26,18 @@ QString getVersion() {
 }
 
 QString getBrand() {
+<<<<<<< HEAD
   return QObject::tr("sunnypilot");
+=======
+  return QObject::tr("openpilot");
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }
 
 QString getUserAgent() {
   return "openpilot-" + getVersion();
 }
 
+<<<<<<< HEAD
 std::optional<QString> getParamIgnoringDefault(const std::string &param_name, const std::string &default_value) {
   std::string value = Params().get(param_name);
 
@@ -48,6 +53,20 @@ std::optional<QString> getDongleId() {
 
 QMap<QString, QString> getFromJsonFile(const QString &path) {
   QFile f(path);
+=======
+std::optional<QString> getDongleId() {
+  std::string id = Params().get("DongleId");
+
+  if (!id.empty() && (id != "UnregisteredDevice")) {
+    return QString::fromStdString(id);
+  } else {
+    return {};
+  }
+}
+
+QMap<QString, QString> getSupportedLanguages() {
+  QFile f(":/languages.json");
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   f.open(QIODevice::ReadOnly | QIODevice::Text);
   QString val = f.readAll();
 
@@ -59,10 +78,13 @@ QMap<QString, QString> getFromJsonFile(const QString &path) {
   return map;
 }
 
+<<<<<<< HEAD
 QMap<QString, QString> getSupportedLanguages() {
   return getFromJsonFile(":/languages.json");
 }
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 QString timeAgo(const QDateTime &date) {
   int diff = date.secsTo(QDateTime::currentDateTimeUtc());
 
@@ -227,4 +249,8 @@ void ParamWatcher::fileChanged(const QString &path) {
 
 void ParamWatcher::addParam(const QString &param_name) {
   watcher->addPath(QString::fromStdString(params.getParamPath(param_name.toStdString())));
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

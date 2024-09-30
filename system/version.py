@@ -11,14 +11,21 @@ from openpilot.common.swaglog import cloudlog
 from openpilot.common.git import get_commit, get_origin, get_branch, get_short_branch, get_commit_date
 
 RELEASE_BRANCHES = ['release3-staging', 'release3', 'nightly']
+<<<<<<< HEAD
 RELEASE_SP_BRANCHES = ['release-c3']
 TESTED_BRANCHES = RELEASE_BRANCHES + RELEASE_SP_BRANCHES + ['devel', 'devel-staging', 'staging-c3']
+=======
+TESTED_BRANCHES = RELEASE_BRANCHES + ['devel', 'devel-staging']
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 BUILD_METADATA_FILENAME = "build.json"
 
 training_version: bytes = b"0.2.0"
 terms_version: bytes = b"2"
+<<<<<<< HEAD
 terms_version_sp: bytes = b"1.0"
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 
 def get_version(path: str = BASEDIR) -> str:
@@ -80,8 +87,12 @@ class OpenpilotMetadata:
   def comma_remote(self) -> bool:
     # note to fork maintainers, this is used for release metrics. please do not
     # touch this to get rid of the orange startup alert. there's better ways to do that
+<<<<<<< HEAD
     return self.git_normalized_origin in ("github.com/sunnypilot/sunnypilot", "github.com/sunnyhaibin/sunnypilot",
                                           "github.com/sunnypilot/openpilot", "github.com/sunnyhaibin/openpilot")
+=======
+    return self.git_normalized_origin == "github.com/commaai/openpilot"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   @property
   def git_normalized_origin(self) -> str:
@@ -106,10 +117,13 @@ class BuildMetadata:
     return self.channel in RELEASE_BRANCHES
 
   @property
+<<<<<<< HEAD
   def release_sp_channel(self) -> bool:
     return self.channel in RELEASE_SP_BRANCHES
 
   @property
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   def canonical(self) -> str:
     return f"{self.openpilot.version}-{self.openpilot.git_commit}-{self.openpilot.build_style}"
 
@@ -117,6 +131,7 @@ class BuildMetadata:
   def ui_description(self) -> str:
     return f"{self.openpilot.version} / {self.openpilot.git_commit[:6]} / {self.channel}"
 
+<<<<<<< HEAD
   @property
   def channel_type(self) -> str:
     if self.channel.startswith("dev-"):
@@ -130,6 +145,8 @@ class BuildMetadata:
     else:
       return "master"
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 def build_metadata_from_dict(build_metadata: dict) -> BuildMetadata:
   channel = build_metadata.get("channel", "unknown")
@@ -180,7 +197,10 @@ if __name__ == "__main__":
 
   params = Params()
   params.put("TermsVersion", terms_version)
+<<<<<<< HEAD
   params.put("TermsVersionSunnypilot", terms_version_sp)
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   params.put("TrainingVersion", training_version)
 
   print(get_build_metadata())

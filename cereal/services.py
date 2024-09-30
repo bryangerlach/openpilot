@@ -24,6 +24,10 @@ _services: dict[str, tuple] = {
   "deviceState": (True, 2., 1),
   "can": (True, 100., 2053),  # decimation gives ~3 msgs in a full segment
   "controlsState": (True, 100., 10),
+<<<<<<< HEAD
+=======
+  "selfdriveState": (True, 100., 10),
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   "pandaStates": (True, 10., 1),
   "peripheralState": (True, 2., 1),
   "radarState": (True, 20., 5),
@@ -39,6 +43,10 @@ _services: dict[str, tuple] = {
   "carControl": (True, 100., 10),
   "carOutput": (True, 100., 10),
   "longitudinalPlan": (True, 20., 10),
+<<<<<<< HEAD
+=======
+  "driverAssistance": (True, 20., 20),
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   "procLog": (True, 0.5, 15),
   "gpsLocationExternal": (True, 10., 10),
   "gpsLocation": (True, 1., 1),
@@ -48,10 +56,15 @@ _services: dict[str, tuple] = {
   "clocks": (True, 0.1, 1),
   "ubloxRaw": (True, 20.),
   "livePose": (True, 20., 4),
+<<<<<<< HEAD
   "liveLocationKalman": (True, 20.),
   "liveParameters": (True, 20., 5),
   "cameraOdometry": (True, 20., 10),
   "lateralPlanDEPRECATED": (True, 20., 5),
+=======
+  "liveParameters": (True, 20., 5),
+  "cameraOdometry": (True, 20., 10),
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   "thumbnail": (True, 0.2, 1),
   "onroadEvents": (True, 1., 1),
   "carParams": (True, 0.02, 1),
@@ -69,13 +82,17 @@ _services: dict[str, tuple] = {
   "navInstruction": (True, 1., 10),
   "navRoute": (True, 0.),
   "navThumbnail": (True, 0.),
+<<<<<<< HEAD
   "navModelDEPRECATED": (True, 2., 4.),
   "mapRenderState": (True, 2., 1.),
   "uiPlanDEPRECATED": (True, 20., 40.),
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   "qRoadEncodeIdx": (False, 20.),
   "userFlag": (True, 0., 1),
   "microphone": (True, 10., 10),
 
+<<<<<<< HEAD
   "controlsStateSP": (True, 100., 10),
   "longitudinalPlanSP": (True, 20., 5),
   "lateralPlanSPDEPRECATED": (True, 20., 5),
@@ -87,6 +104,12 @@ _services: dict[str, tuple] = {
   # debug
   "uiDebug": (True, 0., 1),
   "testJoystick": (True, 0.),
+=======
+  # debug
+  "uiDebug": (True, 0., 1),
+  "testJoystick": (True, 0.),
+  "alertDebug": (True, 20., 5),
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   "roadEncodeData": (False, 20.),
   "driverEncodeData": (False, 20.),
   "wideRoadEncodeData": (False, 20.),

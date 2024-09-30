@@ -96,5 +96,8 @@ cabana
 ## Additional Information
 
 For more information, see the [openpilot wiki](https://github.com/commaai/openpilot/wiki/Cabana)
+<<<<<<< HEAD
 
 If you encounter any issues or have feature requests, please contribute bug reports or discussions at: [new cabana feedback](https://github.com/commaai/openpilot/discussions/26091)
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

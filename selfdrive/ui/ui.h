@@ -1,20 +1,36 @@
 #pragma once
 
+<<<<<<< HEAD
 #include <memory>
 #include <string>
 
 #include <QObject>
+=======
+#include <eigen3/Eigen/Dense>
+#include <memory>
+#include <string>
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 #include <QTimer>
 #include <QColor>
 #include <QFuture>
 #include <QPolygonF>
+<<<<<<< HEAD
 #include <QTransform>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 #include "cereal/messaging/messaging.h"
 #include "common/mat.h"
 #include "common/params.h"
+<<<<<<< HEAD
 #include "common/timing.h"
 #include "system/hardware/hw.h"
+=======
+#include "common/util.h"
+#include "system/hardware/hw.h"
+#include "selfdrive/ui/qt/prime_state.h"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 const int UI_BORDER_SIZE = 30;
 const int UI_HEADER_HEIGHT = 420;
@@ -24,6 +40,7 @@ const int BACKLIGHT_OFFROAD = 50;
 
 const float MIN_DRAW_DISTANCE = 10.0;
 const float MAX_DRAW_DISTANCE = 100.0;
+<<<<<<< HEAD
 constexpr mat3 DEFAULT_CALIBRATION = {{ 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0 }};
 constexpr mat3 FCAM_INTRINSIC_MATRIX = (mat3){{2648.0, 0.0, 1928.0 / 2,
                                            0.0, 2648.0, 1208.0 / 2,
@@ -51,11 +68,30 @@ constexpr vec3 default_face_kpts_3d[] = {
 #else
 #define EXTRA_UI_STATES
 #endif
+=======
+const Eigen::Matrix3f VIEW_FROM_DEVICE = (Eigen::Matrix3f() <<
+  0.0, 1.0, 0.0,
+  0.0, 0.0, 1.0,
+  1.0, 0.0, 0.0).finished();
+
+const Eigen::Matrix3f FCAM_INTRINSIC_MATRIX = (Eigen::Matrix3f() <<
+  2648.0, 0.0, 1928.0 / 2,
+  0.0, 2648.0, 1208.0 / 2,
+  0.0, 0.0, 1.0).finished();
+
+// tici ecam focal probably wrong? magnification is not consistent across frame
+// Need to retrain model before this can be changed
+const Eigen::Matrix3f ECAM_INTRINSIC_MATRIX = (Eigen::Matrix3f() <<
+  567.0, 0.0, 1928.0 / 2,
+  0.0, 567.0, 1208.0 / 2,
+  0.0, 0.0, 1.0).finished();
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 typedef enum UIStatus {
   STATUS_DISENGAGED,
   STATUS_OVERRIDE,
   STATUS_ENGAGED,
+<<<<<<< HEAD
   EXTRA_UI_STATES
 } UIStatus;
 
@@ -70,12 +106,17 @@ enum PrimeType {
   PURPLE = 5,
 };
 
+=======
+} UIStatus;
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 const QColor bg_colors [] = {
   [STATUS_DISENGAGED] = QColor(0x17, 0x33, 0x49, 0xc8),
   [STATUS_OVERRIDE] = QColor(0x91, 0x9b, 0x95, 0xf1),
   [STATUS_ENGAGED] = QColor(0x17, 0x86, 0x44, 0xf1),
 };
 
+<<<<<<< HEAD
 
 typedef struct UIScene {
   bool calibration_valid = false;
@@ -83,6 +124,11 @@ typedef struct UIScene {
   bool wide_cam = true;
   mat3 view_from_calib = DEFAULT_CALIBRATION;
   mat3 view_from_wide_calib = DEFAULT_CALIBRATION;
+=======
+typedef struct UIScene {
+  Eigen::Matrix3f view_from_calib = VIEW_FROM_DEVICE;
+  Eigen::Matrix3f view_from_wide_calib = VIEW_FROM_DEVICE;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   cereal::PandaState::PandaType pandaType;
 
   // modelV2
@@ -95,6 +141,7 @@ typedef struct UIScene {
   // lead
   QPointF lead_vertices[2];
 
+<<<<<<< HEAD
   // DMoji state
   float driver_pose_vals[3];
   float driver_pose_diff[3];
@@ -102,6 +149,8 @@ typedef struct UIScene {
   float driver_pose_coss[3];
   vec3 face_kpts_draw[std::size(default_face_kpts_3d)];
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   cereal::LongitudinalPersonality personality;
 
   float light_sensor = -1;
@@ -110,15 +159,19 @@ typedef struct UIScene {
   uint64_t started_frame;
 } UIScene;
 
+<<<<<<< HEAD
 #ifdef SUNNYPILOT
 #include "sunnypilot/qt/ui_scene.h"
 #define UIScene UISceneSP
 #endif
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 class UIState : public QObject {
   Q_OBJECT
 
 public:
   UIState(QObject* parent = 0);
+<<<<<<< HEAD
   virtual void updateStatus();
   inline bool engaged() const {
     return scene.started && (*sm)["controlsState"].getControlsState().getEnabled();
@@ -132,16 +185,32 @@ public:
 
   std::unique_ptr<SubMaster> sm;
 
+=======
+  void updateStatus();
+  inline bool engaged() const {
+    return scene.started && (*sm)["selfdriveState"].getSelfdriveState().getEnabled();
+  }
+
+  std::unique_ptr<SubMaster> sm;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   UIStatus status;
   UIScene scene = {};
 
   QString language;
+<<<<<<< HEAD
 
   QTransform car_space_transform;
+=======
+  PrimeState *prime_state;
+
+  Eigen::Matrix3f car_space_transform = Eigen::Matrix3f::Zero();
+  QRectF clip_region;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 signals:
   void uiUpdate(const UIState &s);
   void offroadTransition(bool offroad);
+<<<<<<< HEAD
   void primeChanged(bool prime);
   void primeTypeChanged(PrimeType prime_type);
 
@@ -160,6 +229,18 @@ private:
 #ifndef SUNNYPILOT
 UIState *uiState();
 #endif
+=======
+
+private slots:
+  void update();
+
+private:
+  QTimer *timer;
+  bool started_prev = false;
+};
+
+UIState *uiState();
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 // device management class
 class Device : public QObject {
@@ -172,7 +253,11 @@ public:
     offroad_brightness = std::clamp(brightness, 0, 100);
   }
 
+<<<<<<< HEAD
 protected:
+=======
+private:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   bool awake = false;
   int interactive_timeout = 0;
   bool ignition_on = false;
@@ -182,10 +267,16 @@ protected:
   FirstOrderFilter brightness_filter;
   QFuture<void> brightness_future;
 
+<<<<<<< HEAD
   virtual void updateBrightness(const UIState &s);
   void updateWakefulness(const UIState &s);
   void setAwake(bool on);
   float clipped_brightness;
+=======
+  void updateBrightness(const UIState &s);
+  void updateWakefulness(const UIState &s);
+  void setAwake(bool on);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 signals:
   void displayPowerChanged(bool on);
@@ -196,14 +287,19 @@ public slots:
   void update(const UIState &s);
 };
 
+<<<<<<< HEAD
 #ifndef SUNNYPILOT
 Device *device();
 #endif
+=======
+Device *device();
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 void ui_update_params(UIState *s);
 int get_path_length_idx(const cereal::XYZTData::Reader &line, const float path_height);
 void update_model(UIState *s,
                   const cereal::ModelDataV2::Reader &model);
+<<<<<<< HEAD
 void update_dmonitoring(UIState *s, const cereal::DriverStateV2::Reader &driverstate, float dm_fade_state, bool is_rhd);
 void update_leads(UIState *s, const cereal::RadarState::Reader &radar_state, const cereal::XYZTData::Reader &line);
 void update_line_data(const UIState *s, const cereal::XYZTData::Reader &line,
@@ -212,3 +308,8 @@ void update_line_data(const UIState *s, const cereal::XYZTData::Reader &line,
 bool calib_frame_to_full_frame(const UIState *s, float in_x, float in_y, float in_z, QPointF *out, float margin=500.0f);
 void update_state(UIState *s);
 void update_sockets(UIState *s);
+=======
+void update_leads(UIState *s, const cereal::RadarState::Reader &radar_state, const cereal::XYZTData::Reader &line);
+void update_line_data(const UIState *s, const cereal::XYZTData::Reader &line,
+                      float y_off, float z_off, QPolygonF *pvd, int max_idx, bool allow_invert);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

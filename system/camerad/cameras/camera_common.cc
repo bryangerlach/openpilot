@@ -3,13 +3,17 @@
 #include <cassert>
 #include <string>
 
+<<<<<<< HEAD
 #include "third_party/libyuv/include/libyuv.h"
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 #include <jpeglib.h>
 
 #include "common/clutil.h"
 #include "common/swaglog.h"
 #include "third_party/linux/include/msm_media_info.h"
 
+<<<<<<< HEAD
 #include "system/camerad/cameras/camera_qcom2.h"
 #ifdef QCOM2
 #include "CL/cl_ext_qcom.h"
@@ -20,14 +24,29 @@ public:
   ImgProc(cl_device_id device_id, cl_context context, const CameraBuf *b, const CameraState *s, int buf_width, int uv_offset) {
     char args[4096];
     const SensorInfo *ci = s->ci.get();
+=======
+#include "system/camerad/cameras/spectra.h"
+
+
+class ImgProc {
+public:
+  ImgProc(cl_device_id device_id, cl_context context, const CameraBuf *b, const SensorInfo *sensor, int camera_num, int buf_width, int uv_offset) {
+    char args[4096];
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     snprintf(args, sizeof(args),
              "-cl-fast-relaxed-math -cl-denorms-are-zero -Isensors "
              "-DFRAME_WIDTH=%d -DFRAME_HEIGHT=%d -DFRAME_STRIDE=%d -DFRAME_OFFSET=%d "
              "-DRGB_WIDTH=%d -DRGB_HEIGHT=%d -DYUV_STRIDE=%d -DUV_OFFSET=%d "
              "-DSENSOR_ID=%hu -DHDR_OFFSET=%d -DVIGNETTING=%d ",
+<<<<<<< HEAD
              ci->frame_width, ci->frame_height, ci->hdr_offset > 0 ? ci->frame_stride * 2 : ci->frame_stride, ci->frame_offset,
              b->rgb_width, b->rgb_height, buf_width, uv_offset,
              static_cast<unsigned short>(ci->image_sensor), ci->hdr_offset, s->camera_num == 1);
+=======
+             sensor->frame_width, sensor->frame_height, sensor->hdr_offset > 0 ? sensor->frame_stride * 2 : sensor->frame_stride, sensor->frame_offset,
+             b->out_img_width, b->out_img_height, buf_width, uv_offset,
+             static_cast<unsigned short>(sensor->image_sensor), sensor->hdr_offset, camera_num == 1);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     const char *cl_file = "cameras/process_raw.cl";
     cl_program prg_imgproc = cl_program_from_file(context, device_id, cl_file, args);
     krnl_ = CL_CHECK_ERR(clCreateKernel(prg_imgproc, "process_raw", &err));
@@ -62,14 +81,25 @@ private:
   cl_command_queue queue;
 };
 
+<<<<<<< HEAD
 void CameraBuf::init(cl_device_id device_id, cl_context context, CameraState *s, VisionIpcServer * v, int frame_cnt, VisionStreamType type) {
+=======
+void CameraBuf::init(cl_device_id device_id, cl_context context, SpectraCamera *cam, VisionIpcServer * v, int frame_cnt, VisionStreamType type) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   vipc_server = v;
   stream_type = type;
   frame_buf_count = frame_cnt;
 
+<<<<<<< HEAD
   const SensorInfo *ci = s->ci.get();
   // RAW frame
   const int frame_size = (ci->frame_height + ci->extra_height) * ci->frame_stride;
+=======
+  const SensorInfo *sensor = cam->sensor.get();
+
+  // RAW frame
+  const int frame_size = (sensor->frame_height + sensor->extra_height) * sensor->frame_stride;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   camera_bufs = std::make_unique<VisionBuf[]>(frame_buf_count);
   camera_bufs_metadata = std::make_unique<FrameMetadata[]>(frame_buf_count);
 
@@ -79,6 +109,7 @@ void CameraBuf::init(cl_device_id device_id, cl_context context, CameraState *s,
   }
   LOGD("allocated %d CL buffers", frame_buf_count);
 
+<<<<<<< HEAD
   rgb_width = ci->frame_width;
   rgb_height = ci->hdr_offset > 0 ? (ci->frame_height - ci->hdr_offset) / 2 : ci->frame_height;
 
@@ -86,16 +117,34 @@ void CameraBuf::init(cl_device_id device_id, cl_context context, CameraState *s,
   int nv12_height = VENUS_Y_SCANLINES(COLOR_FMT_NV12, rgb_height);
   assert(nv12_width == VENUS_UV_STRIDE(COLOR_FMT_NV12, rgb_width));
   assert(nv12_height/2 == VENUS_UV_SCANLINES(COLOR_FMT_NV12, rgb_height));
+=======
+  out_img_width = sensor->frame_width;
+  out_img_height = sensor->hdr_offset > 0 ? (sensor->frame_height - sensor->hdr_offset) / 2 : sensor->frame_height;
+
+  int nv12_width = VENUS_Y_STRIDE(COLOR_FMT_NV12, out_img_width);
+  int nv12_height = VENUS_Y_SCANLINES(COLOR_FMT_NV12, out_img_height);
+  assert(nv12_width == VENUS_UV_STRIDE(COLOR_FMT_NV12, out_img_width));
+  assert(nv12_height/2 == VENUS_UV_SCANLINES(COLOR_FMT_NV12, out_img_height));
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   size_t nv12_uv_offset = nv12_width * nv12_height;
 
   // the encoder HW tells us the size it wants after setting it up.
   // TODO: VENUS_BUFFER_SIZE should give the size, but it's too small. dependent on encoder settings?
+<<<<<<< HEAD
   size_t nv12_size = (rgb_width <= 1344 ? 2900 : 2346)*nv12_width;
 
   vipc_server->create_buffers_with_sizes(stream_type, YUV_BUFFER_COUNT, false, rgb_width, rgb_height, nv12_size, nv12_width, nv12_uv_offset);
   LOGD("created %d YUV vipc buffers with size %dx%d", YUV_BUFFER_COUNT, nv12_width, nv12_height);
 
   imgproc = new ImgProc(device_id, context, this, s, nv12_width, nv12_uv_offset);
+=======
+  size_t nv12_size = (out_img_width <= 1344 ? 2900 : 2346)*nv12_width;
+
+  vipc_server->create_buffers_with_sizes(stream_type, YUV_BUFFER_COUNT, false, out_img_width, out_img_height, nv12_size, nv12_width, nv12_uv_offset);
+  LOGD("created %d YUV vipc buffers with size %dx%d", YUV_BUFFER_COUNT, nv12_width, nv12_height);
+
+  imgproc = new ImgProc(device_id, context, this, sensor, cam->cc.camera_num, nv12_width, nv12_uv_offset);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }
 
 CameraBuf::~CameraBuf() {
@@ -105,7 +154,11 @@ CameraBuf::~CameraBuf() {
   if (imgproc) delete imgproc;
 }
 
+<<<<<<< HEAD
 bool CameraBuf::acquire() {
+=======
+bool CameraBuf::acquire(int expo_time) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   if (!safe_queue.try_pop(cur_buf_idx, 50)) return false;
 
   if (camera_bufs_metadata[cur_buf_idx].frame_id == -1) {
@@ -118,7 +171,11 @@ bool CameraBuf::acquire() {
   cur_camera_buf = &camera_bufs[cur_buf_idx];
 
   double start_time = millis_since_boot();
+<<<<<<< HEAD
   imgproc->runKernel(camera_bufs[cur_buf_idx].buf_cl, cur_yuv_buf->buf_cl, rgb_width, rgb_height, cur_frame_data.integ_lines);
+=======
+  imgproc->runKernel(camera_bufs[cur_buf_idx].buf_cl, cur_yuv_buf->buf_cl, out_img_width, out_img_height, expo_time);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   cur_frame_data.processing_time = (millis_since_boot() - start_time) / 1000.0;
 
   VisionIpcBufExtra extra = {
@@ -138,6 +195,7 @@ void CameraBuf::queue(size_t buf_idx) {
 
 // common functions
 
+<<<<<<< HEAD
 void fill_frame_data(cereal::FrameData::Builder &framed, const FrameMetadata &frame_data, CameraState *c) {
   framed.setFrameId(frame_data.frame_id);
   framed.setRequestId(frame_data.request_id);
@@ -156,6 +214,8 @@ void fill_frame_data(cereal::FrameData::Builder &framed, const FrameMetadata &fr
   framed.setSensor(c->ci->image_sensor);
 }
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 kj::Array<uint8_t> get_raw_frame_image(const CameraBuf *b) {
   const uint8_t *dat = (const uint8_t *)b->cur_camera_buf->addr;
 
@@ -173,7 +233,11 @@ static kj::Array<capnp::byte> yuv420_to_jpeg(const CameraBuf *b, int thumbnail_w
   int in_stride = b->cur_yuv_buf->stride;
 
   // make the buffer big enough. jpeg_write_raw_data requires 16-pixels aligned height to be used.
+<<<<<<< HEAD
   std::unique_ptr<uint8[]> buf(new uint8_t[(thumbnail_width * ((thumbnail_height + 15) & ~15) * 3) / 2]);
+=======
+  std::unique_ptr<uint8_t[]> buf(new uint8_t[(thumbnail_width * ((thumbnail_height + 15) & ~15) * 3) / 2]);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   uint8_t *y_plane = buf.get();
   uint8_t *u_plane = y_plane + thumbnail_width * thumbnail_height;
   uint8_t *v_plane = u_plane + (thumbnail_width * thumbnail_height) / 4;
@@ -244,7 +308,11 @@ static kj::Array<capnp::byte> yuv420_to_jpeg(const CameraBuf *b, int thumbnail_w
 }
 
 void publish_thumbnail(PubMaster *pm, const CameraBuf *b) {
+<<<<<<< HEAD
   auto thumbnail = yuv420_to_jpeg(b, b->rgb_width / 4, b->rgb_height / 4);
+=======
+  auto thumbnail = yuv420_to_jpeg(b, b->out_img_width / 4, b->out_img_height / 4);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   if (thumbnail.size() == 0) return;
 
   MessageBuilder msg;
@@ -264,7 +332,11 @@ float set_exposure_target(const CameraBuf *b, Rect ae_xywh, int x_skip, int y_sk
   unsigned int lum_total = 0;
   for (int y = ae_xywh.y; y < ae_xywh.y + ae_xywh.h; y += y_skip) {
     for (int x = ae_xywh.x; x < ae_xywh.x + ae_xywh.w; x += x_skip) {
+<<<<<<< HEAD
       uint8_t lum = pix_ptr[(y * b->rgb_width) + x];
+=======
+      uint8_t lum = pix_ptr[(y * b->out_img_width) + x];
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       lum_binning[lum]++;
       lum_total += 1;
     }
@@ -283,6 +355,7 @@ float set_exposure_target(const CameraBuf *b, Rect ae_xywh, int x_skip, int y_sk
   return lum_med / 256.0;
 }
 
+<<<<<<< HEAD
 void camerad_thread() {
   cl_device_id device_id = cl_get_device_id(CL_DEVICE_TYPE_DEFAULT);
 #ifdef QCOM2
@@ -307,6 +380,8 @@ void camerad_thread() {
   CL_CHECK(clReleaseContext(context));
 }
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 int open_v4l_by_name_and_index(const char name[], int index, int flags) {
   for (int v4l_index = 0; /**/; ++v4l_index) {
     std::string v4l_name = util::read_file(util::string_format("/sys/class/video4linux/v4l-subdev%d/name", v4l_index));

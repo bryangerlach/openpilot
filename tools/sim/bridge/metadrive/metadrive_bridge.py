@@ -69,6 +69,10 @@ class MetaDriveBridge(SimulatorBridge):
       use_render=self.should_render,
       vehicle_config=dict(
         enable_reverse=False,
+<<<<<<< HEAD
+=======
+        render_vehicle=False,
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         image_source="rgb_road",
       ),
       sensors=sensors,
@@ -84,7 +88,13 @@ class MetaDriveBridge(SimulatorBridge):
       map_config=create_map(),
       decision_repeat=1,
       physics_world_step_size=self.TICKS_PER_FRAME/100,
+<<<<<<< HEAD
       preload_models=False
+=======
+      preload_models=False,
+      show_logo=False,
+      anisotropic_filtering=False
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     )
 
     return MetaDriveWorld(queue, config, self.test_duration, self.test_run, self.dual_camera)

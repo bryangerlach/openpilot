@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+<<<<<<< HEAD
 from collections import defaultdict
 import jinja2
 import os
@@ -20,10 +21,17 @@ def get_all_footnotes() -> dict[Enum, int]:
     all_footnotes.extend(footnotes)
   return {fn: idx + 1 for idx, fn in enumerate(all_footnotes)}
 
+=======
+import os
+
+from openpilot.common.basedir import BASEDIR
+from opendbc.car.docs import get_all_car_docs, generate_cars_md
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 CARS_MD_OUT = os.path.join(BASEDIR, "docs", "CARS.md")
 CARS_MD_TEMPLATE = os.path.join(BASEDIR, "selfdrive", "car", "CARS_template.md")
 
+<<<<<<< HEAD
 
 def get_all_car_docs() -> list[CarDocs]:
   all_car_docs: list[CarDocs] = []
@@ -67,6 +75,8 @@ def generate_cars_md(all_car_docs: list[CarDocs], template_fn: str) -> str:
   return cars_md
 
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description="Auto generates supported cars documentation",
                                    formatter_class=argparse.ArgumentDefaultsHelpFormatter)

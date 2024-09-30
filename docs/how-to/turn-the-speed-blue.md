@@ -9,7 +9,11 @@ And if you have a comma 3/3X, we'll deploy the change to your device for testing
 
 Run this to clone openpilot and install all the dependencies:
 ```bash
+<<<<<<< HEAD
 curl -fsSL openpilot.comma.ai | bash
+=======
+bash <(curl -fsSL openpilot.comma.ai)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 ```
 
 Navigate to openpilot folder & activate a Python virtual environment

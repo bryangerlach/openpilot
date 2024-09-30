@@ -47,8 +47,12 @@ ModelFrame::~ModelFrame() {
   CL_CHECK(clReleaseMemObject(u_cl));
   CL_CHECK(clReleaseMemObject(y_cl));
   CL_CHECK(clReleaseCommandQueue(q));
+<<<<<<< HEAD
 }
 
 float sigmoid(float input) {
   return 1 / (1 + expf(-input));
 }
+=======
+}
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

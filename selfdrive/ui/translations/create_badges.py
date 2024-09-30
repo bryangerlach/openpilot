@@ -31,7 +31,11 @@ if __name__ == "__main__":
         unfinished_translations += 1
 
     percent_finished = int(100 - (unfinished_translations / total_translations * 100.))
+<<<<<<< HEAD
     color = "green" if percent_finished == 100 else "orange" if percent_finished > 90 else "red"
+=======
+    color = f"rgb{(94, 188, 0) if percent_finished == 100 else (248, 255, 50) if percent_finished > 90 else (204, 55, 27)}"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
     # Download badge
     badge_label = f"LANGUAGE {name}"

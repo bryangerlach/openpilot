@@ -10,7 +10,11 @@ from msgq.visionipc import VisionIpcClient, VisionStreamType
 from openpilot.common.params import Params
 from openpilot.common.realtime import DT_MDL
 from openpilot.system.hardware import PC
+<<<<<<< HEAD
 from openpilot.selfdrive.controls.lib.alertmanager import set_offroad_alert
+=======
+from openpilot.selfdrive.selfdrived.alertmanager import set_offroad_alert
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.system.manager.process_config import managed_processes
 
 

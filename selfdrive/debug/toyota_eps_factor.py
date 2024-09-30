@@ -3,7 +3,11 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import linear_model
+<<<<<<< HEAD
 from openpilot.selfdrive.car.toyota.values import STEER_THRESHOLD
+=======
+from opendbc.car.toyota.values import STEER_THRESHOLD
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 from openpilot.tools.lib.logreader import LogReader
 

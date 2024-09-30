@@ -19,6 +19,7 @@ void OnroadAlerts::clear() {
 }
 
 OnroadAlerts::Alert OnroadAlerts::getAlert(const SubMaster &sm, uint64_t started_frame) {
+<<<<<<< HEAD
   const cereal::ControlsState::Reader &cs = sm["controlsState"].getControlsState();
   const uint64_t controls_frame = sm.rcv_frame("controlsState");
 
@@ -48,6 +49,37 @@ OnroadAlerts::Alert OnroadAlerts::getAlert(const SubMaster &sm, uint64_t started
         a = {tr("Controls Unresponsive"), tr("Reboot Device"),
              "controlsUnresponsivePermanent", cereal::ControlsState::AlertSize::MID,
              cereal::ControlsState::AlertStatus::NORMAL};
+=======
+  const cereal::SelfdriveState::Reader &ss = sm["selfdriveState"].getSelfdriveState();
+  const uint64_t selfdrive_frame = sm.rcv_frame("selfdriveState");
+
+  Alert a = {};
+  if (selfdrive_frame >= started_frame) {  // Don't get old alert.
+    a = {ss.getAlertText1().cStr(), ss.getAlertText2().cStr(),
+         ss.getAlertType().cStr(), ss.getAlertSize(), ss.getAlertStatus()};
+  }
+
+  if (!sm.updated("selfdriveState") && (sm.frame - started_frame) > 5 * UI_FREQ) {
+    const int SELFDRIVE_STATE_TIMEOUT = 5;
+    const int ss_missing = (nanos_since_boot() - sm.rcv_time("selfdriveState")) / 1e9;
+
+    // Handle selfdrive timeout
+    if (selfdrive_frame < started_frame) {
+      // car is started, but selfdriveState hasn't been seen at all
+      a = {tr("openpilot Unavailable"), tr("Waiting to start"),
+           "selfdriveWaiting", cereal::SelfdriveState::AlertSize::MID,
+           cereal::SelfdriveState::AlertStatus::NORMAL};
+    } else if (ss_missing > SELFDRIVE_STATE_TIMEOUT && !Hardware::PC()) {
+      // car is started, but selfdrive is lagging or died
+      if (ss.getEnabled() && (ss_missing - SELFDRIVE_STATE_TIMEOUT) < 10) {
+        a = {tr("TAKE CONTROL IMMEDIATELY"), tr("System Unresponsive"),
+             "selfdriveUnresponsive", cereal::SelfdriveState::AlertSize::FULL,
+             cereal::SelfdriveState::AlertStatus::CRITICAL};
+      } else {
+        a = {tr("System Unresponsive"), tr("Reboot Device"),
+             "selfdriveUnresponsivePermanent", cereal::SelfdriveState::AlertSize::MID,
+             cereal::SelfdriveState::AlertStatus::NORMAL};
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       }
     }
   }
@@ -55,6 +87,7 @@ OnroadAlerts::Alert OnroadAlerts::getAlert(const SubMaster &sm, uint64_t started
 }
 
 void OnroadAlerts::paintEvent(QPaintEvent *event) {
+<<<<<<< HEAD
   if (alert.size == cereal::ControlsState::AlertSize::NONE) {
     return;
   }
@@ -62,12 +95,25 @@ void OnroadAlerts::paintEvent(QPaintEvent *event) {
     {cereal::ControlsState::AlertSize::SMALL, 271},
     {cereal::ControlsState::AlertSize::MID, 420},
     {cereal::ControlsState::AlertSize::FULL, height()},
+=======
+  if (alert.size == cereal::SelfdriveState::AlertSize::NONE) {
+    return;
+  }
+  static std::map<cereal::SelfdriveState::AlertSize, const int> alert_heights = {
+    {cereal::SelfdriveState::AlertSize::SMALL, 271},
+    {cereal::SelfdriveState::AlertSize::MID, 420},
+    {cereal::SelfdriveState::AlertSize::FULL, height()},
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   };
   int h = alert_heights[alert.size];
 
   int margin = 40;
   int radius = 30;
+<<<<<<< HEAD
   if (alert.size == cereal::ControlsState::AlertSize::FULL) {
+=======
+  if (alert.size == cereal::SelfdriveState::AlertSize::FULL) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     margin = 0;
     radius = 0;
   }
@@ -94,15 +140,26 @@ void OnroadAlerts::paintEvent(QPaintEvent *event) {
   const QPoint c = r.center();
   p.setPen(QColor(0xff, 0xff, 0xff));
   p.setRenderHint(QPainter::TextAntialiasing);
+<<<<<<< HEAD
   if (alert.size == cereal::ControlsState::AlertSize::SMALL) {
     p.setFont(InterFont(74, QFont::DemiBold));
     p.drawText(r, Qt::AlignCenter, alert.text1);
   } else if (alert.size == cereal::ControlsState::AlertSize::MID) {
+=======
+  if (alert.size == cereal::SelfdriveState::AlertSize::SMALL) {
+    p.setFont(InterFont(74, QFont::DemiBold));
+    p.drawText(r, Qt::AlignCenter, alert.text1);
+  } else if (alert.size == cereal::SelfdriveState::AlertSize::MID) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     p.setFont(InterFont(88, QFont::Bold));
     p.drawText(QRect(0, c.y() - 125, width(), 150), Qt::AlignHCenter | Qt::AlignTop, alert.text1);
     p.setFont(InterFont(66));
     p.drawText(QRect(0, c.y() + 21, width(), 90), Qt::AlignHCenter, alert.text2);
+<<<<<<< HEAD
   } else if (alert.size == cereal::ControlsState::AlertSize::FULL) {
+=======
+  } else if (alert.size == cereal::SelfdriveState::AlertSize::FULL) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     bool l = alert.text1.length() > 15;
     p.setFont(InterFont(l ? 132 : 177, QFont::Bold));
     p.drawText(QRect(0, r.y() + (l ? 240 : 270), width(), 600), Qt::AlignHCenter | Qt::TextWordWrap, alert.text1);

@@ -10,6 +10,11 @@
 #include "common/swaglog.h"
 #include "common/util.h"
 
+<<<<<<< HEAD
+=======
+const bool PANDAD_MAXOUT = getenv("PANDAD_MAXOUT") != nullptr;
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 Panda::Panda(std::string serial, uint32_t bus_offset) : bus_offset(bus_offset) {
   // try USB first, then SPI
   try {
@@ -45,7 +50,11 @@ std::vector<std::string> Panda::list(bool usb_only) {
 
 #ifndef __APPLE__
   if (!usb_only) {
+<<<<<<< HEAD
     for (auto s : PandaSpiHandle::list()) {
+=======
+    for (const auto &s : PandaSpiHandle::list()) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       if (std::find(serials.begin(), serials.end(), s) == serials.end()) {
         serials.push_back(s);
       }
@@ -167,7 +176,11 @@ void Panda::pack_can_buffer(const capnp::List<cereal::CanData>::Reader &can_data
   int32_t pos = 0;
   uint8_t send_buf[2 * USB_TX_SOFT_LIMIT];
 
+<<<<<<< HEAD
   for (auto cmsg : can_data_list) {
+=======
+  for (const auto &cmsg : can_data_list) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     // check if the message is intended for this panda
     uint8_t bus = cmsg.getSrc();
     if (bus < bus_offset || bus >= (bus_offset + PANDA_BUS_OFFSET)) {
@@ -204,7 +217,11 @@ void Panda::pack_can_buffer(const capnp::List<cereal::CanData>::Reader &can_data
   if (pos > 0) write_func(send_buf, pos);
 }
 
+<<<<<<< HEAD
 void Panda::can_send(capnp::List<cereal::CanData>::Reader can_data_list) {
+=======
+void Panda::can_send(const capnp::List<cereal::CanData>::Reader &can_data_list) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   pack_can_buffer(can_data_list, [=](uint8_t* data, size_t size) {
     handle->bulk_write(3, data, size, 5);
   });
@@ -219,7 +236,11 @@ bool Panda::can_receive(std::vector<can_frame>& out_vec) {
     return false;
   }
 
+<<<<<<< HEAD
   if (getenv("PANDAD_MAXOUT") != NULL) {
+=======
+  if (PANDAD_MAXOUT) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     static uint8_t junk[RECV_SIZE];
     handle->bulk_read(0xab, junk, RECV_SIZE - recv);
   }

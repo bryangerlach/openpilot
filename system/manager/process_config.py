@@ -1,12 +1,20 @@
 import os
+<<<<<<< HEAD
+=======
+import operator
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 from cereal import car
 from openpilot.common.params import Params
 from openpilot.system.hardware import PC, TICI
+<<<<<<< HEAD
 from openpilot.selfdrive.modeld.custom_model_metadata import CustomModelMetadata, ModelCapabilities
 from openpilot.system.manager.process import PythonProcess, NativeProcess, DaemonProcess
 from openpilot.system.mapd_manager import MAPD_PATH, COMMON_DIR
 from openpilot.system.manager.sunnylink import sunnylink_need_register, sunnylink_ready, use_sunnylink_uploader
+=======
+from openpilot.system.manager.process import PythonProcess, NativeProcess, DaemonProcess
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 WEBCAM = os.getenv("USE_WEBCAM") is not None
 
@@ -32,6 +40,21 @@ def ublox(started, params, CP: car.CarParams) -> bool:
     params.put_bool("UbloxAvailable", use_ublox)
   return started and use_ublox
 
+<<<<<<< HEAD
+=======
+def joystick(started: bool, params, CP: car.CarParams) -> bool:
+  return started and params.get_bool("JoystickDebugMode")
+
+def not_joystick(started: bool, params, CP: car.CarParams) -> bool:
+  return started and not params.get_bool("JoystickDebugMode")
+
+def long_maneuver(started: bool, params, CP: car.CarParams) -> bool:
+  return started and params.get_bool("LongitudinalManeuverMode")
+
+def not_long_maneuver(started: bool, params, CP: car.CarParams) -> bool:
+  return started and not params.get_bool("LongitudinalManeuverMode")
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 def qcomgps(started, params, CP: car.CarParams) -> bool:
   return started and not ublox_available()
 
@@ -44,6 +67,7 @@ def only_onroad(started: bool, params, CP: car.CarParams) -> bool:
 def only_offroad(started, params, CP: car.CarParams) -> bool:
   return not started
 
+<<<<<<< HEAD
 def use_gitlab_runner(started, params, CP: car.CarParams) -> bool:
   return not PC and params.get_bool("EnableGitlabRunner") and only_offroad(started, params, CP)
 
@@ -62,6 +86,13 @@ def sunnylink_need_register_shim(started, params, CP: car.CarParams) -> bool:
 def use_sunnylink_uploader_shim(started, params, CP: car.CarParams) -> bool:
   """Shim for use_sunnylink_uploader to match the process manager signature."""
   return use_sunnylink_uploader(params)
+=======
+def or_(*fns):
+  return lambda *args: operator.or_(*(fn(*args) for fn in fns))
+
+def and_(*fns):
+  return lambda *args: operator.and_(*(fn(*args) for fn in fns))
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 procs = [
   DaemonProcess("manage_athenad", "system.athena.manage_athenad", "AthenadPid"),
@@ -73,11 +104,16 @@ procs = [
   PythonProcess("micd", "system.micd", iscar),
   PythonProcess("timed", "system.timed", always_run, enabled=not PC),
 
+<<<<<<< HEAD
   PythonProcess("dmonitoringmodeld", "selfdrive.modeld.dmonitoringmodeld", driverview, enabled=(not PC or WEBCAM)),
+=======
+  NativeProcess("dmonitoringmodeld", "selfdrive/modeld", ["./dmonitoringmodeld"], driverview, enabled=(not PC or WEBCAM)),
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   NativeProcess("encoderd", "system/loggerd", ["./encoderd"], only_onroad),
   NativeProcess("stream_encoderd", "system/loggerd", ["./encoderd", "--stream"], notcar),
   NativeProcess("loggerd", "system/loggerd", ["./loggerd"], logging),
   NativeProcess("modeld", "selfdrive/modeld", ["./modeld"], only_onroad),
+<<<<<<< HEAD
   NativeProcess("mapsd", "selfdrive/navd", ["./mapsd"], model_use_nav),
   PythonProcess("navmodeld", "selfdrive.modeld.navmodeld", model_use_nav),
   NativeProcess("sensord", "system/sensord", ["./sensord"], only_onroad, enabled=not PC),
@@ -88,17 +124,37 @@ procs = [
   PythonProcess("calibrationd", "selfdrive.locationd.calibrationd", only_onroad),
   PythonProcess("torqued", "selfdrive.locationd.torqued", only_onroad),
   PythonProcess("controlsd", "selfdrive.controls.controlsd", only_onroad),
+=======
+  NativeProcess("sensord", "system/sensord", ["./sensord"], only_onroad, enabled=not PC),
+  NativeProcess("ui", "selfdrive/ui", ["./ui"], always_run, watchdog_max_dt=(5 if not PC else None)),
+  PythonProcess("soundd", "selfdrive.ui.soundd", only_onroad),
+  PythonProcess("locationd", "selfdrive.locationd.locationd", only_onroad),
+  NativeProcess("pandad", "selfdrive/pandad", ["./pandad"], always_run, enabled=False),
+  PythonProcess("calibrationd", "selfdrive.locationd.calibrationd", only_onroad),
+  PythonProcess("torqued", "selfdrive.locationd.torqued", only_onroad),
+  PythonProcess("controlsd", "selfdrive.controls.controlsd", and_(not_joystick, iscar)),
+  PythonProcess("joystickd", "tools.joystick.joystickd", or_(joystick, notcar)),
+  PythonProcess("selfdrived", "selfdrive.selfdrived.selfdrived", only_onroad),
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   PythonProcess("card", "selfdrive.car.card", only_onroad),
   PythonProcess("deleter", "system.loggerd.deleter", always_run),
   PythonProcess("dmonitoringd", "selfdrive.monitoring.dmonitoringd", driverview, enabled=(not PC or WEBCAM)),
   PythonProcess("qcomgpsd", "system.qcomgpsd.qcomgpsd", qcomgps, enabled=TICI),
   #PythonProcess("ugpsd", "system.ugpsd", only_onroad, enabled=TICI),
+<<<<<<< HEAD
   PythonProcess("navd", "selfdrive.navd.navd", only_onroad),
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   PythonProcess("pandad", "selfdrive.pandad.pandad", always_run),
   PythonProcess("paramsd", "selfdrive.locationd.paramsd", only_onroad),
   NativeProcess("ubloxd", "system/ubloxd", ["./ubloxd"], ublox, enabled=TICI),
   PythonProcess("pigeond", "system.ubloxd.pigeond", ublox, enabled=TICI),
+<<<<<<< HEAD
   PythonProcess("plannerd", "selfdrive.controls.plannerd", only_onroad),
+=======
+  PythonProcess("plannerd", "selfdrive.controls.plannerd", not_long_maneuver),
+  PythonProcess("maneuversd", "tools.longitudinal_maneuvers.maneuversd", long_maneuver),
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   PythonProcess("radard", "selfdrive.controls.radard", only_onroad),
   PythonProcess("hardwared", "system.hardware.hardwared", always_run),
   PythonProcess("tombstoned", "system.tombstoned", always_run, enabled=not PC),
@@ -106,6 +162,7 @@ procs = [
   PythonProcess("uploader", "system.loggerd.uploader", always_run),
   PythonProcess("statsd", "system.statsd", always_run),
 
+<<<<<<< HEAD
   # PFEIFER - MAPD {{
   NativeProcess("mapd", COMMON_DIR, [MAPD_PATH], always_run, enabled=not PC),
   PythonProcess("mapd_manager", "system.mapd_manager", always_run, enabled=not PC),
@@ -114,10 +171,13 @@ procs = [
   PythonProcess("otisserv", "selfdrive.navd.otisserv", always_run),
   PythonProcess("fleet_manager", "system.fleetmanager.fleet_manager", always_run, enabled=not PC),
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   # debug procs
   NativeProcess("bridge", "cereal/messaging", ["./bridge"], notcar),
   PythonProcess("webrtcd", "system.webrtc.webrtcd", notcar),
   PythonProcess("webjoystick", "tools.bodyteleop.web", notcar),
+<<<<<<< HEAD
 
   # sunnylink <3
   DaemonProcess("manage_sunnylinkd", "system.athena.manage_sunnylinkd", "SunnylinkdPid"),
@@ -130,4 +190,9 @@ if os.path.exists("./gitlab_runner.sh"):
 if os.path.exists("../loggerd/sunnylink_uploader.py"):
   procs += [PythonProcess("sunnylink_uploader", "system.loggerd.sunnylink_uploader", use_sunnylink_uploader_shim)]
 
+=======
+  PythonProcess("joystick", "tools.joystick.joystick_control", and_(joystick, iscar)),
+]
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 managed_processes = {p.name: p for p in procs}

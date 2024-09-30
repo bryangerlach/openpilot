@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 #!/usr/bin/bash
 
 set -e
+=======
+#!/usr/bin/env bash
+
+set -e
+set -x
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 if [ -z "$SOURCE_DIR" ]; then
   echo "SOURCE_DIR must be set"
@@ -17,6 +24,7 @@ if [ -z "$TEST_DIR" ]; then
   exit 1
 fi
 
+<<<<<<< HEAD
 umount /data/safe_staging/merged/ || true
 sudo umount /data/safe_staging/merged/ || true
 rm -rf /data/safe_staging/* || true
@@ -24,6 +32,17 @@ rm -rf /data/safe_staging/* || true
 CONTINUE_PATH="/data/continue.sh"
 tee $CONTINUE_PATH << EOF
 #!/usr/bin/bash
+=======
+rm -rf /data/safe_staging/ || true
+if [ -d /data/safe_staging/ ]; then
+  sudo umount /data/safe_staging/merged/ || true
+  rm -rf /data/safe_staging/ || true
+fi
+
+CONTINUE_PATH="/data/continue.sh"
+tee $CONTINUE_PATH << EOF
+#!/usr/bin/env bash
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 sudo abctl --set_success
 

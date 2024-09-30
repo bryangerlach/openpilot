@@ -21,7 +21,11 @@ OnroadWindow::OnroadWindow(QWidget *parent) : QWidget(parent) {
   split->addWidget(nvg);
 
   if (getenv("DUAL_CAMERA_VIEW")) {
+<<<<<<< HEAD
     CameraWidget *arCam = new CameraWidget("camerad", VISION_STREAM_ROAD, true, this);
+=======
+    CameraWidget *arCam = new CameraWidget("camerad", VISION_STREAM_ROAD, this);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     split->insertWidget(0, arCam);
   }
 
@@ -35,12 +39,17 @@ OnroadWindow::OnroadWindow(QWidget *parent) : QWidget(parent) {
   alerts->raise();
 
   setAttribute(Qt::WA_OpaquePaintEvent);
+<<<<<<< HEAD
 
   // We handle the connection of the signals on the derived class
 #ifndef SUNNYPILOT
   QObject::connect(uiState(), &UIState::uiUpdate, this, &OnroadWindow::updateState);
   QObject::connect(uiState(), &UIState::offroadTransition, this, &OnroadWindow::offroadTransition);
 #endif
+=======
+  QObject::connect(uiState(), &UIState::uiUpdate, this, &OnroadWindow::updateState);
+  QObject::connect(uiState(), &UIState::offroadTransition, this, &OnroadWindow::offroadTransition);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }
 
 void OnroadWindow::updateState(const UIState &s) {

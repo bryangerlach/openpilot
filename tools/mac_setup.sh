@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+<<<<<<< HEAD
 
 set -e
 
@@ -9,6 +10,10 @@ echo
 echo "Check out devcontainers for a seamless experience (see tools/README.md)."
 echo "-------------------------------------------------"
 
+=======
+set -e
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 ROOT="$(cd $DIR/../ && pwd)"
 ARCH=$(uname -m)
@@ -97,10 +102,13 @@ else
   brew link qt@5
 fi
 
+<<<<<<< HEAD
 ln -s /opt/homebrew/Cellar/capnp/1.0.2/lib/libcapnp.1.0.2.dylib /opt/homebrew/Cellar/capnp/1.0.2/lib/libcapnp.1.0.1.dylib || true
 ln -s /opt/homebrew/Cellar/capnp/1.0.2/lib/libcapnpc.1.0.2.dylib /opt/homebrew/Cellar/capnp/1.0.2/lib/libcapnpc.1.0.1.dylib || true
 ln -s /opt/homebrew/Cellar/capnp/1.0.2/lib/libkj.1.0.2.dylib /opt/homebrew/Cellar/capnp/1.0.2/lib/libkj.1.0.1.dylib || true
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 echo
 echo "----   OPENPILOT SETUP DONE   ----"
 echo "Open a new shell or configure your active shell env by running:"

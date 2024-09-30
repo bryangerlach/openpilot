@@ -91,7 +91,10 @@ std::unordered_map<std::string, uint32_t> keys = {
     {"AccessToken", CLEAR_ON_MANAGER_START | DONT_LOG},
     {"AlwaysOnDM", PERSISTENT},
     {"ApiCache_Device", PERSISTENT},
+<<<<<<< HEAD
     {"ApiCache_NavDestinations", PERSISTENT},
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     {"AssistNowToken", PERSISTENT},
     {"AthenadPid", PERSISTENT},
     {"AthenadUploadQueue", PERSISTENT},
@@ -105,52 +108,88 @@ std::unordered_map<std::string, uint32_t> keys = {
     {"CarParamsCache", CLEAR_ON_MANAGER_START},
     {"CarParamsPersistent", PERSISTENT},
     {"CarParamsPrevRoute", PERSISTENT},
+<<<<<<< HEAD
     {"CarVin", CLEAR_ON_MANAGER_START | CLEAR_ON_ONROAD_TRANSITION},
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     {"CompletedTrainingVersion", PERSISTENT},
     {"ControlsReady", CLEAR_ON_MANAGER_START | CLEAR_ON_ONROAD_TRANSITION},
     {"CurrentBootlog", PERSISTENT},
     {"CurrentRoute", CLEAR_ON_MANAGER_START | CLEAR_ON_ONROAD_TRANSITION},
     {"DisableLogging", CLEAR_ON_MANAGER_START | CLEAR_ON_ONROAD_TRANSITION},
+<<<<<<< HEAD
     {"DisablePowerDown", PERSISTENT | BACKUP},
     {"DisableUpdates", PERSISTENT | BACKUP},
     {"DisengageOnAccelerator", PERSISTENT | BACKUP},
+=======
+    {"DisablePowerDown", PERSISTENT},
+    {"DisableUpdates", PERSISTENT},
+    {"DisengageOnAccelerator", PERSISTENT},
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     {"DmModelInitialized", CLEAR_ON_ONROAD_TRANSITION},
     {"DongleId", PERSISTENT},
     {"DoReboot", CLEAR_ON_MANAGER_START},
     {"DoShutdown", CLEAR_ON_MANAGER_START},
     {"DoUninstall", CLEAR_ON_MANAGER_START},
+<<<<<<< HEAD
     {"ExperimentalLongitudinalEnabled", PERSISTENT | DEVELOPMENT_ONLY | BACKUP},
     {"ExperimentalMode", PERSISTENT | BACKUP},
     {"ExperimentalModeConfirmed", PERSISTENT | BACKUP},
+=======
+    {"ExperimentalLongitudinalEnabled", PERSISTENT | DEVELOPMENT_ONLY},
+    {"ExperimentalMode", PERSISTENT},
+    {"ExperimentalModeConfirmed", PERSISTENT},
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     {"FirmwareQueryDone", CLEAR_ON_MANAGER_START | CLEAR_ON_ONROAD_TRANSITION},
     {"ForcePowerDown", PERSISTENT},
     {"GitBranch", PERSISTENT},
     {"GitCommit", PERSISTENT},
     {"GitCommitDate", PERSISTENT},
     {"GitDiff", PERSISTENT},
+<<<<<<< HEAD
     {"GithubSshKeys", PERSISTENT | BACKUP},
     {"GithubUsername", PERSISTENT | BACKUP},
     {"GitRemote", PERSISTENT},
     {"GsmApn", PERSISTENT | BACKUP},
     {"GsmMetered", PERSISTENT | BACKUP},
     {"GsmRoaming", PERSISTENT | BACKUP},
+=======
+    {"GithubSshKeys", PERSISTENT},
+    {"GithubUsername", PERSISTENT},
+    {"GitRemote", PERSISTENT},
+    {"GsmApn", PERSISTENT},
+    {"GsmMetered", PERSISTENT},
+    {"GsmRoaming", PERSISTENT},
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     {"HardwareSerial", PERSISTENT},
     {"HasAcceptedTerms", PERSISTENT},
     {"IMEI", PERSISTENT},
     {"InstallDate", PERSISTENT},
     {"IsDriverViewEnabled", CLEAR_ON_MANAGER_START},
     {"IsEngaged", PERSISTENT},
+<<<<<<< HEAD
     {"IsLdwEnabled", PERSISTENT | BACKUP},
     {"IsMetric", PERSISTENT | BACKUP},
+=======
+    {"IsLdwEnabled", PERSISTENT},
+    {"IsMetric", PERSISTENT},
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     {"IsOffroad", CLEAR_ON_MANAGER_START},
     {"IsOnroad", PERSISTENT},
     {"IsRhdDetected", PERSISTENT},
     {"IsReleaseBranch", CLEAR_ON_MANAGER_START},
+<<<<<<< HEAD
     {"IsReleaseSPBranch", CLEAR_ON_MANAGER_START},
     {"IsTakingSnapshot", CLEAR_ON_MANAGER_START},
     {"IsTestedBranch", CLEAR_ON_MANAGER_START},
     {"JoystickDebugMode", CLEAR_ON_MANAGER_START | CLEAR_ON_OFFROAD_TRANSITION},
     {"LanguageSetting", PERSISTENT | BACKUP},
+=======
+    {"IsTakingSnapshot", CLEAR_ON_MANAGER_START},
+    {"IsTestedBranch", CLEAR_ON_MANAGER_START},
+    {"JoystickDebugMode", CLEAR_ON_MANAGER_START | CLEAR_ON_OFFROAD_TRANSITION},
+    {"LanguageSetting", PERSISTENT},
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     {"LastAthenaPingTime", CLEAR_ON_MANAGER_START},
     {"LastGPSPosition", PERSISTENT},
     {"LastManagerExitReason", CLEAR_ON_MANAGER_START},
@@ -160,12 +199,18 @@ std::unordered_map<std::string, uint32_t> keys = {
     {"LastUpdateTime", PERSISTENT},
     {"LiveParameters", PERSISTENT},
     {"LiveTorqueParameters", PERSISTENT | DONT_LOG},
+<<<<<<< HEAD
     {"LongitudinalPersonality", PERSISTENT | BACKUP},
     {"NavDestination", CLEAR_ON_MANAGER_START | CLEAR_ON_OFFROAD_TRANSITION},
     {"NavDestinationWaypoints", CLEAR_ON_MANAGER_START | CLEAR_ON_OFFROAD_TRANSITION},
     {"NavPastDestinations", PERSISTENT},
     {"NavSettingLeftSide", PERSISTENT | BACKUP},
     {"NavSettingTime24h", PERSISTENT | BACKUP},
+=======
+    {"LocationFilterInitialState", PERSISTENT},
+    {"LongitudinalManeuverMode", CLEAR_ON_MANAGER_START | CLEAR_ON_OFFROAD_TRANSITION},
+    {"LongitudinalPersonality", PERSISTENT},
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     {"NetworkMetered", PERSISTENT},
     {"ObdMultiplexingChanged", CLEAR_ON_MANAGER_START | CLEAR_ON_ONROAD_TRANSITION},
     {"ObdMultiplexingEnabled", CLEAR_ON_MANAGER_START | CLEAR_ON_ONROAD_TRANSITION},
@@ -181,18 +226,30 @@ std::unordered_map<std::string, uint32_t> keys = {
     {"Offroad_TemperatureTooHigh", CLEAR_ON_MANAGER_START},
     {"Offroad_UnofficialHardware", CLEAR_ON_MANAGER_START},
     {"Offroad_UpdateFailed", CLEAR_ON_MANAGER_START},
+<<<<<<< HEAD
     {"Offroad_OSMUpdateRequired", CLEAR_ON_MANAGER_START},
     {"OpenpilotEnabledToggle", PERSISTENT | BACKUP},
+=======
+    {"OpenpilotEnabledToggle", PERSISTENT},
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     {"PandaHeartbeatLost", CLEAR_ON_MANAGER_START | CLEAR_ON_OFFROAD_TRANSITION},
     {"PandaSomResetTriggered", CLEAR_ON_MANAGER_START | CLEAR_ON_OFFROAD_TRANSITION},
     {"PandaSignatures", CLEAR_ON_MANAGER_START},
     {"PrimeType", PERSISTENT},
+<<<<<<< HEAD
     {"RecordFront", PERSISTENT | BACKUP},
     {"RecordFrontLock", PERSISTENT},  // for the internal fleet
     {"ReplayControlsState", CLEAR_ON_MANAGER_START | CLEAR_ON_ONROAD_TRANSITION},
     {"RouteCount", PERSISTENT},
     {"SnoozeUpdate", CLEAR_ON_MANAGER_START | CLEAR_ON_OFFROAD_TRANSITION},
     {"SshEnabled", PERSISTENT | BACKUP},
+=======
+    {"RecordFront", PERSISTENT},
+    {"RecordFrontLock", PERSISTENT},  // for the internal fleet
+    {"RouteCount", PERSISTENT},
+    {"SnoozeUpdate", CLEAR_ON_MANAGER_START | CLEAR_ON_OFFROAD_TRANSITION},
+    {"SshEnabled", PERSISTENT},
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     {"TermsVersion", PERSISTENT},
     {"TrainingVersion", PERSISTENT},
     {"UbloxAvailable", PERSISTENT},
@@ -208,6 +265,7 @@ std::unordered_map<std::string, uint32_t> keys = {
     {"UpdaterTargetBranch", CLEAR_ON_MANAGER_START},
     {"UpdaterLastFetchTime", PERSISTENT},
     {"Version", PERSISTENT},
+<<<<<<< HEAD
 
     {"AccelPersonality", PERSISTENT | BACKUP},
     {"AccMadsCombo", PERSISTENT | BACKUP},
@@ -353,6 +411,8 @@ std::unordered_map<std::string, uint32_t> keys = {
     {"OSMDownloadProgress", CLEAR_ON_MANAGER_START},
     {"OsmDbUpdatesCheck", CLEAR_ON_MANAGER_START},  // mapd database update happens with device ON, reset on boot
     // }} PFEIFER - MAPD
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 };
 
 } // namespace

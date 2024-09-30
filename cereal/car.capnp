@@ -5,7 +5,13 @@ $Cxx.namespace("cereal");
 
 # ******* events causing controls state machine transition *******
 
+<<<<<<< HEAD
 struct CarEvent @0x9b1657f34caf3ad3 {
+=======
+# FIXME: OnroadEvent shouldn't be in car.capnp, but can't immediately
+#        move due to being referenced by structs in this file
+struct OnroadEvent @0x9b1657f34caf3ad3 {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   name @0 :EventName;
 
   # event types
@@ -52,6 +58,10 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     manualRestart @30;
     lowSpeedLockout @31;
     joystickDebug @34;
+<<<<<<< HEAD
+=======
+    longitudinalManeuver @124;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     steerTempUnavailableSilent @35;
     resumeRequired @36;
     preDriverDistracted @37;
@@ -85,7 +95,10 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     startupNoCar @76;
     startupNoControl @77;
     startupMaster @78;
+<<<<<<< HEAD
     startupNoFw @104;
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     fcw @79;
     steerSaturated @80;
     belowEngageSpeed @84;
@@ -98,6 +111,7 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     cameraFrameRate @110;
     processNotRunning @95;
     dashcamMode @96;
+<<<<<<< HEAD
     controlsInitializing @98;
     usbError @99;
     roadCameraError @100;
@@ -108,6 +122,14 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     lkasDisabled @107;
     canBusMissing @111;
     controlsdLagging @112;
+=======
+    selfdriveInitializing @98;
+    usbError @99;
+    cruiseMismatch @106;
+    lkasDisabled @107;
+    canBusMissing @111;
+    selfdrivedLagging @112;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     resumeBlocked @113;
     steerTimeLimit @115;
     vehicleSensorsInvalid @116;
@@ -117,6 +139,7 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     paramsdPermanentError @119;
     actuatorsApiUnavailable @120;
     espActive @121;
+<<<<<<< HEAD
     manualSteeringRequired @122;
     manualLongitudinalRequired @123;
     silentPedalPressed @124;
@@ -137,6 +160,10 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     speedLimitPreActive @139;
     speedLimitConfirmed @140;
     torqueNNLoad @141;
+=======
+    personalityChanged @122;
+    aeb @123;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
     radarCanErrorDEPRECATED @15;
     communityFeatureDisallowedDEPRECATED @62;
@@ -164,6 +191,14 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     brakeUnavailableDEPRECATED @2;
     plannerErrorDEPRECATED @32;
     gpsMalfunctionDEPRECATED @94;
+<<<<<<< HEAD
+=======
+    roadCameraErrorDEPRECATED @100;
+    driverCameraErrorDEPRECATED @101;
+    wideRoadCameraErrorDEPRECATED @102;
+    highCpuUsageDEPRECATED @105;
+    startupNoFwDEPRECATED @104;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   }
 }
 
@@ -171,7 +206,11 @@ struct CarEvent @0x9b1657f34caf3ad3 {
 # all speeds in m/s
 
 struct CarState {
+<<<<<<< HEAD
   events @13 :List(CarEvent);
+=======
+  events @13 :List(OnroadEvent);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   # CAN health
   canValid @26 :Bool;       # invalid counter/checksums
@@ -179,10 +218,20 @@ struct CarState {
   canErrorCounter @48 :UInt32;
 
   # car speed
+<<<<<<< HEAD
   vEgo @1 :Float32;          # best estimate of speed
   aEgo @16 :Float32;         # best estimate of acceleration
   vEgoRaw @17 :Float32;      # unfiltered speed from CAN sensors
   vEgoCluster @44 :Float32;  # best estimate of speed shown on car's instrument cluster, used for UI
+=======
+  vEgo @1 :Float32;            # best estimate of speed
+  aEgo @16 :Float32;           # best estimate of aCAN cceleration
+  vEgoRaw @17 :Float32;        # unfiltered speed from wheel speed sensors
+  vEgoCluster @44 :Float32;    # best estimate of speed shown on car's instrument cluster, used for UI
+
+  vCruise @53 :Float32;        # actual set speed
+  vCruiseCluster @54 :Float32; # set speed to display in the UI
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   yawRate @22 :Float32;     # best estimate of yaw rate
   standstill @18 :Bool;
@@ -216,6 +265,10 @@ struct CarState {
   accFaulted @42 :Bool;
   carFaultedNonCritical @47 :Bool;  # some ECU is faulted, but car remains controllable
   espActive @51 :Bool;
+<<<<<<< HEAD
+=======
+  vehicleSensorsInvalid @52 :Bool;  # invalid steering angle readings, etc.
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   # cruise state
   cruiseState @10 :CruiseState;
@@ -236,6 +289,7 @@ struct CarState {
   # clutch (manual transmission only)
   clutchPressed @28 :Bool;
 
+<<<<<<< HEAD
   madsEnabled @52 :Bool;
   leftBlinkerOn @53 :Bool;
   rightBlinkerOn @54 :Bool;
@@ -257,6 +311,8 @@ struct CarState {
     buttonType @6 :Int16;
   }
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   # blindspot sensors
   leftBlindspot @33 :Bool; # Is there something blocking the left lane change
   rightBlindspot @34 :Bool; # Is there something blocking the right lane change
@@ -283,7 +339,10 @@ struct CarState {
     speedOffset @3 :Float32;
     standstill @4 :Bool;
     nonAdaptive @5 :Bool;
+<<<<<<< HEAD
     speedLimit @7 :Float32;
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   }
 
   enum GearShifter {
@@ -321,7 +380,11 @@ struct CarState {
   }
 
   # deprecated
+<<<<<<< HEAD
   errorsDEPRECATED @0 :List(CarEvent.EventName);
+=======
+  errorsDEPRECATED @0 :List(OnroadEvent.EventName);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   brakeLightsDEPRECATED @19 :Bool;
   steeringRateLimitedDEPRECATED @29 :Bool;
   canMonoTimesDEPRECATED @12: List(UInt64);
@@ -369,6 +432,7 @@ struct CarControl {
   enabled @0 :Bool;
   latActive @11: Bool;
   longActive @12: Bool;
+<<<<<<< HEAD
   vCruise @17 :Float32;  # actual set speed
 
   # Actuator commands as computed by controlsd
@@ -377,6 +441,13 @@ struct CarControl {
   # moved to CarOutput
   actuatorsOutputDEPRECATED @10 :Actuators;
 
+=======
+
+  # Final actuator commands
+  actuators @6 :Actuators;
+
+  # Blinker controls
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   leftBlinker @15: Bool;
   rightBlinker @16: Bool;
 
@@ -387,6 +458,7 @@ struct CarControl {
   hudControl @5 :HUDControl;
 
   struct Actuators {
+<<<<<<< HEAD
     # range from 0.0 - 1.0
     gas @0: Float32;
     brake @1: Float32;
@@ -402,6 +474,23 @@ struct CarControl {
     accel @4: Float32; # m/s^2
     longControlState @5: LongControlState;
 
+=======
+    # lateral commands, mutually exclusive
+    steer @2: Float32;  # [0.0, 1.0]
+    steeringAngleDeg @3: Float32;
+    curvature @7: Float32;
+
+    # longitudinal commands
+    accel @4: Float32;  # m/s^2
+    longControlState @5: LongControlState;
+
+    # these are only for logging the actual values sent to the car over CAN
+    gas @0: Float32;   # [0.0, 1.0]
+    brake @1: Float32; # [0.0, 1.0]
+    steerOutputCan @8: Float32;   # value sent over can to the car
+    speed @6: Float32;  # m/s
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     enum LongControlState @0xe40f3a917d908282{
       off @0;
       pid @1;
@@ -457,9 +546,12 @@ struct CarControl {
       prompt @6;
       promptRepeat @7;
       promptDistracted @8;
+<<<<<<< HEAD
       promptStarting @9;
       promptSingleLow @10;
       promptSingleHigh @11;
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     }
   }
 
@@ -469,6 +561,10 @@ struct CarControl {
   activeDEPRECATED @7 :Bool;
   rollDEPRECATED @8 :Float32;
   pitchDEPRECATED @9 :Float32;
+<<<<<<< HEAD
+=======
+  actuatorsOutputDEPRECATED @10 :Actuators;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }
 
 struct CarOutput {
@@ -492,9 +588,12 @@ struct CarParams {
   enableBsm @56 :Bool;       # blind spot monitoring
   flags @64 :UInt32;         # flags for car specific quirks
   experimentalLongitudinalAvailable @71 :Bool;
+<<<<<<< HEAD
   pcmCruiseSpeed @74 :Bool;  # is openpilot's state tied to the PCM's cruise speed?
   customStockLongAvailable @75 :Bool;
   spFlags @76 :UInt32;       # flags for car specific quirks in sunnypilot
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   minEnableSpeed @7 :Float32;
   minSteerSpeed @8 :Float32;
@@ -550,6 +649,10 @@ struct CarParams {
   carFw @44 :List(CarFw);
 
   radarTimeStep @45: Float32 = 0.05;  # time delta between radar updates, 20Hz is very standard
+<<<<<<< HEAD
+=======
+  radarDelay @74 :Float32;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   fingerprintSource @49: FingerprintSource;
   networkLocation @50 :NetworkLocation;  # Where Panda/C2 is integrated into the car's CAN network
 
@@ -584,8 +687,11 @@ struct CarParams {
     steeringAngleDeadzoneDeg @5 :Float32;
     latAccelFactor @6 :Float32;
     latAccelOffset @7 :Float32;
+<<<<<<< HEAD
     nnModelName @8 :Text;
     nnModelFuzzyMatch @9 :Bool;
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   }
 
   struct LongitudinalPIDTuning {
@@ -661,6 +767,10 @@ struct CarParams {
     volkswagenMqbEvo @29;
     chryslerCusw @30;
     psa @31;
+<<<<<<< HEAD
+=======
+    fcaGiorgio @32;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   }
 
   enum SteerControlType {
@@ -755,5 +865,9 @@ struct CarParams {
   brakeMaxVDEPRECATED @16 :List(Float32);
   directAccelControlDEPRECATED @30 :Bool;
   maxSteeringAngleDegDEPRECATED @54 :Float32;
+<<<<<<< HEAD
   longitudinalActuatorDelayLowerBoundDEPRECATEDDEPRECATED @61 :Float32;
+=======
+  longitudinalActuatorDelayLowerBoundDEPRECATED @61 :Float32;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }

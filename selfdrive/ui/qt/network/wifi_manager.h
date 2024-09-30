@@ -42,6 +42,10 @@ public:
   QMap<QString, Network> seenNetworks;
   QMap<QDBusObjectPath, QString> knownConnections;
   QString ipv4_address;
+<<<<<<< HEAD
+=======
+  bool ipv4_forward = false;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   explicit WifiManager(QObject* parent);
   void start();

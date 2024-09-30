@@ -4,6 +4,7 @@ import random
 
 from cereal import car, log
 import cereal.messaging as messaging
+<<<<<<< HEAD
 from openpilot.common.realtime import DT_CTRL
 from openpilot.selfdrive.car.honda.interface import CarInterface
 from openpilot.selfdrive.controls.lib.events import ET, Events
@@ -11,6 +12,15 @@ from openpilot.selfdrive.controls.lib.alertmanager import AlertManager
 from openpilot.system.manager.process_config import managed_processes
 
 EventName = car.CarEvent.EventName
+=======
+from opendbc.car.honda.interface import CarInterface
+from openpilot.common.realtime import DT_CTRL
+from openpilot.selfdrive.selfdrived.events import ET, Events
+from openpilot.selfdrive.selfdrived.alertmanager import AlertManager
+from openpilot.system.manager.process_config import managed_processes
+
+EventName = car.OnroadEvent.EventName
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 def randperc() -> float:
   return 100. * random.random()
@@ -54,10 +64,17 @@ def cycle_alerts(duration=200, is_metric=False):
   CS = car.CarState.new_message()
   CP = CarInterface.get_non_essential_params("HONDA_CIVIC")
   sm = messaging.SubMaster(['deviceState', 'pandaStates', 'roadCameraState', 'modelV2', 'liveCalibration',
+<<<<<<< HEAD
                             'driverMonitoringState', 'longitudinalPlan', 'liveLocationKalman',
                             'managerState', 'longitudinalPlanSP', 'driverMonitoringStateSP'] + cameras)
 
   pm = messaging.PubMaster(['controlsState', 'pandaStates', 'deviceState'])
+=======
+                            'driverMonitoringState', 'longitudinalPlan', 'livePose',
+                            'managerState'] + cameras)
+
+  pm = messaging.PubMaster(['selfdriveState', 'pandaStates', 'deviceState'])
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   events = Events()
   AM = AlertManager()
@@ -100,6 +117,7 @@ def cycle_alerts(duration=200, is_metric=False):
       print(alert)
       for _ in range(duration):
         dat = messaging.new_message()
+<<<<<<< HEAD
         dat.init('controlsState')
         dat.controlsState.enabled = False
 
@@ -112,6 +130,19 @@ def cycle_alerts(duration=200, is_metric=False):
           dat.controlsState.alertType = alert.alert_type
           dat.controlsState.alertSound = alert.audible_alert
         pm.send('controlsState', dat)
+=======
+        dat.init('selfdriveState')
+        dat.selfdriveState.enabled = False
+
+        if alert:
+          dat.selfdriveState.alertText1 = alert.alert_text_1
+          dat.selfdriveState.alertText2 = alert.alert_text_2
+          dat.selfdriveState.alertSize = alert.alert_size
+          dat.selfdriveState.alertStatus = alert.alert_status
+          dat.selfdriveState.alertType = alert.alert_type
+          dat.selfdriveState.alertSound = alert.audible_alert
+        pm.send('selfdriveState', dat)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
         dat = messaging.new_message()
         dat.init('deviceState')

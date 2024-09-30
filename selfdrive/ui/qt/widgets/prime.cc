@@ -155,7 +155,11 @@ PrimeAdWidget::PrimeAdWidget(QWidget* parent) : QFrame(parent) {
   main_layout->addWidget(features, 0, Qt::AlignBottom);
   main_layout->addSpacing(30);
 
+<<<<<<< HEAD
   QVector<QString> bullets = {tr("Remote access"), tr("24/7 LTE connectivity"), tr("1 year of drive storage"), tr("Turn-by-turn navigation")};
+=======
+  QVector<QString> bullets = {tr("Remote access"), tr("24/7 LTE connectivity"), tr("1 year of drive storage"), tr("Remote snapshots")};
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   for (auto &b : bullets) {
     const QString check = "<b><font color='#465BEA'>✓</font></b> ";
     QLabel *l = new QLabel(check + b);
@@ -225,9 +229,12 @@ SetupWidget::SetupWidget(QWidget* parent) : QFrame(parent) {
   content_layout->setContentsMargins(0, 0, 0, 0);
   content_layout->setSpacing(30);
 
+<<<<<<< HEAD
   primeUser = new PrimeUserWidget;
   content_layout->addWidget(primeUser);
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   WiFiPromptWidget *wifi_prompt = new WiFiPromptWidget;
   QObject::connect(wifi_prompt, &WiFiPromptWidget::openSettings, this, &SetupWidget::openSettings);
   content_layout->addWidget(wifi_prompt);
@@ -235,7 +242,10 @@ SetupWidget::SetupWidget(QWidget* parent) : QFrame(parent) {
 
   mainLayout->addWidget(content);
 
+<<<<<<< HEAD
   primeUser->setVisible(uiState()->hasPrime());
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   mainLayout->setCurrentIndex(1);
 
   setStyleSheet(R"(
@@ -250,6 +260,7 @@ SetupWidget::SetupWidget(QWidget* parent) : QFrame(parent) {
   sp_retain.setRetainSizeWhenHidden(true);
   setSizePolicy(sp_retain);
 
+<<<<<<< HEAD
   // set up API requests
   if (auto dongleId = getDongleId()) {
     QString url = CommaApi::BASE_URL + "/v1.1/devices/" + *dongleId + "/";
@@ -281,4 +292,14 @@ void SetupWidget::replyFinished(const QString &response, bool success) {
     primeUser->setVisible(uiState()->hasPrime());
     mainLayout->setCurrentIndex(1);
   }
+=======
+  QObject::connect(uiState()->prime_state, &PrimeState::changed, [this](PrimeState::Type type) {
+    if (type == PrimeState::PRIME_TYPE_UNPAIRED) {
+      mainLayout->setCurrentIndex(0);  // Display "Pair your device" widget
+    } else {
+      popup->reject();
+      mainLayout->setCurrentIndex(1);  // Display Wi-Fi prompt widget
+    }
+  });
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }

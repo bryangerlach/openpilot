@@ -2,6 +2,7 @@
 
 #include <utility>
 
+<<<<<<< HEAD
 #ifdef SUNNYPILOT
 #include "selfdrive/ui/sunnypilot/ui.h"
 #else
@@ -10,6 +11,8 @@
 #include "selfdrive/ui/qt/widgets/prime.h"
 
 #include "common/params.h"
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 #include "common/swaglog.h"
 #include "selfdrive/ui/qt/util.h"
 
@@ -449,9 +452,12 @@ void WifiManager::addTetheringConnection() {
 }
 
 void WifiManager::tetheringActivated(QDBusPendingCallWatcher *call) {
+<<<<<<< HEAD
   int prime_type = uiState()->primeType();
   int ipv4_forward = (prime_type == PrimeType::NONE || prime_type == PrimeType::LITE);
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   if (!ipv4_forward) {
     QTimer::singleShot(5000, this, [=] {
       qWarning() << "net.ipv4.ip_forward = 0";

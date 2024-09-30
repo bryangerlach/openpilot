@@ -26,7 +26,11 @@ dependencies = [
   "pycapnp",
   "Cython",
   "setuptools",
+<<<<<<< HEAD
   "numpy",
+=======
+  "numpy < 2.0.0",
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   # body / webrtcd
   "aiohttp",
@@ -52,6 +56,7 @@ dependencies = [
   "websocket_client",
 
   # acados deps
+<<<<<<< HEAD
   "casadi @ https://github.com/commaai/casadi/releases/download/nightly-release-3.6.6/casadi-3.6.6-cp312-none-manylinux2014_aarch64.whl ; (python_version == '3.12' and platform_machine == 'aarch64')", # TODO: Go back to pypi casadi when they fix aarch64 for python312
   "casadi; platform_machine != 'aarch64' or python_version != '3.12'",
   "future-fstrings",
@@ -59,6 +64,18 @@ dependencies = [
   # these should be removed
   "psutil",
   "pycryptodome", # used in updated/casync, panda, body, and a test
+=======
+  "casadi >=3.6.6",  # 3.12 fixed in 3.6.6
+  "future-fstrings",
+
+  # joystickd
+  "inputs",
+
+  # these should be removed
+  "psutil",
+  "pycryptodome", # used in updated/casync, panda, body, and a test
+  "setproctitle",
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   # logreader
   "zstandard",
@@ -74,7 +91,10 @@ docs = [
 testing = [
   "coverage",
   "hypothesis ==6.47.*",
+<<<<<<< HEAD
   "import-linter",
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   "mypy",
   "pytest",
   "pytest-cov",
@@ -88,6 +108,10 @@ testing = [
   "pytest-repeat",
   "ruff",
   "codespell",
+<<<<<<< HEAD
+=======
+  "pre-commit-hooks",
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 ]
 
 dev = [
@@ -96,10 +120,15 @@ dev = [
   "azure-storage-blob",
   "dictdiffer",
   "flaky",
+<<<<<<< HEAD
   "inputs",
   "lru-dict",
   "matplotlib",
   "metadrive-simulator@git+https://github.com/commaai/metadrive@opencv_headless ; platform_machine != 'aarch64'",
+=======
+  "lru-dict",
+  "matplotlib",
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   "parameterized >=0.8, <0.9",
   #"pprofile",
   "pyautogui",
@@ -107,7 +136,10 @@ dev = [
   "pytools < 2024.1.11; platform_machine != 'aarch64'", # pyopencl use a broken version
   "pywinctl",
   "pyprof2calltree",
+<<<<<<< HEAD
   "rerun-sdk",
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   "tabulate",
   "types-requests",
   "types-tabulate",
@@ -116,6 +148,14 @@ dev = [
   "pyqt5 ==5.15.2; platform_machine == 'x86_64'", # no aarch64 wheels for macOS/linux
 ]
 
+<<<<<<< HEAD
+=======
+tools = [
+  "metadrive-simulator @ https://github.com/commaai/metadrive/releases/download/MetaDrive-minimal/metadrive_simulator-0.4.2.3-py3-none-any.whl ; (platform_machine != 'aarch64')",
+  "rerun-sdk >= 0.18",
+]
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 [project.urls]
 Homepage = "https://comma.ai"
 
@@ -135,6 +175,10 @@ addopts = "--ignore=openpilot/ --ignore=opendbc/ --ignore=panda/ --ignore=rednos
 cpp_files = "test_*"
 cpp_harness = "selfdrive/test/cpp_harness.py"
 python_files = "test_*.py"
+<<<<<<< HEAD
+=======
+asyncio_default_fixture_loop_scope = "function"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 #timeout = "30"  # you get this long by default
 markers = [
   "slow: tests that take awhile to run and can be skipped with -m 'not slow'",
@@ -144,6 +188,10 @@ testpaths = [
   "common",
   "selfdrive/pandad",
   "selfdrive/car",
+<<<<<<< HEAD
+=======
+  "selfdrive/opcar",
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   "selfdrive/controls",
   "selfdrive/locationd",
   "selfdrive/monitoring",
@@ -165,11 +213,19 @@ testpaths = [
 ]
 
 [tool.codespell]
+<<<<<<< HEAD
 count = true
 quiet-level = 3
 # if you've got a short variable name that's getting flagged, add it here
 ignore-words-list = "bu,ro,te,ue,alo,hda,ois,nam,nams,ned,som,parm,setts,inout,warmup,bumb,nd,sie,preints,whit,indexIn"
 builtin = "clear,rare,informal,usage,code,names,en-GB_to_en-US"
+=======
+quiet-level = 3
+# if you've got a short variable name that's getting flagged, add it here
+ignore-words-list = "bu,ro,te,ue,alo,hda,ois,nam,nams,ned,som,parm,setts,inout,warmup,bumb,nd,sie,preints,whit,indexIn,ws,uint,grey,deque,stdio,amin,BA,LITE,atEnd,UIs,errorString,arange,FocusIn,od,tim,relA,hist,copyable,jupyter,thead"
+builtin = "clear,rare,informal,code,names,en-GB_to_en-US"
+skip = "./third_party/*, ./tinygrad/*, ./tinygrad_repo/*, ./msgq/*, ./panda/*, ./opendbc/*, ./opendbc_repo/*, ./rednose/*, ./rednose_repo/*, ./teleoprtc/*, ./teleoprtc_repo/*, *.ts, uv.lock, *.onnx, ./cereal/gen/*, */c_generated_code/*"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 [tool.mypy]
 python_version = "3.11"
@@ -177,9 +233,17 @@ plugins = [
   "numpy.typing.mypy_plugin",
 ]
 exclude = [
+<<<<<<< HEAD
   "body/",
   "cereal/",
   "opendbc/",
+=======
+  "cereal/",
+  "msgq/",
+  "msgq_repo/",
+  "opendbc/",
+  "opendbc_repo/",
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   "panda/",
   "rednose/",
   "rednose_repo/",
@@ -204,6 +268,13 @@ warn_return_any=true
 # allow implicit optionals for default args
 implicit_optional = true
 
+<<<<<<< HEAD
+=======
+local_partial_types=true
+explicit_package_bases=true
+disable_error_code = "annotation-unchecked"
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 # https://beta.ruff.rs/docs/configuration/#using-pyprojecttoml
 [tool.ruff]
 indent-width = 2
@@ -238,6 +309,10 @@ exclude = [
   "teleoprtc",
   "teleoprtc_repo",
   "third_party",
+<<<<<<< HEAD
+=======
+  "*.ipynb",
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 ]
 lint.flake8-implicit-str-concat.allow-multiline = false
 

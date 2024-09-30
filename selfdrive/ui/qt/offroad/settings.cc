@@ -14,6 +14,7 @@
 #include "selfdrive/ui/qt/widgets/prime.h"
 #include "selfdrive/ui/qt/widgets/scrollview.h"
 #include "selfdrive/ui/qt/widgets/ssh_keys.h"
+<<<<<<< HEAD
 #ifdef SUNNYPILOT
 #include "selfdrive/ui/sunnypilot/sunnypilot_main.h"
 #endif 
@@ -21,12 +22,21 @@
 TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
   RETURN_IF_SUNNYPILOT
 
+=======
+
+TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   // param, title, desc, icon
   std::vector<std::tuple<QString, QString, QString, QString>> toggle_defs{
     {
       "OpenpilotEnabledToggle",
+<<<<<<< HEAD
       tr("Enable sunnypilot"),
       tr("Use the sunnypilot system for adaptive cruise control and lane keep driver assistance. Your attention is required at all times to use this feature. Changing this setting takes effect when the car is powered off."),
+=======
+      tr("Enable openpilot"),
+      tr("Use the openpilot system for adaptive cruise control and lane keep driver assistance. Your attention is required at all times to use this feature. Changing this setting takes effect when the car is powered off."),
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       "../assets/offroad/icon_openpilot.png",
     },
     {
@@ -116,8 +126,13 @@ TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
 void TogglesPanel::updateState(const UIState &s) {
   const SubMaster &sm = *(s.sm);
 
+<<<<<<< HEAD
   if (sm.updated("controlsState")) {
     auto personality = sm["controlsState"].getControlsState().getPersonality();
+=======
+  if (sm.updated("selfdriveState")) {
+    auto personality = sm["selfdriveState"].getSelfdriveState().getPersonality();
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     if (personality != s.scene.personality && s.scene.started && isVisible()) {
       long_personality_setting->setCheckedButton(static_cast<int>(personality));
     }
@@ -252,11 +267,17 @@ DevicePanel::DevicePanel(SettingsWindow *parent) : ListWidget(parent) {
   });
   addItem(translateBtn);
 
+<<<<<<< HEAD
   QObject::connect(uiState(), &UIState::primeTypeChanged, [this] (PrimeType type) {
     pair_device->setVisible(type == PrimeType::UNPAIRED);
   });
 
 #ifndef SUNNYPILOT
+=======
+  QObject::connect(uiState()->prime_state, &PrimeState::changed, [this] (PrimeState::Type type) {
+    pair_device->setVisible(type == PrimeState::PRIME_TYPE_UNPAIRED);
+  });
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   QObject::connect(uiState(), &UIState::offroadTransition, [=](bool offroad) {
     for (auto btn : findChildren<ButtonControl *>()) {
       if (btn != pair_device) {
@@ -264,10 +285,16 @@ DevicePanel::DevicePanel(SettingsWindow *parent) : ListWidget(parent) {
       }
     }
   });
+<<<<<<< HEAD
 #endif
 
   // power buttons
   power_layout = new QHBoxLayout();
+=======
+
+  // power buttons
+  QHBoxLayout *power_layout = new QHBoxLayout();
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   power_layout->setSpacing(30);
 
   QPushButton *reboot_btn = new QPushButton(tr("Reboot"));
@@ -290,14 +317,22 @@ DevicePanel::DevicePanel(SettingsWindow *parent) : ListWidget(parent) {
     #poweroff_btn { height: 120px; border-radius: 15px; background-color: #E22C2C; }
     #poweroff_btn:pressed { background-color: #FF2424; }
   )");
+<<<<<<< HEAD
   RETURN_IF_SUNNYPILOT
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   addItem(power_layout);
 }
 
 void DevicePanel::updateCalibDescription() {
   QString desc =
+<<<<<<< HEAD
       tr("sunnypilot requires the device to be mounted within 4° left or right and "
          "within 5° up or 9° down. sunnypilot is continuously calibrating, resetting is rarely required.");
+=======
+      tr("openpilot requires the device to be mounted within 4° left or right and "
+         "within 5° up or 9° down. openpilot is continuously calibrating, resetting is rarely required.");
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   std::string calib_bytes = params.get("CalibrationParams");
   if (!calib_bytes.empty()) {
     try {
@@ -344,11 +379,14 @@ void DevicePanel::poweroff() {
   }
 }
 
+<<<<<<< HEAD
 void DevicePanel::showEvent(QShowEvent *event) {
   pair_device->setVisible(uiState()->primeType() == PrimeType::UNPAIRED);
   ListWidget::showEvent(event);
 }
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 void SettingsWindow::showEvent(QShowEvent *event) {
   setCurrentPanel(0);
 }
@@ -362,7 +400,10 @@ void SettingsWindow::setCurrentPanel(int index, const QString &param) {
 }
 
 SettingsWindow::SettingsWindow(QWidget *parent) : QFrame(parent) {
+<<<<<<< HEAD
   RETURN_IF_SUNNYPILOT
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   // setup two main layouts
   sidebar_widget = new QWidget;
@@ -396,9 +437,18 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QFrame(parent) {
   TogglesPanel *toggles = new TogglesPanel(this);
   QObject::connect(this, &SettingsWindow::expandToggleDescription, toggles, &TogglesPanel::expandToggleDescription);
 
+<<<<<<< HEAD
   QList<QPair<QString, QWidget *>> panels = {
     {tr("Device"), device},
     {tr("Network"), new Networking(this)},
+=======
+  auto networking = new Networking(this);
+  QObject::connect(uiState()->prime_state, &PrimeState::changed, networking, &Networking::setPrimeType);
+
+  QList<QPair<QString, QWidget *>> panels = {
+    {tr("Device"), device},
+    {tr("Network"), networking},
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     {tr("Toggles"), toggles},
     {tr("Software"), new SoftwarePanel(this)},
   };

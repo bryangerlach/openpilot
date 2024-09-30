@@ -1,8 +1,11 @@
 using Cxx = import "./include/c++.capnp";
 $Cxx.namespace("cereal");
 
+<<<<<<< HEAD
 using Car = import "car.capnp";
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 @0xb526ba661d550a59;
 
 # custom.capnp: a home for empty structs reserved for custom forks
@@ -10,6 +13,7 @@ using Car = import "car.capnp";
 # cereal, so use these if you want custom events in your fork.
 
 # you can rename the struct, but don't change the identifier
+<<<<<<< HEAD
 
 enum LongitudinalPersonalitySP {
   aggressive @0;
@@ -201,6 +205,27 @@ struct ModelDataV2SP @0xf98d843bfd7004a3 {
   customModel @2 :Bool;
   modelGeneration @3 :ModelGeneration;
   modelCapabilities @4 :UInt32;
+=======
+struct CustomReserved0 @0x81c2f05a394cf4af {
+}
+
+struct CustomReserved1 @0xaedffd8f31e7b55d {
+}
+
+struct CustomReserved2 @0xf35cc4560bbf6ec2 {
+}
+
+struct CustomReserved3 @0xda96579883444c35 {
+}
+
+struct CustomReserved4 @0x80ae746ee2596b11 {
+}
+
+struct CustomReserved5 @0xa5cd762cd951a455 {
+}
+
+struct CustomReserved6 @0xf98d843bfd7004a3 {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }
 
 struct CustomReserved7 @0xb86e6369214c01c8 {

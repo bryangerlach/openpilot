@@ -25,7 +25,11 @@ class TestSimBridgeBase:
     p_manager = subprocess.Popen("./launch_openpilot.sh", cwd=SIM_DIR)
     self.processes.append(p_manager)
 
+<<<<<<< HEAD
     sm = messaging.SubMaster(['controlsState', 'onroadEvents', 'managerState'])
+=======
+    sm = messaging.SubMaster(['selfdriveState', 'onroadEvents', 'managerState'])
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     q = Queue()
     bridge = self.create_bridge()
     p_bridge = bridge.run(q, retries=10)
@@ -63,7 +67,11 @@ class TestSimBridgeBase:
     while time.monotonic() < start_time + max_time_per_step:
       sm.update()
 
+<<<<<<< HEAD
       if sm.all_alive() and sm['controlsState'].active:
+=======
+      if sm.all_alive() and sm['selfdriveState'].active:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         control_active += 1
 
         if control_active == min_counts_control_active:

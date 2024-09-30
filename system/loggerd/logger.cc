@@ -40,7 +40,11 @@ kj::Array<capnp::word> logger_build_init_data() {
   init.setOsVersion(util::read_file("/VERSION"));
 
   // log params
+<<<<<<< HEAD
   auto params = Params(util::getenv("PARAMS_COPY_PATH", ""));
+=======
+  Params params(util::getenv("PARAMS_COPY_PATH", ""));
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   std::map<std::string, std::string> params_map = params.readAll();
 
   init.setGitCommit(params_map["GitCommit"]);
@@ -89,6 +93,7 @@ kj::Array<capnp::word> logger_build_init_data() {
   return capnp::messageToFlatArray(msg);
 }
 
+<<<<<<< HEAD
 kj::Array<capnp::word> logger_build_params_data_car_start() {
   MessageBuilder msg;
   auto init = msg.initEvent().initInitData();
@@ -111,6 +116,8 @@ kj::Array<capnp::word> logger_build_params_data_car_start() {
   return capnp::messageToFlatArray(msg);
 }
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 std::string logger_get_identifier(std::string key) {
   // a log identifier is a 32 bit counter, plus a 10 character unique ID.
   // e.g. 000001a3--c20ba54385

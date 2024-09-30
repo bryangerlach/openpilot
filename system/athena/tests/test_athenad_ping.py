@@ -65,7 +65,11 @@ class TestAthenadPing:
     mock_create_connection.assert_called_once()
     mock_create_connection.reset_mock()
 
+<<<<<<< HEAD
     # check normal behaviour, server pings on connection
+=======
+    # check normal behavior, server pings on connection
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     with subtests.test("Wi-Fi: receives ping"), Timeout(70, "no ping received"):
       while not self._received_ping():
         time.sleep(0.1)

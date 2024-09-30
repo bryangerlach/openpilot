@@ -1,5 +1,16 @@
 #pragma once
 
+<<<<<<< HEAD
+=======
+// has to be in this order
+#ifdef __linux__
+#include "third_party/linux/include/v4l2-controls.h"
+#include <linux/videodev2.h>
+#else
+#define V4L2_BUF_FLAG_KEYFRAME 8
+#endif
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 #include <cassert>
 #include <cstdint>
 #include <memory>
@@ -9,11 +20,16 @@
 #include "cereal/messaging/messaging.h"
 #include "msgq/visionipc/visionipc.h"
 #include "common/queue.h"
+<<<<<<< HEAD
 #include "system/camerad/cameras/camera_common.h"
 #include "system/loggerd/loggerd.h"
 
 #define V4L2_BUF_FLAG_KEYFRAME 8
 
+=======
+#include "system/loggerd/loggerd.h"
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 class VideoEncoder {
 public:
   VideoEncoder(const EncoderInfo &encoder_info, int in_width, int in_height);

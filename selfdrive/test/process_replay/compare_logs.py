@@ -141,7 +141,11 @@ def format_diff(results, log_paths, ref_commit):
 if __name__ == "__main__":
   log1 = list(LogReader(sys.argv[1]))
   log2 = list(LogReader(sys.argv[2]))
+<<<<<<< HEAD
   ignore_fields = sys.argv[3:] or ["logMonoTime", "controlsState.startMonoTime", "controlsState.cumLagMs"]
+=======
+  ignore_fields = sys.argv[3:] or ["logMonoTime"]
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   results = {"segment": {"proc": compare_logs(log1, log2, ignore_fields)}}
   log_paths = {"segment": {"proc": {"ref": sys.argv[1], "new": sys.argv[2]}}}
   diff_short, diff_long, failed = format_diff(results, log_paths, None)

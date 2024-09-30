@@ -4,7 +4,11 @@ openpilot in simulator
 openpilot implements a [bridge](run_bridge.py) that allows it to run in the [MetaDrive simulator](https://github.com/metadriverse/metadrive).
 
 ## Launching openpilot
+<<<<<<< HEAD
 First, start openpilot. Note that you will either need a [mapbox token](https://docs.mapbox.com/help/getting-started/access-tokens/#how-access-tokens-work) (set with ```export MAPBOX_TOKEN="1234"```), or to disable mapsd with ```export BLOCK=mapsd```
+=======
+First, start openpilot.
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 ``` bash
 # Run locally
 ./tools/sim/launch_openpilot.sh

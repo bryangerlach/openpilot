@@ -37,7 +37,11 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
 
   QObject::connect(uiState(), &UIState::uiUpdate, this, &Sidebar::updateState);
 
+<<<<<<< HEAD
   pm = std::make_unique<PubMaster, const std::initializer_list<const char *>>({"userFlag"});
+=======
+  pm = std::make_unique<PubMaster>(std::vector<const char*>{"userFlag"});
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }
 
 void Sidebar::mousePressEvent(QMouseEvent *event) {
@@ -90,7 +94,10 @@ void Sidebar::updateState(const UIState &s) {
   }
   setProperty("connectStatus", QVariant::fromValue(connectStatus));
 
+<<<<<<< HEAD
 #ifndef SUNNYPILOT
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   ItemStatus tempStatus = {{tr("TEMP"), tr("HIGH")}, danger_color};
   auto ts = deviceState.getThermalStatus();
   if (ts == cereal::DeviceState::ThermalStatus::GREEN) {
@@ -99,23 +106,32 @@ void Sidebar::updateState(const UIState &s) {
     tempStatus = {{tr("TEMP"), tr("OK")}, warning_color};
   }
   setProperty("tempStatus", QVariant::fromValue(tempStatus));
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   ItemStatus pandaStatus = {{tr("VEHICLE"), tr("ONLINE")}, good_color};
   if (s.scene.pandaType == cereal::PandaState::PandaType::UNKNOWN) {
     pandaStatus = {{tr("NO"), tr("PANDA")}, danger_color};
+<<<<<<< HEAD
   } else if (s.scene.started && !sm["liveLocationKalman"].getLiveLocationKalman().getGpsOK()) {
     pandaStatus = {{tr("GPS"), tr("SEARCH")}, warning_color};
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   }
   setProperty("pandaStatus", QVariant::fromValue(pandaStatus));
 }
 
 void Sidebar::paintEvent(QPaintEvent *event) {
   QPainter p(this);
+<<<<<<< HEAD
   DrawSidebar(p); // Because derived classes implement this. Otherwise QPainter gets terminated before time.
 }
 
 void Sidebar::DrawSidebar(QPainter &p){
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   p.setPen(Qt::NoPen);
   p.setRenderHint(QPainter::Antialiasing);
 
@@ -141,7 +157,10 @@ void Sidebar::DrawSidebar(QPainter &p){
   p.setPen(QColor(0xff, 0xff, 0xff));
   const QRect r = QRect(50, 247, 100, 50);
   p.drawText(r, Qt::AlignCenter, net_type);
+<<<<<<< HEAD
   RETURN_IF_SUNNYPILOT // Because we draw ourselves
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   // metrics
   drawMetric(p, temp_status.first, temp_status.second, 338);

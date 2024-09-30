@@ -52,5 +52,8 @@ protected:
 };
 
 kj::Array<capnp::word> logger_build_init_data();
+<<<<<<< HEAD
 kj::Array<capnp::word> logger_build_params_data_car_start();
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 std::string logger_get_identifier(std::string key);

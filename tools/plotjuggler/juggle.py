@@ -10,12 +10,22 @@ import requests
 import argparse
 from functools import partial
 
+<<<<<<< HEAD
 from openpilot.common.basedir import BASEDIR
 from openpilot.selfdrive.car.fingerprints import MIGRATION
+=======
+from opendbc.car.fingerprints import MIGRATION
+from openpilot.common.basedir import BASEDIR
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.tools.lib.logreader import LogReader, ReadMode, save_log
 
 juggle_dir = os.path.dirname(os.path.realpath(__file__))
 
+<<<<<<< HEAD
+=======
+os.environ['LD_LIBRARY_PATH'] = os.environ.get('LD_LIBRARY_PATH', '') + f":{juggle_dir}/bin/"
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 DEMO_ROUTE = "a2a0ccea32023010|2023-07-27--13-01-19"
 RELEASES_URL = "https://github.com/commaai/PlotJuggler/releases/download/latest"
 INSTALL_DIR = os.path.join(juggle_dir, "bin")
@@ -83,7 +93,11 @@ def juggle_route(route_or_segment_name, can, layout, dbc=None):
   if dbc is None:
     for cp in [m for m in all_data if m.which() == 'carParams']:
       try:
+<<<<<<< HEAD
         DBC = __import__(f"openpilot.selfdrive.car.{cp.carParams.carName}.values", fromlist=['DBC']).DBC
+=======
+        DBC = __import__(f"opendbc.car.{cp.carParams.carName}.values", fromlist=['DBC']).DBC
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         fingerprint = cp.carParams.carFingerprint
         dbc = DBC[MIGRATION.get(fingerprint, fingerprint)]['pt']
       except Exception:

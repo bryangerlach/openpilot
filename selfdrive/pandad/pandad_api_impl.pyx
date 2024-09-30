@@ -50,7 +50,12 @@ def can_capnp_to_list(strings, msgtype='can'):
   cdef vector[CanData].iterator it = data.begin()
   while it != data.end():
     d = &deref(it)
+<<<<<<< HEAD
     frames = [[f.address, (<char *>&f.dat[0])[:f.dat.size()], f.src] for f in d.frames]
     result.append([d.nanos, frames])
+=======
+    frames = [(f.address, (<char *>&f.dat[0])[:f.dat.size()], f.src) for f in d.frames]
+    result.append((d.nanos, frames))
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     preinc(it)
   return result

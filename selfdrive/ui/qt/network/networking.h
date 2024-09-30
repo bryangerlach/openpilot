@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "selfdrive/ui/qt/network/wifi_manager.h"
+<<<<<<< HEAD
 #include "selfdrive/ui/qt/widgets/input.h"
 #include "selfdrive/ui/qt/widgets/ssh_keys.h"
 #include "selfdrive/ui/qt/widgets/toggle.h"
@@ -13,6 +14,12 @@
 #else
 #include "selfdrive/ui/qt/widgets/controls.h"
 #endif
+=======
+#include "selfdrive/ui/qt/prime_state.h"
+#include "selfdrive/ui/qt/widgets/input.h"
+#include "selfdrive/ui/qt/widgets/ssh_keys.h"
+#include "selfdrive/ui/qt/widgets/toggle.h"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 class WifiItem : public QWidget {
   Q_OBJECT
@@ -63,6 +70,10 @@ class AdvancedNetworking : public QWidget {
   Q_OBJECT
 public:
   explicit AdvancedNetworking(QWidget* parent = 0, WifiManager* wifi = 0);
+<<<<<<< HEAD
+=======
+  void setGsmVisible(bool visible);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 private:
   LabelControl* ipLabel;
@@ -88,6 +99,10 @@ class Networking : public QFrame {
 
 public:
   explicit Networking(QWidget* parent = 0, bool show_advanced = true);
+<<<<<<< HEAD
+=======
+  void setPrimeType(PrimeState::Type type);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   WifiManager* wifi = nullptr;
 
 private:
@@ -105,4 +120,8 @@ public slots:
 private slots:
   void connectToNetwork(const Network n);
   void wrongPassword(const QString &ssid);
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

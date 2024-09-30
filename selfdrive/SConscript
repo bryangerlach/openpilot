@@ -2,6 +2,9 @@ SConscript(['pandad/SConscript'])
 SConscript(['controls/lib/lateral_mpc_lib/SConscript'])
 SConscript(['controls/lib/longitudinal_mpc_lib/SConscript'])
 SConscript(['locationd/SConscript'])
+<<<<<<< HEAD
 SConscript(['navd/SConscript'])
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 SConscript(['modeld/SConscript'])
 SConscript(['ui/SConscript'])

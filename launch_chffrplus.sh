@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/usr/bin/bash
+=======
+#!/usr/bin/env bash
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 if [ -z "$BASEDIR" ]; then
   BASEDIR="/data/openpilot"
@@ -86,8 +90,12 @@ function launch {
   if [ ! -f $DIR/prebuilt ]; then
     ./build.py
   fi
+<<<<<<< HEAD
 
   ./mapd_installer.py; ./manager.py
+=======
+  ./manager.py
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   # if broken, keep on screen error
   while true; do sleep 1; done

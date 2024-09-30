@@ -23,7 +23,11 @@ MSGQ_TO_SERVICE = {
 }
 SERVICE_TO_DURATIONS = {
   'camerad': ['processingTime'],
+<<<<<<< HEAD
   'modeld': ['modelExecutionTime', 'gpuExecutionTime'],
+=======
+  'modeld': ['modelExecutionTime', 'gpuExecutionTimeDEPRECATED'],
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   'plannerd': ['solverExecutionTime'],
 }
 

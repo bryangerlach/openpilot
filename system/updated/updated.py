@@ -17,7 +17,11 @@ from openpilot.common.params import Params
 from openpilot.common.time import system_time_valid
 from openpilot.common.markdown import parse_markdown
 from openpilot.common.swaglog import cloudlog
+<<<<<<< HEAD
 from openpilot.selfdrive.controls.lib.alertmanager import set_offroad_alert
+=======
+from openpilot.selfdrive.selfdrived.alertmanager import set_offroad_alert
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.system.hardware import AGNOS, HARDWARE
 from openpilot.system.version import get_build_metadata
 
@@ -86,7 +90,11 @@ def set_consistent_flag(consistent: bool) -> None:
 
 def parse_release_notes(basedir: str) -> bytes:
   try:
+<<<<<<< HEAD
     with open(os.path.join(basedir, "CHANGELOGS.md"), "rb") as f:
+=======
+    with open(os.path.join(basedir, "RELEASES.md"), "rb") as f:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       r = f.read().split(b'\n\n', 1)[0]  # Slice latest release notes
     try:
       return bytes(parse_markdown(r.decode("utf-8")), encoding="utf-8")

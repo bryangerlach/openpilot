@@ -148,7 +148,11 @@ QWidget *VideoWidget::createCameraWidget() {
 
   QStackedLayout *stacked = new QStackedLayout();
   stacked->setStackingMode(QStackedLayout::StackAll);
+<<<<<<< HEAD
   stacked->addWidget(cam_widget = new StreamCameraView("camerad", VISION_STREAM_ROAD, false));
+=======
+  stacked->addWidget(cam_widget = new StreamCameraView("camerad", VISION_STREAM_ROAD));
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   cam_widget->setMinimumHeight(MIN_VIDEO_HEIGHT);
   cam_widget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
   stacked->addWidget(alert_label = new InfoLabel(this));
@@ -277,11 +281,19 @@ void Slider::parseQLog(std::shared_ptr<LogReader> qlog) {
         std::lock_guard lk(mutex);
         thumbnails[thumb.getTimestampEof()] = scaled;
       }
+<<<<<<< HEAD
     } else if (e.which == cereal::Event::Which::CONTROLS_STATE) {
       capnp::FlatArrayMessageReader reader(e.data);
       auto cs = reader.getRoot<cereal::Event>().getControlsState();
       if (cs.getAlertType().size() > 0 && cs.getAlertText1().size() > 0 &&
           cs.getAlertSize() != cereal::ControlsState::AlertSize::NONE) {
+=======
+    } else if (e.which == cereal::Event::Which::SELFDRIVE_STATE) {
+      capnp::FlatArrayMessageReader reader(e.data);
+      auto cs = reader.getRoot<cereal::Event>().getSelfdriveState();
+      if (cs.getAlertType().size() > 0 && cs.getAlertText1().size() > 0 &&
+          cs.getAlertSize() != cereal::SelfdriveState::AlertSize::NONE) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         std::lock_guard lk(mutex);
         alerts.emplace(e.mono_time, AlertInfo{cs.getAlertStatus(), cs.getAlertText1().cStr(), cs.getAlertText2().cStr()});
       }
@@ -397,9 +409,15 @@ void InfoLabel::paintEvent(QPaintEvent *event) {
   }
   if (alert_info.text1.size() > 0) {
     QColor color = timeline_colors[(int)TimelineType::AlertInfo];
+<<<<<<< HEAD
     if (alert_info.status == cereal::ControlsState::AlertStatus::USER_PROMPT) {
       color = timeline_colors[(int)TimelineType::AlertWarning];
     } else if (alert_info.status == cereal::ControlsState::AlertStatus::CRITICAL) {
+=======
+    if (alert_info.status == cereal::SelfdriveState::AlertStatus::USER_PROMPT) {
+      color = timeline_colors[(int)TimelineType::AlertWarning];
+    } else if (alert_info.status == cereal::SelfdriveState::AlertStatus::CRITICAL) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       color = timeline_colors[(int)TimelineType::AlertCritical];
     }
     color.setAlphaF(0.5);
@@ -420,8 +438,13 @@ void InfoLabel::paintEvent(QPaintEvent *event) {
   }
 }
 
+<<<<<<< HEAD
 StreamCameraView::StreamCameraView(std::string stream_name, VisionStreamType stream_type, bool zoom, QWidget *parent)
     : CameraWidget(stream_name, stream_type, zoom, parent) {
+=======
+StreamCameraView::StreamCameraView(std::string stream_name, VisionStreamType stream_type, QWidget *parent)
+    : CameraWidget(stream_name, stream_type, parent) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   fade_animation = new QPropertyAnimation(this, "overlayOpacity");
   fade_animation->setDuration(500);
   fade_animation->setStartValue(0.2f);

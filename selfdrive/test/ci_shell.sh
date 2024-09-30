@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 #!/bin/bash -e
+=======
+#!/usr/bin/env bash
+set -e
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 OP_ROOT="$DIR/../../"

@@ -68,12 +68,19 @@ public:
 public slots:
   void enableAccept();
 
+<<<<<<< HEAD
 protected:
   QPushButton *accept_btn;
 
 private:
   void showEvent(QShowEvent *event) override;
 
+=======
+private:
+  void showEvent(QShowEvent *event) override;
+
+  QPushButton *accept_btn;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 signals:
   void acceptedTerms();
@@ -99,14 +106,25 @@ class OnboardingWindow : public QStackedWidget {
 public:
   explicit OnboardingWindow(QWidget *parent = 0);
   inline void showTrainingGuide() { setCurrentIndex(1); }
+<<<<<<< HEAD
   virtual inline bool completed() const { return accepted_terms && training_done; }
 
 protected:
   virtual void updateActiveScreen();
+=======
+  inline bool completed() const { return accepted_terms && training_done; }
+
+private:
+  void updateActiveScreen();
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   Params params;
   bool accepted_terms = false, training_done = false;
 
 signals:
   void onboardingDone();
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

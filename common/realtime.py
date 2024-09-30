@@ -2,11 +2,17 @@
 import gc
 import os
 import time
+<<<<<<< HEAD
 import threading
 import psutil
 from collections import deque
 
 from openpilot.common.threadname import getthreadname
+=======
+from collections import deque
+
+from setproctitle import getproctitle
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 from openpilot.system.hardware import PC
 
@@ -46,6 +52,7 @@ def config_realtime_process(cores: int | list[int], priority: int) -> None:
   set_core_affinity(c)
 
 
+<<<<<<< HEAD
 def set_thread_affinity(thread: threading.Thread, cores: list[int]) -> None:
   try:
     process = psutil.Process(thread.ident)
@@ -54,6 +61,8 @@ def set_thread_affinity(thread: threading.Thread, cores: list[int]) -> None:
     print(f"Error setting thread affinity: {e}")
 
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 class Ratekeeper:
   def __init__(self, rate: float, print_delay_threshold: float | None = 0.0) -> None:
     """Rate in Hz for ratekeeping. print_delay_threshold must be nonnegative."""
@@ -62,7 +71,11 @@ class Ratekeeper:
     self._print_delay_threshold = print_delay_threshold
     self._frame = 0
     self._remaining = 0.0
+<<<<<<< HEAD
     self._thread_name = getthreadname()
+=======
+    self._process_name = getproctitle()
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self._dts = deque([self._interval], maxlen=100)
     self._last_monitor_time = time.monotonic()
 
@@ -97,7 +110,11 @@ class Ratekeeper:
     remaining = self._next_frame_time - time.monotonic()
     self._next_frame_time += self._interval
     if self._print_delay_threshold is not None and remaining < -self._print_delay_threshold:
+<<<<<<< HEAD
       print(f"{self._thread_name} lagging by {-remaining * 1000:.2f} ms")
+=======
+      print(f"{self._process_name} lagging by {-remaining * 1000:.2f} ms")
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       lagged = True
     self._frame += 1
     self._remaining = remaining

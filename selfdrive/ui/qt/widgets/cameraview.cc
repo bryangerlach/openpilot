@@ -7,6 +7,7 @@
 #endif
 
 #include <cmath>
+<<<<<<< HEAD
 #include <set>
 #include <string>
 #include <utility>
@@ -14,6 +15,9 @@
 #include <QApplication>
 #include <QOpenGLBuffer>
 #include <QOffscreenSurface>
+=======
+#include <QApplication>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 namespace {
 
@@ -66,6 +70,7 @@ const char frame_fragment_shader[] =
   "}\n";
 #endif
 
+<<<<<<< HEAD
 mat4 get_driver_view_transform(int screen_width, int screen_height, int stream_width, int stream_height, bool reverse_dm_cam = false) {
   const float driver_view_ratio = 2.0;
   const float yscale = stream_height * driver_view_ratio / stream_width;
@@ -101,6 +106,12 @@ mat4 get_fit_view_transform(float widget_aspect_ratio, float frame_aspect_ratio)
 
 CameraWidget::CameraWidget(std::string stream_name, VisionStreamType type, bool zoom, QWidget* parent) :
                           stream_name(stream_name), active_stream_type(type), requested_stream_type(type), zoomed_view(zoom), QOpenGLWidget(parent) {
+=======
+} // namespace
+
+CameraWidget::CameraWidget(std::string stream_name, VisionStreamType type, QWidget* parent) :
+                          stream_name(stream_name), active_stream_type(type), requested_stream_type(type), QOpenGLWidget(parent) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   setAttribute(Qt::WA_OpaquePaintEvent);
   qRegisterMetaType<std::set<VisionStreamType>>("availableStreams");
   QObject::connect(this, &CameraWidget::vipcThreadConnected, this, &CameraWidget::vipcConnected, Qt::BlockingQueuedConnection);
@@ -116,7 +127,11 @@ CameraWidget::~CameraWidget() {
     glDeleteVertexArrays(1, &frame_vao);
     glDeleteBuffers(1, &frame_vbo);
     glDeleteBuffers(1, &frame_ibo);
+<<<<<<< HEAD
     glDeleteBuffers(2, textures);
+=======
+    glDeleteTextures(2, textures);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   }
   doneCurrent();
 }
@@ -215,6 +230,7 @@ void CameraWidget::availableStreamsUpdated(std::set<VisionStreamType> streams) {
   available_streams = streams;
 }
 
+<<<<<<< HEAD
 void CameraWidget::updateFrameMat() {
   int w = glWidth(), h = glHeight();
 
@@ -268,6 +284,21 @@ void CameraWidget::updateFrameMat() {
 
 void CameraWidget::updateCalibration(const mat3 &calib) {
   calibration = calib;
+=======
+mat4 CameraWidget::calcFrameMatrix() {
+  // Scale the frame to fit the widget while maintaining the aspect ratio.
+  float widget_aspect_ratio = (float)width() / height();
+  float frame_aspect_ratio = (float)stream_width / stream_height;
+  float zx = std::min(frame_aspect_ratio / widget_aspect_ratio, 1.0f);
+  float zy = std::min(widget_aspect_ratio / frame_aspect_ratio, 1.0f);
+
+  return mat4{{
+    zx, 0.0, 0.0, 0.0,
+    0.0, zy, 0.0, 0.0,
+    0.0, 0.0, 1.0, 0.0,
+    0.0, 0.0, 0.0, 1.0,
+  }};
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }
 
 void CameraWidget::paintGL() {
@@ -294,7 +325,11 @@ void CameraWidget::paintGL() {
   VisionBuf *frame = frames[frame_idx].second;
   assert(frame != nullptr);
 
+<<<<<<< HEAD
   updateFrameMat();
+=======
+  auto frame_mat = calcFrameMatrix();
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   glViewport(0, 0, glWidth(), glHeight());
   glBindVertexArray(frame_vao);

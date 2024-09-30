@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import math
 import numpy as np
 
@@ -16,6 +17,11 @@ V_CRUISE_UNSET = 255
 V_CRUISE_INITIAL = 40
 V_CRUISE_INITIAL_EXPERIMENTAL_MODE = 105
 IMPERIAL_INCREMENT = round(CV.MPH_TO_KPH, 1)  # round here to avoid rounding errors incrementing set speed
+=======
+from cereal import log
+from openpilot.common.numpy_fast import clip
+from openpilot.common.realtime import DT_CTRL
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 MIN_SPEED = 1.0
 CONTROL_N = 17
@@ -25,6 +31,7 @@ CAR_ROTATION_RADIUS = 0.0
 MAX_LATERAL_JERK = 5.0
 MAX_VEL_ERR = 5.0
 
+<<<<<<< HEAD
 ButtonEvent = car.CarState.ButtonEvent
 ButtonType = car.CarState.ButtonEvent.Type
 CRUISE_LONG_PRESS = 50
@@ -237,6 +244,8 @@ class VCruiseHelper:
     self.is_metric_prev = is_metric
 
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 def clip_curvature(v_ego, prev_curvature, new_curvature):
   v_ego = max(MIN_SPEED, v_ego)
   max_curvature_rate = MAX_LATERAL_JERK / (v_ego**2) # inexact calculation, check https://github.com/commaai/openpilot/pull/24755
@@ -247,6 +256,7 @@ def clip_curvature(v_ego, prev_curvature, new_curvature):
   return safe_desired_curvature
 
 
+<<<<<<< HEAD
 def get_lag_adjusted_curvature(CP, v_ego, psis, curvatures):
   if len(psis) != CONTROL_N:
     psis = [0.0]*CONTROL_N
@@ -273,12 +283,15 @@ def get_lag_adjusted_curvature(CP, v_ego, psis, curvatures):
   return safe_desired_curvature
 
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 def get_speed_error(modelV2: log.ModelDataV2, v_ego: float) -> float:
   # ToDo: Try relative error, and absolute speed
   if len(modelV2.temporalPose.trans):
     vel_err = clip(modelV2.temporalPose.trans[0] - v_ego, -MAX_VEL_ERR, MAX_VEL_ERR)
     return float(vel_err)
   return 0.0
+<<<<<<< HEAD
 
 
 def get_road_edge(carstate, model_v2, toggle):
@@ -310,3 +323,5 @@ def get_road_edge(carstate, model_v2, toggle):
     road_edge = False
 
   return road_edge
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

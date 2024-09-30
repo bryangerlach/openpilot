@@ -12,7 +12,11 @@
 #include "cereal/gen/cpp/car.capnp.h"
 #include "cereal/gen/cpp/log.capnp.h"
 #include "panda/board/health.h"
+<<<<<<< HEAD
 #include "panda/board/can_definitions.h"
+=======
+#include "panda/board/can.h"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 #include "selfdrive/pandad/panda_comms.h"
 
 #define USB_TX_SOFT_LIMIT   (0x100U)
@@ -79,7 +83,11 @@ public:
   void set_can_speed_kbps(uint16_t bus, uint16_t speed);
   void set_data_speed_kbps(uint16_t bus, uint16_t speed);
   void set_canfd_non_iso(uint16_t bus, bool non_iso);
+<<<<<<< HEAD
   void can_send(capnp::List<cereal::CanData>::Reader can_data_list);
+=======
+  void can_send(const capnp::List<cereal::CanData>::Reader &can_data_list);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   bool can_receive(std::vector<can_frame>& out_vec);
   void can_reset_communications();
 

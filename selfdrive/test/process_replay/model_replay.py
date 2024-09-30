@@ -73,6 +73,7 @@ if __name__ == "__main__":
   ref_commit_fn = os.path.join(replay_dir, "model_replay_ref_commit")
 
   # load logs
+<<<<<<< HEAD
   lr = list(LogReader(get_url(TEST_ROUTE, SEGMENT)))
   frs = {
     'roadCameraState': FrameReader(get_url(TEST_ROUTE, SEGMENT, log_type="fcamera"), readahead=True),
@@ -105,6 +106,15 @@ if __name__ == "__main__":
   else:
     os.environ['MAPS_HOST'] = BASE_URL.rstrip('/')
 
+=======
+  lr = list(LogReader(get_url(TEST_ROUTE, SEGMENT, "rlog.bz2")))
+  frs = {
+    'roadCameraState': FrameReader(get_url(TEST_ROUTE, SEGMENT, "fcamera.hevc"), readahead=True),
+    'driverCameraState': FrameReader(get_url(TEST_ROUTE, SEGMENT, "dcamera.hevc"), readahead=True),
+    'wideRoadCameraState': FrameReader(get_url(TEST_ROUTE, SEGMENT, "ecamera.hevc"), readahead=True)
+  }
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   log_msgs = []
   # run replays
   if not NO_MODEL:
@@ -130,6 +140,7 @@ if __name__ == "__main__":
       ignore = [
         'logMonoTime',
         'drivingModelData.frameDropPerc',
+<<<<<<< HEAD
         'modelV2.frameDropPerc',
         'modelV2.modelExecutionTime',
         'driverStateV2.modelExecutionTime',
@@ -146,6 +157,33 @@ if __name__ == "__main__":
         ]
       # TODO this tolerance is absurdly large
       tolerance = 2.0 if PC else None
+=======
+        'drivingModelData.modelExecutionTime',
+        'modelV2.frameDropPerc',
+        'modelV2.modelExecutionTime',
+        'driverStateV2.modelExecutionTime',
+        'driverStateV2.gpuExecutionTime'
+      ]
+      if PC:
+        # TODO We ignore whole bunch so we can compare important stuff
+        # like posenet with reasonable tolerance
+        ignore += ['modelV2.acceleration.x',
+                   'modelV2.position.x',
+                   'modelV2.position.xStd',
+                   'modelV2.position.y',
+                   'modelV2.position.yStd',
+                   'modelV2.position.z',
+                   'modelV2.position.zStd',
+                   'drivingModelData.path.xCoefficients',]
+        for i in range(3):
+          for field in ('x', 'y', 'v', 'a'):
+            ignore.append(f'modelV2.leadsV3.{i}.{field}')
+            ignore.append(f'modelV2.leadsV3.{i}.{field}Std')
+        for i in range(4):
+          for field in ('x', 'y', 'z', 't'):
+            ignore.append(f'modelV2.laneLines.{i}.{field}')
+      tolerance = .2 if PC else None
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       results: Any = {TEST_ROUTE: {}}
       log_paths: Any = {TEST_ROUTE: {"models": {'ref': BASE_URL + log_fn, 'new': log_fn}}}
       results[TEST_ROUTE]["models"] = compare_logs(cmp_log, log_msgs, tolerance=tolerance, ignore_fields=ignore)

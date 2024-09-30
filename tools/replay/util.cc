@@ -329,8 +329,22 @@ std::string decompressZST(const std::byte *in, size_t in_size, std::atomic<bool>
 
   // Initialize input and output buffers
   ZSTD_inBuffer input = {in, in_size, 0};
+<<<<<<< HEAD
   std::string decompressedData;
   const size_t bufferSize = ZSTD_DStreamOutSize();  // recommended output buffer size
+=======
+
+  // Estimate and reserve memory for decompressed data
+  size_t estimatedDecompressedSize = ZSTD_getFrameContentSize(in, in_size);
+  if (estimatedDecompressedSize == ZSTD_CONTENTSIZE_ERROR || estimatedDecompressedSize == ZSTD_CONTENTSIZE_UNKNOWN) {
+    estimatedDecompressedSize = in_size * 2;  // Use a fallback size
+  }
+
+  std::string decompressedData;
+  decompressedData.reserve(estimatedDecompressedSize);
+
+  const size_t bufferSize = ZSTD_DStreamOutSize();  // Recommended output buffer size
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   std::string outputBuffer(bufferSize, '\0');
 
   while (input.pos < input.size && !(abort && *abort)) {

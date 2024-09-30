@@ -63,7 +63,11 @@ bool ReplayStream::loadRoute(const QString &route, const QString &data_dir, uint
       QString message;
       if (auth_content.empty()) {
         message = "Authentication Required. Please run the following command to authenticate:\n\n"
+<<<<<<< HEAD
                   "python tools/lib/auth.py\n\n"
+=======
+                  "python3 tools/lib/auth.py\n\n"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
                   "This will grant access to routes from your comma account.";
       } else {
         message = tr("Access Denied. You do not have permission to access route:\n\n%1\n\n"

@@ -5,11 +5,15 @@
 #include <QPushButton>
 
 #include "common/util.h"
+<<<<<<< HEAD
 #ifdef SUNNYPILOT
 #include "selfdrive/ui/sunnypilot/ui.h"
 #else
 #include "selfdrive/ui/ui.h"
 #endif
+=======
+#include "selfdrive/ui/ui.h"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 class RecordButton : public QPushButton {
   Q_OBJECT

@@ -6,6 +6,7 @@ import numpy as np
 import cereal.messaging as messaging
 from cereal import car, log
 from pathlib import Path
+<<<<<<< HEAD
 from openpilot.common.threadname import setthreadname
 from cereal.messaging import PubMaster, SubMaster
 from msgq.visionipc import VisionIpcClient, VisionStreamType, VisionBuf
@@ -13,22 +14,40 @@ from openpilot.common.swaglog import cloudlog
 from openpilot.common.params import Params
 from openpilot.common.realtime import DT_MDL
 from openpilot.common.numpy_fast import interp
+=======
+from setproctitle import setproctitle
+from cereal.messaging import PubMaster, SubMaster
+from msgq.visionipc import VisionIpcClient, VisionStreamType, VisionBuf
+from opendbc.car.car_helpers import get_demo_car_params
+from openpilot.common.swaglog import cloudlog
+from openpilot.common.params import Params
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.common.filter_simple import FirstOrderFilter
 from openpilot.common.realtime import config_realtime_process
 from openpilot.common.transformations.camera import DEVICE_CAMERAS
 from openpilot.common.transformations.model import get_warp_matrix
 from openpilot.system import sentry
+<<<<<<< HEAD
 from openpilot.selfdrive.car.car_helpers import get_demo_car_params
 from openpilot.selfdrive.controls.lib.desire_helper import DesireHelper
 from openpilot.selfdrive.modeld.custom_model_metadata import CustomModelMetadata, ModelCapabilities
+=======
+from openpilot.selfdrive.car.card import convert_to_capnp
+from openpilot.selfdrive.controls.lib.desire_helper import DesireHelper
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.selfdrive.modeld.runners import ModelRunner, Runtime
 from openpilot.selfdrive.modeld.parse_model_outputs import Parser
 from openpilot.selfdrive.modeld.fill_model_msg import fill_model_msg, fill_pose_msg, PublishState
 from openpilot.selfdrive.modeld.constants import ModelConstants
 from openpilot.selfdrive.modeld.models.commonmodel_pyx import ModelFrame, CLContext
+<<<<<<< HEAD
 from openpilot.system.hardware.hw import Paths
 
 THREAD_NAME = "selfdrive.modeld.modeld"
+=======
+
+PROCESS_NAME = "selfdrive.modeld.modeld"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 SEND_RAW_PRED = os.getenv('SEND_RAW_PRED')
 
 MODEL_PATHS = {
@@ -37,11 +56,14 @@ MODEL_PATHS = {
 
 METADATA_PATH = Path(__file__).parent / 'models/supercombo_metadata.pkl'
 
+<<<<<<< HEAD
 CUSTOM_MODEL_PATH = Paths.model_root()
 
 LaneChangeState = log.LaneChangeState
 
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 class FrameMeta:
   frame_id: int = 0
   timestamp_sof: int = 0
@@ -60,6 +82,7 @@ class ModelState:
   model: ModelRunner
 
   def __init__(self, context: CLContext):
+<<<<<<< HEAD
     self.param_s = Params()
     self.custom_model_metadata = CustomModelMetadata(params=self.param_s, init_only=True)
     self.frame = ModelFrame(context)
@@ -105,6 +128,20 @@ class ModelState:
       _metadata_path = METADATA_PATH
 
     with open(_metadata_path, 'rb') as f:
+=======
+    self.frame = ModelFrame(context)
+    self.wide_frame = ModelFrame(context)
+    self.prev_desire = np.zeros(ModelConstants.DESIRE_LEN, dtype=np.float32)
+    self.inputs = {
+      'desire': np.zeros(ModelConstants.DESIRE_LEN * (ModelConstants.HISTORY_BUFFER_LEN+1), dtype=np.float32),
+      'traffic_convention': np.zeros(ModelConstants.TRAFFIC_CONVENTION_LEN, dtype=np.float32),
+      'lateral_control_params': np.zeros(ModelConstants.LATERAL_CONTROL_PARAMS_LEN, dtype=np.float32),
+      'prev_desired_curv': np.zeros(ModelConstants.PREV_DESIRED_CURV_LEN * (ModelConstants.HISTORY_BUFFER_LEN+1), dtype=np.float32),
+      'features_buffer': np.zeros(ModelConstants.HISTORY_BUFFER_LEN * ModelConstants.FEATURE_LEN, dtype=np.float32),
+    }
+
+    with open(METADATA_PATH, 'rb') as f:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       model_metadata = pickle.load(f)
 
     self.output_slices = model_metadata['output_slices']
@@ -112,7 +149,11 @@ class ModelState:
     self.output = np.zeros(net_output_size, dtype=np.float32)
     self.parser = Parser()
 
+<<<<<<< HEAD
     self.model = ModelRunner(_model_paths, self.output, Runtime.GPU, False, context)
+=======
+    self.model = ModelRunner(MODEL_PATHS, self.output, Runtime.GPU, False, context)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self.model.addInput("input_imgs", None)
     self.model.addInput("big_input_imgs", None)
     for k,v in self.inputs.items():
@@ -133,11 +174,15 @@ class ModelState:
     self.prev_desire[:] = inputs['desire']
 
     self.inputs['traffic_convention'][:] = inputs['traffic_convention']
+<<<<<<< HEAD
     if not (self.custom_model_metadata.valid and self.custom_model_metadata.capabilities & ModelCapabilities.LateralPlannerSolution):
       self.inputs['lateral_control_params'][:] = inputs['lateral_control_params']
     if self.custom_model_metadata.valid and self.custom_model_metadata.capabilities & ModelCapabilities.NoO:
       self.inputs['nav_features'][:] = inputs['nav_features']
       self.inputs['nav_instructions'][:] = inputs['nav_instructions']
+=======
+    self.inputs['lateral_control_params'][:] = inputs['lateral_control_params']
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
     # if getCLBuffer is not None, frame will be None
     self.model.setInputBuffer("input_imgs", self.frame.prepare(buf, transform.flatten(), self.model.getCLBuffer("input_imgs")))
@@ -152,6 +197,7 @@ class ModelState:
 
     self.inputs['features_buffer'][:-ModelConstants.FEATURE_LEN] = self.inputs['features_buffer'][ModelConstants.FEATURE_LEN:]
     self.inputs['features_buffer'][-ModelConstants.FEATURE_LEN:] = outputs['hidden_state'][0, :]
+<<<<<<< HEAD
     if self.custom_model_metadata.valid:
       if self.custom_model_metadata.capabilities & ModelCapabilities.LateralPlannerSolution:
         self.inputs['lat_planner_state'][2] = interp(DT_MDL, ModelConstants.T_IDXS, outputs['lat_planner_solution'][0, :, 2])
@@ -162,15 +208,25 @@ class ModelState:
     else:  # Default model, and as of time of writing, this model uses DesiredCurvatureV2
       self.inputs['prev_desired_curv'][:-ModelConstants.PREV_DESIRED_CURV_LEN] = self.inputs['prev_desired_curv'][ModelConstants.PREV_DESIRED_CURV_LEN:]
       self.inputs['prev_desired_curv'][-ModelConstants.PREV_DESIRED_CURV_LEN:] = outputs['desired_curvature'][0, :]
+=======
+    self.inputs['prev_desired_curv'][:-ModelConstants.PREV_DESIRED_CURV_LEN] = self.inputs['prev_desired_curv'][ModelConstants.PREV_DESIRED_CURV_LEN:]
+    self.inputs['prev_desired_curv'][-ModelConstants.PREV_DESIRED_CURV_LEN:] = outputs['desired_curvature'][0, :]
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     return outputs
 
 
 def main(demo=False):
   cloudlog.warning("modeld init")
 
+<<<<<<< HEAD
   sentry.set_tag("daemon", THREAD_NAME)
   cloudlog.bind(daemon=THREAD_NAME)
   setthreadname("modeld")
+=======
+  sentry.set_tag("daemon", PROCESS_NAME)
+  cloudlog.bind(daemon=PROCESS_NAME)
+  setproctitle(PROCESS_NAME)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   config_realtime_process(7, 54)
 
   cloudlog.warning("setting up CL context")
@@ -202,6 +258,7 @@ def main(demo=False):
   if use_extra_client:
     cloudlog.warning(f"connected extra cam with buffer size: {vipc_client_extra.buffer_len} ({vipc_client_extra.width} x {vipc_client_extra.height})")
 
+<<<<<<< HEAD
   params = Params()
   custom_model_metadata = CustomModelMetadata(params=params, init_only=True)
 
@@ -213,6 +270,14 @@ def main(demo=False):
   sm = SubMaster(["deviceState", "carState", "roadCameraState", "liveCalibration", "driverMonitoringState", "carControl"] + extended_svs)
 
   publish_state = PublishState()
+=======
+  # messaging
+  pm = PubMaster(["modelV2", "drivingModelData", "cameraOdometry"])
+  sm = SubMaster(["deviceState", "carState", "roadCameraState", "liveCalibration", "driverMonitoringState", "carControl"])
+
+  publish_state = PublishState()
+  params = Params()
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   # setup filter to track dropped frames
   frame_dropped_filter = FirstOrderFilter(0., 10., 1. / ModelConstants.MODEL_FREQ)
@@ -223,18 +288,25 @@ def main(demo=False):
   model_transform_main = np.zeros((3, 3), dtype=np.float32)
   model_transform_extra = np.zeros((3, 3), dtype=np.float32)
   live_calib_seen = False
+<<<<<<< HEAD
   if custom_model_metadata.valid and custom_model_metadata.capabilities & ModelCapabilities.LateralPlannerSolution:
     driving_style = np.array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], dtype=np.float32)
   if custom_model_metadata.valid and custom_model_metadata.capabilities & ModelCapabilities.NoO:
     nav_features = np.zeros(ModelConstants.NAV_FEATURE_LEN, dtype=np.float32)
     nav_instructions = np.zeros(ModelConstants.NAV_INSTRUCTION_LEN, dtype=np.float32)
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   buf_main, buf_extra = None, None
   meta_main = FrameMeta()
   meta_extra = FrameMeta()
 
 
   if demo:
+<<<<<<< HEAD
     CP = get_demo_car_params()
+=======
+    CP = convert_to_capnp(get_demo_car_params())
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   else:
     CP = messaging.log_from_bytes(params.get("CarParams", block=True), car.CarParams)
 
@@ -279,6 +351,7 @@ def main(demo=False):
       meta_extra = meta_main
 
     sm.update(0)
+<<<<<<< HEAD
     if custom_model_metadata.valid and custom_model_metadata.capabilities & ModelCapabilities.LateralPlannerSolution:
       desire = sm["lateralPlanDEPRECATED"].desire.raw
     else:
@@ -287,6 +360,12 @@ def main(demo=False):
     frame_id = sm["roadCameraState"].frameId
     if not (custom_model_metadata.valid and custom_model_metadata.capabilities & ModelCapabilities.LateralPlannerSolution):
       lateral_control_params = np.array([sm["carState"].vEgo, steer_delay], dtype=np.float32)
+=======
+    desire = DH.desire
+    is_rhd = sm["driverMonitoringState"].isRHD
+    frame_id = sm["roadCameraState"].frameId
+    lateral_control_params = np.array([sm["carState"].vEgo, steer_delay], dtype=np.float32)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     if sm.updated["liveCalibration"] and sm.seen['roadCameraState'] and sm.seen['deviceState']:
       device_from_calib_euler = np.array(sm["liveCalibration"].rpyCalib, dtype=np.float32)
       dc = DEVICE_CAMERAS[(str(sm['deviceState'].deviceType), str(sm['roadCameraState'].sensor))]
@@ -301,6 +380,7 @@ def main(demo=False):
     if desire >= 0 and desire < ModelConstants.DESIRE_LEN:
       vec_desire[desire] = 1
 
+<<<<<<< HEAD
     timestamp_llk = 0
     nav_enabled = False
     if custom_model_metadata.valid and custom_model_metadata.capabilities & ModelCapabilities.NoO:
@@ -328,6 +408,8 @@ def main(demo=False):
           if 0 <= distance_idx < 50:
             nav_instructions[distance_idx*3 + direction_idx] = 1
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     # tracked dropped frames
     vipc_dropped_frames = max(0, meta_main.frame_id - last_vipc_frame_id - 1)
     frames_dropped = frame_dropped_filter.update(min(vipc_dropped_frames, 10))
@@ -341,6 +423,7 @@ def main(demo=False):
     if prepare_only:
       cloudlog.error(f"skipping model eval. Dropped {vipc_dropped_frames} frames")
 
+<<<<<<< HEAD
     if custom_model_metadata.valid and custom_model_metadata.capabilities & ModelCapabilities.LateralPlannerSolution:
       _inputs = {
         'driving_style': driving_style
@@ -362,6 +445,12 @@ def main(demo=False):
       'traffic_convention': traffic_convention,
       **_inputs,
       **_inputs_2,
+=======
+    inputs:dict[str, np.ndarray] = {
+      'desire': vec_desire,
+      'traffic_convention': traffic_convention,
+      'lateral_control_params': lateral_control_params,
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       }
 
     mt1 = time.perf_counter()
@@ -369,13 +458,17 @@ def main(demo=False):
     mt2 = time.perf_counter()
     model_execution_time = mt2 - mt1
 
+<<<<<<< HEAD
     lat_plan_sp = sm['lateralPlanSPDEPRECATED']
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     if model_output is not None:
       modelv2_send = messaging.new_message('modelV2')
       drivingdata_send = messaging.new_message('drivingModelData')
       posenet_send = messaging.new_message('cameraOdometry')
       fill_model_msg(drivingdata_send, modelv2_send, model_output, publish_state, meta_main.frame_id, meta_extra.frame_id, frame_id,
+<<<<<<< HEAD
                      frame_drop_ratio, meta_main.timestamp_eof, timestamp_llk, model_execution_time, nav_enabled, live_calib_seen,
                      custom_model_metadata.valid, custom_model_metadata.capabilities)
 
@@ -388,6 +481,17 @@ def main(demo=False):
         modelv2_send.modelV2.meta.laneChangeState = DH.lane_change_state
         modelv2_send.modelV2.meta.laneChangeDirection = DH.lane_change_direction
 
+=======
+                     frame_drop_ratio, meta_main.timestamp_eof, model_execution_time, live_calib_seen)
+
+      desire_state = modelv2_send.modelV2.meta.desireState
+      l_lane_change_prob = desire_state[log.Desire.laneChangeLeft]
+      r_lane_change_prob = desire_state[log.Desire.laneChangeRight]
+      lane_change_prob = l_lane_change_prob + r_lane_change_prob
+      DH.update(sm['carState'], sm['carControl'].latActive, lane_change_prob)
+      modelv2_send.modelV2.meta.laneChangeState = DH.lane_change_state
+      modelv2_send.modelV2.meta.laneChangeDirection = DH.lane_change_direction
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       drivingdata_send.drivingModelData.meta.laneChangeState = DH.lane_change_state
       drivingdata_send.drivingModelData.meta.laneChangeDirection = DH.lane_change_direction
 
@@ -396,6 +500,7 @@ def main(demo=False):
       pm.send('drivingModelData', drivingdata_send)
       pm.send('cameraOdometry', posenet_send)
 
+<<<<<<< HEAD
       modelv2_sp_send = messaging.new_message('modelV2SP')
       modelv2_sp_send.valid = True
       modelV2SP = modelv2_sp_send.modelV2SP
@@ -407,6 +512,8 @@ def main(demo=False):
       modelV2SP.modelCapabilities = int(custom_model_metadata.capabilities)
       pm.send('modelV2SP', modelv2_sp_send)
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     last_vipc_frame_id = meta_main.frame_id
 
 
@@ -418,7 +525,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
     main(demo=args.demo)
   except KeyboardInterrupt:
+<<<<<<< HEAD
     cloudlog.warning(f"child {THREAD_NAME} got SIGINT")
+=======
+    cloudlog.warning(f"child {PROCESS_NAME} got SIGINT")
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   except Exception:
     sentry.capture_exception()
     raise

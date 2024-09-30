@@ -13,13 +13,20 @@ class TestRegistration:
   def setup_method(self):
     # clear params and setup key paths
     self.params = Params()
+<<<<<<< HEAD
     self.params.clear_all()
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
     persist_dir = Path(Paths.persist_root()) / "comma"
     persist_dir.mkdir(parents=True, exist_ok=True)
 
     self.priv_key = persist_dir / "id_rsa"
     self.pub_key = persist_dir / "id_rsa.pub"
+<<<<<<< HEAD
+=======
+    self.dongle_id = persist_dir / "dongle_id"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   def _generate_keys(self):
     self.pub_key.touch()
@@ -30,16 +37,32 @@ class TestRegistration:
       f.write(k.publickey().export_key())
 
   def test_valid_cache(self, mocker):
+<<<<<<< HEAD
     # if all params are written, return the cached dongle id
+=======
+    # if all params are written, return the cached dongle id.
+    # should work with a dongle ID on either /persist/ or normal params
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self.params.put("IMEI", "imei")
     self.params.put("HardwareSerial", "serial")
     self._generate_keys()
 
+<<<<<<< HEAD
     m = mocker.patch("openpilot.system.athena.registration.api_get", autospec=True)
     dongle = "DONGLE_ID_123"
     self.params.put("DongleId", dongle)
     assert register() == dongle
     assert not m.called
+=======
+    dongle = "DONGLE_ID_123"
+    m = mocker.patch("openpilot.system.athena.registration.api_get", autospec=True)
+    for persist, params in [(True, True), (True, False), (False, True)]:
+      self.params.put("DongleId", dongle if params else "")
+      with open(self.dongle_id, "w") as f:
+        f.write(dongle if persist else "")
+      assert register() == dongle
+      assert not m.called
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   def test_no_keys(self, mocker):
     # missing pubkey

@@ -1,7 +1,14 @@
 #include "tools/replay/camera.h"
 
+<<<<<<< HEAD
 #include <capnp/dynamic.h>
 #include <cassert>
+=======
+#include <cassert>
+#include <algorithm>
+
+#include <capnp/dynamic.h>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 #include "third_party/linux/include/msm_media_info.h"
 #include "tools/replay/util.h"

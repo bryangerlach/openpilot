@@ -33,7 +33,11 @@ void ExperimentalButton::changeMode() {
 }
 
 void ExperimentalButton::updateState(const UIState &s) {
+<<<<<<< HEAD
   const auto cs = (*s.sm)["controlsState"].getControlsState();
+=======
+  const auto cs = (*s.sm)["selfdriveState"].getSelfdriveState();
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   bool eng = cs.getEngageable() || cs.getEnabled();
   if ((cs.getExperimentalMode() != experimental_mode) || (eng != engageable)) {
     engageable = eng;

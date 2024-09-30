@@ -6,6 +6,10 @@ import time
 import ctypes
 import numpy as np
 from pathlib import Path
+<<<<<<< HEAD
+=======
+from setproctitle import setproctitle
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 from cereal import messaging
 from cereal.messaging import PubMaster, SubMaster
@@ -14,6 +18,7 @@ from openpilot.common.swaglog import cloudlog
 from openpilot.common.params import Params
 from openpilot.common.realtime import set_realtime_priority
 from openpilot.selfdrive.modeld.runners import ModelRunner, Runtime
+<<<<<<< HEAD
 from openpilot.selfdrive.modeld.models.commonmodel_pyx import sigmoid
 
 CALIB_LEN = 3
@@ -24,6 +29,21 @@ OUTPUT_SIZE = 84
 SEND_RAW_PRED = os.getenv('SEND_RAW_PRED')
 MODEL_PATHS = {
   ModelRunner.SNPE: Path(__file__).parent / 'models/dmonitoring_model_q.dlc',
+=======
+from openpilot.selfdrive.modeld.models.commonmodel_pyx import CLContext
+from openpilot.selfdrive.modeld.parse_model_outputs import sigmoid
+
+CALIB_LEN = 3
+MODEL_WIDTH = 1440
+MODEL_HEIGHT = 960
+FEATURE_LEN = 512
+OUTPUT_SIZE = 84 + FEATURE_LEN
+
+PROCESS_NAME = "selfdrive.modeld.dmonitoringmodeld"
+SEND_RAW_PRED = os.getenv('SEND_RAW_PRED')
+MODEL_PATHS = {
+  ModelRunner.THNEED: Path(__file__).parent / 'models/dmonitoring_model.thneed',
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   ModelRunner.ONNX: Path(__file__).parent / 'models/dmonitoring_model.onnx'}
 
 class DriverStateResult(ctypes.Structure):
@@ -49,21 +69,34 @@ class DMonitoringModelResult(ctypes.Structure):
     ("driver_state_lhd", DriverStateResult),
     ("driver_state_rhd", DriverStateResult),
     ("poor_vision_prob", ctypes.c_float),
+<<<<<<< HEAD
     ("wheel_on_right_prob", ctypes.c_float)]
+=======
+    ("wheel_on_right_prob", ctypes.c_float),
+    ("features", ctypes.c_float*FEATURE_LEN)]
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 class ModelState:
   inputs: dict[str, np.ndarray]
   output: np.ndarray
   model: ModelRunner
 
+<<<<<<< HEAD
   def __init__(self):
+=======
+  def __init__(self, cl_ctx):
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     assert ctypes.sizeof(DMonitoringModelResult) == OUTPUT_SIZE * ctypes.sizeof(ctypes.c_float)
     self.output = np.zeros(OUTPUT_SIZE, dtype=np.float32)
     self.inputs = {
       'input_img': np.zeros(MODEL_HEIGHT * MODEL_WIDTH, dtype=np.uint8),
       'calib': np.zeros(CALIB_LEN, dtype=np.float32)}
 
+<<<<<<< HEAD
     self.model = ModelRunner(MODEL_PATHS, self.output, Runtime.DSP, True, None)
+=======
+    self.model = ModelRunner(MODEL_PATHS, self.output, Runtime.GPU, False, cl_ctx)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self.model.addInput("input_img", None)
     self.model.addInput("calib", self.inputs['calib'])
 
@@ -76,14 +109,20 @@ class ModelState:
     input_data = self.inputs['input_img'].reshape(MODEL_HEIGHT, MODEL_WIDTH)
     input_data[:] = buf_data[v_offset:v_offset+MODEL_HEIGHT, h_offset:h_offset+MODEL_WIDTH]
 
+<<<<<<< HEAD
     t1 = time.perf_counter()
     self.model.setInputBuffer("input_img", self.inputs['input_img'].view(np.float32))
+=======
+    self.model.setInputBuffer("input_img", self.inputs['input_img'].view(np.float32))
+    t1 = time.perf_counter()
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self.model.execute()
     t2 = time.perf_counter()
     return self.output, t2 - t1
 
 
 def fill_driver_state(msg, ds_result: DriverStateResult):
+<<<<<<< HEAD
   msg.faceOrientation = [x * REG_SCALE for x in ds_result.face_orientation]
   msg.faceOrientationStd = [math.exp(x) for x in ds_result.face_orientation_std]
   msg.facePosition = [x * REG_SCALE for x in ds_result.face_position[:2]]
@@ -99,14 +138,37 @@ def fill_driver_state(msg, ds_result: DriverStateResult):
   msg.notReadyProb = [sigmoid(x) for x in ds_result.not_ready_prob]
 
 def get_driverstate_packet(model_output: np.ndarray, frame_id: int, location_ts: int, execution_time: float, dsp_execution_time: float):
+=======
+  msg.faceOrientation = list(ds_result.face_orientation)
+  msg.faceOrientationStd = [math.exp(x) for x in ds_result.face_orientation_std]
+  msg.facePosition = list(ds_result.face_position[:2])
+  msg.facePositionStd = [math.exp(x) for x in ds_result.face_position_std[:2]]
+  msg.faceProb = float(sigmoid(ds_result.face_prob))
+  msg.leftEyeProb = float(sigmoid(ds_result.left_eye_prob))
+  msg.rightEyeProb = float(sigmoid(ds_result.right_eye_prob))
+  msg.leftBlinkProb = float(sigmoid(ds_result.left_blink_prob))
+  msg.rightBlinkProb = float(sigmoid(ds_result.right_blink_prob))
+  msg.sunglassesProb = float(sigmoid(ds_result.sunglasses_prob))
+  msg.occludedProb = float(sigmoid(ds_result.occluded_prob))
+  msg.readyProb = [float(sigmoid(x)) for x in ds_result.ready_prob]
+  msg.notReadyProb = [float(sigmoid(x)) for x in ds_result.not_ready_prob]
+
+def get_driverstate_packet(model_output: np.ndarray, frame_id: int, location_ts: int, execution_time: float, gpu_execution_time: float):
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   model_result = ctypes.cast(model_output.ctypes.data, ctypes.POINTER(DMonitoringModelResult)).contents
   msg = messaging.new_message('driverStateV2', valid=True)
   ds = msg.driverStateV2
   ds.frameId = frame_id
   ds.modelExecutionTime = execution_time
+<<<<<<< HEAD
   ds.dspExecutionTime = dsp_execution_time
   ds.poorVisionProb = sigmoid(model_result.poor_vision_prob)
   ds.wheelOnRightProb = sigmoid(model_result.wheel_on_right_prob)
+=======
+  ds.gpuExecutionTime = gpu_execution_time
+  ds.poorVisionProb = float(sigmoid(model_result.poor_vision_prob))
+  ds.wheelOnRightProb = float(sigmoid(model_result.wheel_on_right_prob))
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   ds.rawPredictions = model_output.tobytes() if SEND_RAW_PRED else b''
   fill_driver_state(ds.leftDriverData, model_result.driver_state_lhd)
   fill_driver_state(ds.rightDriverData, model_result.driver_state_rhd)
@@ -115,14 +177,26 @@ def get_driverstate_packet(model_output: np.ndarray, frame_id: int, location_ts:
 
 def main():
   gc.disable()
+<<<<<<< HEAD
   set_realtime_priority(1)
 
   model = ModelState()
+=======
+  setproctitle(PROCESS_NAME)
+  set_realtime_priority(1)
+
+  cl_context = CLContext()
+  model = ModelState(cl_context)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   cloudlog.warning("models loaded, dmonitoringmodeld starting")
   Params().put_bool("DmModelInitialized", True)
 
   cloudlog.warning("connecting to driver stream")
+<<<<<<< HEAD
   vipc_client = VisionIpcClient("camerad", VisionStreamType.VISION_STREAM_DRIVER, True)
+=======
+  vipc_client = VisionIpcClient("camerad", VisionStreamType.VISION_STREAM_DRIVER, True, cl_context)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   while not vipc_client.connect(False):
     time.sleep(0.1)
   assert vipc_client.is_connected()
@@ -144,10 +218,17 @@ def main():
       calib[:] = np.array(sm["liveCalibration"].rpyCalib)
 
     t1 = time.perf_counter()
+<<<<<<< HEAD
     model_output, dsp_execution_time = model.run(buf, calib)
     t2 = time.perf_counter()
 
     pm.send("driverStateV2", get_driverstate_packet(model_output, vipc_client.frame_id, vipc_client.timestamp_sof, t2 - t1, dsp_execution_time))
+=======
+    model_output, gpu_execution_time = model.run(buf, calib)
+    t2 = time.perf_counter()
+
+    pm.send("driverStateV2", get_driverstate_packet(model_output, vipc_client.frame_id, vipc_client.timestamp_sof, t2 - t1, gpu_execution_time))
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     # print("dmonitoring process: %.2fms, from last %.2fms\n" % (t2 - t1, t1 - last))
     # last = t1
 

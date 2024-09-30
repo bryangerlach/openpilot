@@ -14,6 +14,10 @@ UNDERLINE='\033[4m'
 BOLD='\033[1m'
 NC='\033[0m'
 
+<<<<<<< HEAD
+=======
+SHELL_NAME="$(basename ${SHELL})"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 RC_FILE="${HOME}/.$(basename ${SHELL})rc"
 if [ "$(uname)" == "Darwin" ] && [ $SHELL == "/bin/bash" ]; then
   RC_FILE="$HOME/.bash_profile"
@@ -22,12 +26,35 @@ function op_install() {
   echo "Installing op system-wide..."
   CMD="\nalias op='"$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )/op.sh" \"\$@\"'\n"
   grep "alias op=" "$RC_FILE" &> /dev/null || printf "$CMD" >> $RC_FILE
+<<<<<<< HEAD
   echo -e " ↳ [${GREEN}✔${NC}] op installed successfully. Open a new shell to use it.\n"
+=======
+  echo -e " ↳ [${GREEN}✔${NC}] op installed successfully. Open a new shell to use it."
+}
+
+function loge() {
+  if [[ -f "$LOG_FILE" ]]; then
+    # error type
+    echo "$1" >> $LOG_FILE
+    # error log
+    echo "$2" >> $LOG_FILE
+  fi
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }
 
 function op_run_command() {
   CMD="$@"
+<<<<<<< HEAD
   echo -e "${BOLD}Running:${NC} $CMD"
+=======
+
+  echo -e "${BOLD}Running command →${NC} $CMD │"
+  for ((i=0; i<$((19 + ${#CMD})); i++)); do
+    echo -n "─"
+  done
+  echo -e "┘\n"
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   if [[ -z "$DRY" ]]; then
     eval "$CMD"
   fi
@@ -45,10 +72,27 @@ function op_get_openpilot_dir() {
   done
 }
 
+<<<<<<< HEAD
 function op_check_openpilot_dir() {
   echo "Checking for openpilot directory..."
   if [[ -f "$OPENPILOT_ROOT/launch_openpilot.sh" ]]; then
     echo -e " ↳ [${GREEN}✔${NC}] openpilot found.\n"
+=======
+function op_install_post_commit() {
+  op_get_openpilot_dir
+  if [[ ! -d $OPENPILOT_ROOT/.git/hooks/post-commit.d ]]; then
+    mkdir $OPENPILOT_ROOT/.git/hooks/post-commit.d
+    mv $OPENPILOT_ROOT/.git/hooks/post-commit $OPENPILOT_ROOT/.git/hooks/post-commit.d 2>/dev/null || true
+  fi
+  cd $OPENPILOT_ROOT/.git/hooks
+  ln -sf ../../scripts/post-commit post-commit
+}
+
+function op_check_openpilot_dir() {
+  echo "Checking for openpilot directory..."
+  if [[ -f "$OPENPILOT_ROOT/launch_openpilot.sh" ]]; then
+    echo -e " ↳ [${GREEN}✔${NC}] openpilot found."
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     return 0
   fi
 
@@ -97,18 +141,33 @@ function op_check_os() {
           ;;
         * )
           echo -e " ↳ [${RED}✗${NC}] Incompatible Ubuntu version $VERSION_CODENAME detected!"
+<<<<<<< HEAD
+=======
+          loge "ERROR_INCOMPATIBLE_UBUNTU" "$VERSION_CODENAME"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
           return 1
           ;;
       esac
     else
       echo -e " ↳ [${RED}✗${NC}] No /etc/os-release on your system. Make sure you're running on Ubuntu, or similar!"
+<<<<<<< HEAD
+=======
+      loge "ERROR_UNKNOWN_UBUNTU"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       return 1
     fi
 
   elif [[ "$OSTYPE" == "darwin"* ]]; then
+<<<<<<< HEAD
     echo -e " ↳ [${GREEN}✔${NC}] macos detected.\n"
   else
     echo -e " ↳ [${RED}✗${NC}] OS type $OSTYPE not supported!"
+=======
+    echo -e " ↳ [${GREEN}✔${NC}] macOS detected."
+  else
+    echo -e " ↳ [${RED}✗${NC}] OS type $OSTYPE not supported!"
+    loge "ERROR_UNKNOWN_OS" "$OSTYPE"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     return 1
   fi
 }
@@ -120,18 +179,30 @@ function op_check_python() {
 
   if [[ -z $INSTALLED_PYTHON_VERSION ]]; then
     echo -e " ↳ [${RED}✗${NC}] python3 not found on your system. You need python version at least $(echo $REQUIRED_PYTHON_VERSION | tr -d -c '[0-9.]') to continue!"
+<<<<<<< HEAD
+=======
+    loge "ERROR_PYTHON_NOT_FOUND"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     return 1
   elif [[ $(echo $INSTALLED_PYTHON_VERSION | grep -o '[0-9]\+\.[0-9]\+' | tr -d -c '[0-9]') -ge $(echo $REQUIRED_PYTHON_VERSION | tr -d -c '[0-9]') ]]; then
     echo -e " ↳ [${GREEN}✔${NC}] $INSTALLED_PYTHON_VERSION detected."
   else
     echo -e " ↳ [${RED}✗${NC}] You need python version at least $(echo $REQUIRED_PYTHON_VERSION | tr -d -c '[0-9.]') to continue!"
+<<<<<<< HEAD
+=======
+    loge "ERROR_PYTHON_VERSION" "$INSTALLED_PYTHON_VERSION"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     return 1
   fi
 }
 
 function op_check_venv() {
   echo "Checking for venv..."
+<<<<<<< HEAD
   if source $OPENPILOT_ROOT/.venv/bin/activate; then
+=======
+  if [[ -f $OPENPILOT_ROOT/.venv/bin/activate ]]; then
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     echo -e " ↳ [${GREEN}✔${NC}] venv detected."
   else
     echo -e " ↳ [${RED}✗${NC}] Can't activate venv in $OPENPILOT_ROOT. Assuming global env!"
@@ -156,7 +227,11 @@ function op_before_cmd() {
   result="${result}\n$(( op_check_python ) 2>&1)" || (echo -e "$result" && return 1)
 
   if [[ -z $VERBOSE ]]; then
+<<<<<<< HEAD
     echo -e "Checking system → [${GREEN}✔${NC}] system is good."
+=======
+    echo -e "${BOLD}Checking system →${NC} [${GREEN}✔${NC}]"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   else
     echo -e "$result"
   fi
@@ -168,11 +243,15 @@ function op_setup() {
 
   op_check_openpilot_dir
   op_check_os
+<<<<<<< HEAD
   op_check_python
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   echo "Installing dependencies..."
   st="$(date +%s)"
   if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+<<<<<<< HEAD
     op_run_command $OPENPILOT_ROOT/tools/ubuntu_setup.sh
   elif [[ "$OSTYPE" == "darwin"* ]]; then
     op_run_command $OPENPILOT_ROOT/tools/mac_setup.sh
@@ -191,17 +270,74 @@ function op_setup() {
   op_run_command git lfs pull
   et="$(date +%s)"
   echo -e " ↳ [${GREEN}✔${NC}] Files pulled successfully in $((et - st)) seconds.\n"
+=======
+    SETUP_SCRIPT="tools/ubuntu_setup.sh"
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+    SETUP_SCRIPT="tools/mac_setup.sh"
+  fi
+  if ! $OPENPILOT_ROOT/$SETUP_SCRIPT; then
+    echo -e " ↳ [${RED}✗${NC}] Dependencies installation failed!"
+    loge "ERROR_DEPENDENCIES_INSTALLATION"
+    return 1
+  fi
+  et="$(date +%s)"
+  echo -e " ↳ [${GREEN}✔${NC}] Dependencies installed successfully in $((et - st)) seconds."
+
+  echo "Getting git submodules..."
+  st="$(date +%s)"
+  if ! git submodule update --filter=blob:none --jobs 4 --init --recursive; then
+    echo -e " ↳ [${RED}✗${NC}] Getting git submodules failed!"
+    loge "ERROR_GIT_SUBMODULES"
+    return 1
+  fi
+  et="$(date +%s)"
+  echo -e " ↳ [${GREEN}✔${NC}] Submodules installed successfully in $((et - st)) seconds."
+
+  echo "Pulling git lfs files..."
+  st="$(date +%s)"
+  if ! git lfs pull; then
+    echo -e " ↳ [${RED}✗${NC}] Pulling git lfs files failed!"
+    loge "ERROR_GIT_LFS"
+    return 1
+  fi
+  et="$(date +%s)"
+  echo -e " ↳ [${GREEN}✔${NC}] Files pulled successfully in $((et - st)) seconds."
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   op_check
 }
 
 function op_activate_venv() {
+<<<<<<< HEAD
   source $OPENPILOT_ROOT/.venv/bin/activate &> /dev/null || true
+=======
+  # bash 3.2 can't handle this without the 'set +e'
+  set +e
+  source $OPENPILOT_ROOT/.venv/bin/activate &> /dev/null || true
+  set -e
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }
 
 function op_venv() {
   op_before_cmd
+<<<<<<< HEAD
   bash --rcfile <(echo "source $RC_FILE; source $OPENPILOT_ROOT/.venv/bin/activate")
+=======
+
+  if [[ ! -f $OPENPILOT_ROOT/.venv/bin/activate ]]; then
+    echo -e "No venv found in $OPENPILOT_ROOT"
+    return 1
+  fi
+
+  case $SHELL_NAME in
+    "zsh")
+      ZSHRC_DIR=$(mktemp -d 2>/dev/null || mktemp -d -t 'tmp_zsh')
+      echo "source $RC_FILE; source $OPENPILOT_ROOT/.venv/bin/activate" >> $ZSHRC_DIR/.zshrc
+      ZDOTDIR=$ZSHRC_DIR zsh ;;
+    *)
+      bash --rcfile <(echo "source $RC_FILE; source $OPENPILOT_ROOT/.venv/bin/activate") ;;
+  esac
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }
 
 function op_check() {
@@ -224,7 +360,11 @@ function op_juggle() {
 
 function op_lint() {
   op_before_cmd
+<<<<<<< HEAD
   op_run_command scripts/lint.sh $@
+=======
+  op_run_command scripts/lint/lint.sh $@
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }
 
 function op_test() {
@@ -263,6 +403,7 @@ function op_default() {
   echo ""
   echo -e "${BOLD}${UNDERLINE}Usage:${NC} op [OPTIONS] <COMMAND>"
   echo ""
+<<<<<<< HEAD
   echo -e "${BOLD}${UNDERLINE}Commands:${NC}"
   echo -e "  ${BOLD}venv${NC}     Activate the Python virtual environment"
   echo -e "  ${BOLD}check${NC}    Check the development environment (git, os, python) to start using openpilot"
@@ -276,6 +417,25 @@ function op_default() {
   echo -e "  ${BOLD}test${NC}     Run all unit tests from pytest"
   echo -e "  ${BOLD}help${NC}     Show this message"
   echo -e "  ${BOLD}install${NC}  Install the 'op' tool system wide"
+=======
+  echo -e "${BOLD}${UNDERLINE}Commands [System]:${NC}"
+  echo -e "  ${BOLD}check${NC}        Check the development environment (git, os, python) to start using openpilot"
+  echo -e "  ${BOLD}venv${NC}         Activate the python virtual environment"
+  echo -e "  ${BOLD}setup${NC}        Install openpilot dependencies"
+  echo -e "  ${BOLD}build${NC}        Run the openpilot build system in the current working directory"
+  echo -e "  ${BOLD}install${NC}      Install the 'op' tool system wide"
+  echo ""
+  echo -e "${BOLD}${UNDERLINE}Commands [Tooling]:${NC}"
+  echo -e "  ${BOLD}juggle${NC}       Run PlotJuggler"
+  echo -e "  ${BOLD}replay${NC}       Run Replay"
+  echo -e "  ${BOLD}cabana${NC}       Run Cabana"
+  echo ""
+  echo -e "${BOLD}${UNDERLINE}Commands [Testing]:${NC}"
+  echo -e "  ${BOLD}sim${NC}          Run openpilot in a simulator"
+  echo -e "  ${BOLD}lint${NC}         Run the linter"
+  echo -e "  ${BOLD}post-commit${NC}  Install the linter as a post-commit hook"
+  echo -e "  ${BOLD}test${NC}         Run all unit tests from pytest"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   echo ""
   echo -e "${BOLD}${UNDERLINE}Options:${NC}"
   echo -e "  ${BOLD}-d, --dir${NC}"
@@ -284,6 +444,7 @@ function op_default() {
   echo "          Don't actually run anything, just print what would be run"
   echo -e "  ${BOLD}-n, --no-verify${NC}"
   echo "          Skip environment check before running commands"
+<<<<<<< HEAD
   echo -e "  ${BOLD}-v, --verbose${NC}"
   echo "          Show the result of all checks before running a command"
   echo ""
@@ -298,6 +459,19 @@ function op_default() {
   echo "  op --dir /tmp/openpilot build -j4"
   echo "          Run the build command on openpilot located in /tmp/openpilot"
   echo "          on 4 cores"
+=======
+  echo ""
+  echo -e "${BOLD}${UNDERLINE}Examples:${NC}"
+  echo "  op setup"
+  echo "          Run the setup script to install"
+  echo "          openpilot's dependencies."
+  echo ""
+  echo "  op build -j4"
+  echo "          Compile openpilot using 4 cores"
+  echo ""
+  echo "  op juggle --demo"
+  echo "          Run PlotJuggler on the demo route"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }
 
 
@@ -307,11 +481,16 @@ function _op() {
     -d | --dir )       shift 1; OPENPILOT_ROOT="$1"; shift 1 ;;
     --dry )            shift 1; DRY="1" ;;
     -n | --no-verify ) shift 1; NO_VERIFY="1" ;;
+<<<<<<< HEAD
     -v | --verbose )   shift 1; VERBOSE="1" ;;
+=======
+    -l | --log )       shift 1; LOG_FILE="$1" ; shift 1 ;;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   esac
 
   # parse Commands
   case $1 in
+<<<<<<< HEAD
     venv )      shift 1; op_venv "$@" ;;
     check )     shift 1; op_check "$@" ;;
     setup )     shift 1; op_setup "$@" ;;
@@ -323,6 +502,20 @@ function _op() {
     replay )    shift 1; op_replay "$@" ;;
     sim )       shift 1; op_sim "$@" ;;
     install )   shift 1; op_install "$@" ;;
+=======
+    venv )          shift 1; op_venv "$@" ;;
+    check )         shift 1; op_check "$@" ;;
+    setup )         shift 1; op_setup "$@" ;;
+    build )         shift 1; op_build "$@" ;;
+    juggle )        shift 1; op_juggle "$@" ;;
+    cabana )        shift 1; op_cabana "$@" ;;
+    lint )          shift 1; op_lint "$@" ;;
+    test )          shift 1; op_test "$@" ;;
+    replay )        shift 1; op_replay "$@" ;;
+    sim )           shift 1; op_sim "$@" ;;
+    install )       shift 1; op_install "$@" ;;
+    post-commit )   shift 1; op_install_post_commit "$@" ;;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     * ) op_default "$@" ;;
   esac
 }

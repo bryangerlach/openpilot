@@ -8,7 +8,11 @@ from collections.abc import Callable, ValuesView
 from abc import ABC, abstractmethod
 from multiprocessing import Process
 
+<<<<<<< HEAD
 from openpilot.common.threadname import setthreadname
+=======
+from setproctitle import setproctitle
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 from cereal import car, log
 import cereal.messaging as messaging
@@ -27,7 +31,11 @@ def launcher(proc: str, name: str) -> None:
     mod = importlib.import_module(proc)
 
     # rename the process
+<<<<<<< HEAD
     setthreadname(proc)
+=======
+    setproctitle(proc)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
     # create new context since we forked
     messaging.reset_context()
@@ -73,7 +81,10 @@ class ManagerProcess(ABC):
 
   last_watchdog_time = 0
   watchdog_max_dt: int | None = None
+<<<<<<< HEAD
   always_watchdog = False
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   watchdog_seen = False
   shutting_down = False
 
@@ -103,10 +114,15 @@ class ManagerProcess(ABC):
 
     dt = time.monotonic() - self.last_watchdog_time / 1e9
 
+<<<<<<< HEAD
     always_watchdog = self.always_watchdog and not started and self.proc.exitcode is not None
 
     if dt > self.watchdog_max_dt:
       if (self.watchdog_seen or always_watchdog) and ENABLE_WATCHDOG:
+=======
+    if dt > self.watchdog_max_dt:
+      if self.watchdog_seen and ENABLE_WATCHDOG:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         cloudlog.error(f"Watchdog timeout for {self.name} (exitcode {self.proc.exitcode}) restarting ({started=})")
         self.restart()
     else:
@@ -171,7 +187,11 @@ class ManagerProcess(ABC):
 
 
 class NativeProcess(ManagerProcess):
+<<<<<<< HEAD
   def __init__(self, name, cwd, cmdline, should_run, enabled=True, sigkill=False, watchdog_max_dt=None, always_watchdog=False):
+=======
+  def __init__(self, name, cwd, cmdline, should_run, enabled=True, sigkill=False, watchdog_max_dt=None):
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self.name = name
     self.cwd = cwd
     self.cmdline = cmdline
@@ -180,7 +200,10 @@ class NativeProcess(ManagerProcess):
     self.sigkill = sigkill
     self.watchdog_max_dt = watchdog_max_dt
     self.launcher = nativelauncher
+<<<<<<< HEAD
     self.always_watchdog = always_watchdog
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   def prepare(self) -> None:
     pass
@@ -202,7 +225,11 @@ class NativeProcess(ManagerProcess):
 
 
 class PythonProcess(ManagerProcess):
+<<<<<<< HEAD
   def __init__(self, name, module, should_run, enabled=True, sigkill=False, watchdog_max_dt=None, always_watchdog=False):
+=======
+  def __init__(self, name, module, should_run, enabled=True, sigkill=False, watchdog_max_dt=None):
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self.name = name
     self.module = module
     self.should_run = should_run
@@ -210,7 +237,10 @@ class PythonProcess(ManagerProcess):
     self.sigkill = sigkill
     self.watchdog_max_dt = watchdog_max_dt
     self.launcher = launcher
+<<<<<<< HEAD
     self.always_watchdog = always_watchdog
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   def prepare(self) -> None:
     if self.enabled:

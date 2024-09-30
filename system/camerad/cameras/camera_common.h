@@ -1,6 +1,9 @@
 #pragma once
 
+<<<<<<< HEAD
 #include <fcntl.h>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 #include <memory>
 
 #include "cereal/messaging/messaging.h"
@@ -8,6 +11,7 @@
 #include "common/queue.h"
 #include "common/util.h"
 
+<<<<<<< HEAD
 const int YUV_BUFFER_COUNT = 20;
 
 enum CameraType {
@@ -21,6 +25,11 @@ const bool env_debug_frames = getenv("DEBUG_FRAMES") != NULL;
 const bool env_log_raw_frames = getenv("LOG_RAW_FRAMES") != NULL;
 const bool env_ctrl_exp_from_params = getenv("CTRL_EXP_FROM_PARAMS") != NULL;
 
+=======
+
+const int YUV_BUFFER_COUNT = 20;
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 typedef struct FrameMetadata {
   uint32_t frame_id;
   uint32_t request_id;
@@ -29,6 +38,7 @@ typedef struct FrameMetadata {
   uint64_t timestamp_sof;
   uint64_t timestamp_eof;
 
+<<<<<<< HEAD
   // Exposure
   unsigned int integ_lines;
   bool high_conversion_gain;
@@ -40,6 +50,12 @@ typedef struct FrameMetadata {
 } FrameMetadata;
 
 struct MultiCameraState;
+=======
+  float processing_time;
+} FrameMetadata;
+
+class SpectraCamera;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 class CameraState;
 class ImgProc;
 
@@ -58,6 +74,7 @@ public:
   VisionBuf *cur_camera_buf;
   std::unique_ptr<VisionBuf[]> camera_bufs;
   std::unique_ptr<FrameMetadata[]> camera_bufs_metadata;
+<<<<<<< HEAD
   int rgb_width, rgb_height;
 
   CameraBuf() = default;
@@ -77,4 +94,19 @@ void cameras_run(MultiCameraState *s);
 void cameras_close(MultiCameraState *s);
 void camerad_thread();
 
+=======
+  int out_img_width, out_img_height;
+
+  CameraBuf() = default;
+  ~CameraBuf();
+  void init(cl_device_id device_id, cl_context context, SpectraCamera *cam, VisionIpcServer * v, int frame_cnt, VisionStreamType type);
+  bool acquire(int expo_time);
+  void queue(size_t buf_idx);
+};
+
+void camerad_thread();
+kj::Array<uint8_t> get_raw_frame_image(const CameraBuf *b);
+float set_exposure_target(const CameraBuf *b, Rect ae_xywh, int x_skip, int y_skip);
+void publish_thumbnail(PubMaster *pm, const CameraBuf *b);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 int open_v4l_by_name_and_index(const char name[], int index = 0, int flags = O_RDWR | O_NONBLOCK);

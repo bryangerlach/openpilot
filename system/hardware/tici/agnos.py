@@ -29,6 +29,7 @@ class StreamingDecompressor:
     self.sha256 = hashlib.sha256()
 
   def read(self, length: int) -> bytes:
+<<<<<<< HEAD
     while len(self.buf) < length:
       self.req.raise_for_status()
 
@@ -39,6 +40,25 @@ class StreamingDecompressor:
         break
       out = self.decompressor.decompress(compressed)
       self.buf += out
+=======
+    while len(self.buf) < length and not self.eof:
+      if self.decompressor.needs_input:
+        self.req.raise_for_status()
+
+        try:
+          compressed = next(self.it)
+        except StopIteration:
+          self.eof = True
+          break
+      else:
+        compressed = b''
+
+      self.buf += self.decompressor.decompress(compressed, max_length=length)
+
+      if self.decompressor.eof:
+        self.eof = True
+        break
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
     result = self.buf[:length]
     self.buf = self.buf[length:]
@@ -83,8 +103,13 @@ def unsparsify(f: StreamingDecompressor) -> Generator[bytes, None, None]:
 
 # noop wrapper with same API as unsparsify() for non sparse images
 def noop(f: StreamingDecompressor) -> Generator[bytes, None, None]:
+<<<<<<< HEAD
   while not f.eof:
     yield f.read(1024 * 1024)
+=======
+  while len(chunk := f.read(1024 * 1024)) > 0:
+    yield chunk
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 
 def get_target_slot_number() -> int:

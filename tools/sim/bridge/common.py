@@ -7,11 +7,18 @@ from enum import Enum
 from multiprocessing import Process, Queue, Value
 from abc import ABC, abstractmethod
 
+<<<<<<< HEAD
+=======
+from opendbc.car.honda.values import CruiseButtons
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.common.params import Params
 from openpilot.common.numpy_fast import clip
 from openpilot.common.realtime import Ratekeeper
 from openpilot.selfdrive.test.helpers import set_params_enabled
+<<<<<<< HEAD
 from openpilot.selfdrive.car.honda.values import CruiseButtons
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.tools.sim.lib.common import SimulatorState, World
 from openpilot.tools.sim.lib.simulated_car import SimulatedCar
 from openpilot.tools.sim.lib.simulated_sensors import SimulatedSensors
@@ -167,8 +174,12 @@ Ignition: {self.simulator_state.ignition} Engaged: {self.simulator_state.is_enga
       self.simulated_sensors.update(self.simulator_state, self.world)
 
       self.simulated_car.sm.update(0)
+<<<<<<< HEAD
       controlsState = self.simulated_car.sm['controlsState']
       self.simulator_state.is_engaged = controlsState.active
+=======
+      self.simulator_state.is_engaged = self.simulated_car.sm['selfdriveState'].active
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
       if self.simulator_state.is_engaged:
         throttle_op = clip(self.simulated_car.sm['carControl'].actuators.accel / 1.6, 0.0, 1.0)
@@ -176,7 +187,11 @@ Ignition: {self.simulator_state.ignition} Engaged: {self.simulator_state.is_enga
         steer_op = self.simulated_car.sm['carControl'].actuators.steeringAngleDeg
 
         self.past_startup_engaged = True
+<<<<<<< HEAD
       elif not self.past_startup_engaged and controlsState.engageable:
+=======
+      elif not self.past_startup_engaged and self.simulated_car.sm['selfdriveState'].engageable:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         self.simulator_state.cruise_button = CruiseButtons.DECEL_SET if self.startup_button_prev else CruiseButtons.MAIN # force engagement on startup
         self.startup_button_prev = not self.startup_button_prev
 

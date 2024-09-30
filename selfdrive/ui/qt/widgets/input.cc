@@ -151,7 +151,11 @@ InputDialog::InputDialog(const QString &title, QWidget *parent, const QString &s
 
 QString InputDialog::getText(const QString &prompt, QWidget *parent, const QString &subtitle,
                              bool secret, int minLength, const QString &defaultText) {
+<<<<<<< HEAD
   InputDialog d = InputDialog(prompt, parent, subtitle, secret);
+=======
+  InputDialog d(prompt, parent, subtitle, secret);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   d.line->setText(defaultText);
   d.setMinLength(minLength);
   const int ret = d.exec();
@@ -230,17 +234,29 @@ ConfirmationDialog::ConfirmationDialog(const QString &prompt_text, const QString
 }
 
 bool ConfirmationDialog::alert(const QString &prompt_text, QWidget *parent) {
+<<<<<<< HEAD
   ConfirmationDialog d = ConfirmationDialog(prompt_text, tr("Ok"), "", false, parent);
+=======
+  ConfirmationDialog d(prompt_text, tr("Ok"), "", false, parent);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   return d.exec();
 }
 
 bool ConfirmationDialog::confirm(const QString &prompt_text, const QString &confirm_text, QWidget *parent) {
+<<<<<<< HEAD
   ConfirmationDialog d = ConfirmationDialog(prompt_text, confirm_text, tr("Cancel"), false, parent);
+=======
+  ConfirmationDialog d(prompt_text, confirm_text, tr("Cancel"), false, parent);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   return d.exec();
 }
 
 bool ConfirmationDialog::rich(const QString &prompt_text, QWidget *parent) {
+<<<<<<< HEAD
   ConfirmationDialog d = ConfirmationDialog(prompt_text, tr("Ok"), "", true, parent);
+=======
+  ConfirmationDialog d(prompt_text, tr("Ok"), "", true, parent);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   return d.exec();
 }
 
@@ -328,7 +344,11 @@ MultiOptionDialog::MultiOptionDialog(const QString &prompt_text, const QStringLi
 }
 
 QString MultiOptionDialog::getSelection(const QString &prompt_text, const QStringList &l, const QString &current, QWidget *parent) {
+<<<<<<< HEAD
   MultiOptionDialog d = MultiOptionDialog(prompt_text, l, current, parent);
+=======
+  MultiOptionDialog d(prompt_text, l, current, parent);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   if (d.exec()) {
     return d.selection;
   }

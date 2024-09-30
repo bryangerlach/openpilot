@@ -92,26 +92,79 @@ def recv_one_retry(sock: SubSocket) -> capnp.lib.capnp._DynamicStructReader:
       return log_from_bytes(dat)
 
 
+<<<<<<< HEAD
+=======
+class FrequencyTracker:
+  def __init__(self, service_freq: float, update_freq: float, is_poll: bool):
+    freq = max(min(service_freq, update_freq), 1.)
+    if is_poll:
+      min_freq = max_freq = freq
+    else:
+      max_freq = min(freq, update_freq)
+      if service_freq >= 2 * update_freq:
+        min_freq = update_freq
+      elif update_freq >= 2* service_freq:
+        min_freq = freq
+      else:
+        min_freq = min(freq, freq / 2.)
+
+    self.min_freq = min_freq * 0.8
+    self.max_freq = max_freq * 1.2
+    self.recv_dts: Deque[float] = deque(maxlen=int(10 * freq))
+    self.prev_time = 0.0
+
+  def record_recv_time(self, cur_time: float) -> None:
+    # TODO: Handle case where cur_time is less than prev_time
+    if self.prev_time > 1e-5:
+      self.recv_dts.append(cur_time - self.prev_time)
+    self.prev_time = cur_time
+
+  @property
+  def valid(self) -> bool:
+    if not self.recv_dts:
+      return False
+
+    avg_freq = len(self.recv_dts) / sum(self.recv_dts)
+    if self.min_freq <= avg_freq <= self.max_freq:
+      return True
+
+    recent_dts = list(self.recv_dts)[-int(self.recv_dts.maxlen / 10):]
+    avg_freq_recent = len(recent_dts) / sum(recent_dts)
+    return self.min_freq <= avg_freq_recent <= self.max_freq
+
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 class SubMaster:
   def __init__(self, services: List[str], poll: Optional[str] = None,
                ignore_alive: Optional[List[str]] = None, ignore_avg_freq: Optional[List[str]] = None,
                ignore_valid: Optional[List[str]] = None, addr: str = "127.0.0.1", frequency: Optional[float] = None):
     self.frame = -1
+<<<<<<< HEAD
+=======
+    self.services = services
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self.seen = {s: False for s in services}
     self.updated = {s: False for s in services}
     self.recv_time = {s: 0. for s in services}
     self.recv_frame = {s: 0 for s in services}
     self.alive = {s: False for s in services}
     self.freq_ok = {s: False for s in services}
+<<<<<<< HEAD
     self.recv_dts: Dict[str, Deque[float]] = {}
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self.sock = {}
     self.data = {}
     self.valid = {}
     self.logMonoTime = {}
 
+<<<<<<< HEAD
     self.max_freq = {}
     self.min_freq = {}
 
+=======
+    self.freq_tracker: Dict[str, FrequencyTracker] = {}
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self.poller = Poller()
     polled_services = set([poll, ] if poll is not None else services)
     self.non_polled_services = set(services) - polled_services
@@ -137,6 +190,7 @@ class SubMaster:
 
       self.data[s] = getattr(data.as_reader(), s)
       self.logMonoTime[s] = 0
+<<<<<<< HEAD
       self.valid[s] = True  # FIXME: this should default to False
 
       freq = max(min([SERVICE_LIST[s].frequency, self.update_freq]), 1.)
@@ -154,6 +208,10 @@ class SubMaster:
       self.max_freq[s] = max_freq*1.2
       self.min_freq[s] = min_freq*0.8
       self.recv_dts[s] = deque(maxlen=int(10*freq))
+=======
+      self.valid[s] = False
+      self.freq_tracker[s] = FrequencyTracker(SERVICE_LIST[s].frequency, self.update_freq, s == poll)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   def __getitem__(self, s: str) -> capnp.lib.capnp._DynamicStructReader:
     return self.data[s]
@@ -173,7 +231,11 @@ class SubMaster:
 
   def update_msgs(self, cur_time: float, msgs: List[capnp.lib.capnp._DynamicStructReader]) -> None:
     self.frame += 1
+<<<<<<< HEAD
     self.updated = dict.fromkeys(self.updated, False)
+=======
+    self.updated = dict.fromkeys(self.services, False)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     for msg in msgs:
       if msg is None:
         continue
@@ -182,14 +244,19 @@ class SubMaster:
       self.seen[s] = True
       self.updated[s] = True
 
+<<<<<<< HEAD
       if self.recv_time[s] > 1e-5:
         self.recv_dts[s].append(cur_time - self.recv_time[s])
+=======
+      self.freq_tracker[s].record_recv_time(cur_time)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       self.recv_time[s] = cur_time
       self.recv_frame[s] = self.frame
       self.data[s] = getattr(msg, s)
       self.logMonoTime[s] = msg.logMonoTime
       self.valid[s] = msg.valid
 
+<<<<<<< HEAD
     for s in self.data:
       if SERVICE_LIST[s].frequency > 1e-5 and not self.simulation:
         # alive if delay is within 10x the expected frequency
@@ -230,6 +297,25 @@ class SubMaster:
     if service_list is None:
       service_list = list(self.sock.keys())
     return all(self.valid[s] for s in service_list if s not in self.ignore_valid)
+=======
+    for s in self.services:
+      if SERVICE_LIST[s].frequency > 1e-5 and not self.simulation:
+        # alive if delay is within 10x the expected frequency
+        self.alive[s] = (cur_time - self.recv_time[s]) < (10. / SERVICE_LIST[s].frequency)
+        self.freq_ok[s] = self.freq_tracker[s].valid
+      else:
+        self.freq_ok[s] = True
+        self.alive[s] = self.seen[s] if self.simulation else True
+
+  def all_alive(self, service_list: Optional[List[str]] = None) -> bool:
+    return all(self.alive[s] for s in (service_list or self.services) if s not in self.ignore_alive)
+
+  def all_freq_ok(self, service_list: Optional[List[str]] = None) -> bool:
+    return all(self.freq_ok[s] for s in (service_list or self.services) if self._check_avg_freq(s))
+
+  def all_valid(self, service_list: Optional[List[str]] = None) -> bool:
+    return all(self.valid[s] for s in (service_list or self.services) if s not in self.ignore_valid)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   def all_checks(self, service_list: Optional[List[str]] = None) -> bool:
     return self.all_alive(service_list) and self.all_freq_ok(service_list) and self.all_valid(service_list)

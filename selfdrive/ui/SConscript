@@ -8,8 +8,11 @@ base_libs = [common, messaging, visionipc, transformations,
 if arch == 'larch64':
   base_libs.append('EGL')
 
+<<<<<<< HEAD
 maps = arch in ['larch64', 'aarch64', 'x86_64']
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 if arch == "Darwin":
   del base_libs[base_libs.index('OpenCL')]
   qt_env['FRAMEWORKS'] += ['OpenCL']
@@ -17,6 +20,7 @@ if arch == "Darwin":
 # FIXME: remove this once we're on 5.15 (24.04)
 qt_env['CXXFLAGS'] += ["-Wno-deprecated-declarations"]
 
+<<<<<<< HEAD
 sp_widgets_src = []
 sp_maps_widgets_src = []
 sp_qt_src = []
@@ -38,17 +42,33 @@ if maps:
   widgets_src += ["qt/maps/map_helpers.cc", "qt/maps/map_settings.cc", "qt/maps/map.cc", "qt/maps/map_panel.cc",
                   "qt/maps/map_eta.cc", "qt/maps/map_instructions.cc"] + sp_maps_widgets_src
   qt_env['CPPDEFINES'] += ["ENABLE_MAPS"]
+=======
+qt_util = qt_env.Library("qt_util", ["#selfdrive/ui/qt/api.cc", "#selfdrive/ui/qt/util.cc"], LIBS=base_libs)
+widgets_src = ["qt/widgets/input.cc", "qt/widgets/wifi.cc", "qt/prime_state.cc",
+               "qt/widgets/ssh_keys.cc", "qt/widgets/toggle.cc", "qt/widgets/controls.cc",
+               "qt/widgets/offroad_alerts.cc", "qt/widgets/prime.cc", "qt/widgets/keyboard.cc",
+               "qt/widgets/scrollview.cc", "qt/widgets/cameraview.cc", "#third_party/qrcode/QrCode.cc",
+               "qt/request_repeater.cc", "qt/qt_window.cc", "qt/network/networking.cc", "qt/network/wifi_manager.cc"]
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 widgets = qt_env.Library("qt_widgets", widgets_src, LIBS=base_libs)
 Export('widgets')
 qt_libs = [widgets, qt_util] + base_libs
 
+<<<<<<< HEAD
 qt_src = ["main.cc", "qt/sidebar.cc", "qt/body.cc", "qt/offroad_home.cc",
+=======
+qt_src = ["main.cc", "ui.cc", "qt/sidebar.cc", "qt/body.cc",
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
           "qt/window.cc", "qt/home.cc", "qt/offroad/settings.cc",
           "qt/offroad/software_settings.cc", "qt/offroad/onboarding.cc",
           "qt/offroad/driverview.cc", "qt/offroad/experimental_mode.cc",
           "qt/onroad/onroad_home.cc", "qt/onroad/annotated_camera.cc",
+<<<<<<< HEAD
           "qt/onroad/buttons.cc", "qt/onroad/alerts.cc"] + sp_qt_src
+=======
+          "qt/onroad/buttons.cc", "qt/onroad/alerts.cc", "qt/onroad/driver_monitoring.cc", "qt/onroad/hud.cc"]
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 # build translation files
 with open(File("translations/languages.json").abspath) as f:
@@ -78,6 +98,7 @@ qt_env.Command(assets, [assets_src, translations_assets_src], f"rcc $SOURCES -o 
 qt_env.Depends(assets, Glob('#selfdrive/assets/*', exclude=[assets, assets_src, translations_assets_src, "#selfdrive/assets/assets.o"]) + [lrelease])
 asset_obj = qt_env.Object("assets", assets)
 
+<<<<<<< HEAD
 qt_env.SharedLibrary("qt/python_helpers", ["qt/qt_window.cc"], LIBS=qt_libs)
 
 # spinner and text window
@@ -85,11 +106,14 @@ text_cc_path = "qt/text.cc" if GetOption('stock_ui') else "sunnypilot/qt/text.cc
 qt_env.Program("_text", [text_cc_path], LIBS=qt_libs)
 qt_env.Program("_spinner", ["qt/spinner.cc"], LIBS=qt_libs)
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 # build main UI
 qt_env.Program("ui", qt_src + [asset_obj], LIBS=qt_libs)
 if GetOption('extras'):
   qt_src.remove("main.cc")  # replaced by test_runner
   qt_env.Program('tests/test_translations', [asset_obj, 'tests/test_runner.cc', 'tests/test_translations.cc'] + qt_src, LIBS=qt_libs)
+<<<<<<< HEAD
   qt_env.Program('tests/ui_snapshot', [asset_obj, "tests/ui_snapshot.cc"] + qt_src, LIBS=qt_libs)
 
 
@@ -98,13 +122,31 @@ if GetOption('extras') and arch in ['larch64']:
   qt_env.Program("qt/setup/reset", ["qt/setup/reset.cc"], LIBS=qt_libs)
   qt_env.Program("qt/setup/setup", ["qt/setup/setup.cc", asset_obj],
                  LIBS=qt_libs + ['curl', 'common', 'json11'])
+=======
+
+if GetOption('extras') and arch != "Darwin":
+  qt_env.SharedLibrary("qt/python_helpers", ["qt/qt_window.cc"], LIBS=qt_libs)
+
+  # spinner and text window
+  qt_env.Program("_text", ["qt/text.cc"], LIBS=qt_libs)
+  qt_env.Program("_spinner", ["qt/spinner.cc"], LIBS=qt_libs)
+
+
+  # setup and factory resetter
+  qt_env.Program("qt/setup/reset", ["qt/setup/reset.cc"], LIBS=qt_libs)
+  qt_env.Program("qt/setup/setup", ["qt/setup/setup.cc", asset_obj],
+                 LIBS=qt_libs + ['curl', 'common'])
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   # build updater UI
   qt_env.Program("qt/setup/updater", ["qt/setup/updater.cc", asset_obj], LIBS=qt_libs)
 
+<<<<<<< HEAD
   # build mui
   qt_env.Program("mui", ["mui.cc"], LIBS=qt_libs)
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   # build installers
   senv = qt_env.Clone()
   senv['LINKFLAGS'].append('-Wl,-strip-debug')
@@ -131,4 +173,8 @@ if GetOption('extras') and arch in ['larch64']:
 
 # build watch3
 if arch in ['x86_64', 'aarch64', 'Darwin'] or GetOption('extras'):
+<<<<<<< HEAD
   qt_env.Program("watch3", ["watch3.cc"], LIBS=qt_libs + ['common', 'json11', 'msgq', 'visionipc'])
+=======
+  qt_env.Program("watch3", ["watch3.cc"], LIBS=qt_libs + ['common', 'msgq', 'visionipc'])
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

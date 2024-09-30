@@ -3,7 +3,11 @@ import argparse
 import sys
 import unittest # noqa: TID251
 
+<<<<<<< HEAD
 from openpilot.selfdrive.car.tests.routes import CarTestRoute
+=======
+from opendbc.car.tests.routes import CarTestRoute
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.selfdrive.car.tests.test_models import TestCarModel
 from openpilot.tools.lib.route import SegmentName
 

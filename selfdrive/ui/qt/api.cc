@@ -79,24 +79,42 @@ bool HttpRequest::timeout() const {
   return reply && reply->error() == QNetworkReply::OperationCanceledError;
 }
 
+<<<<<<< HEAD
 QNetworkRequest HttpRequest::prepareRequest(const QString &requestURL)
 {
   QNetworkRequest request;
   QString token;
   if (create_jwt) {
     token = GetJwtToken();
+=======
+void HttpRequest::sendRequest(const QString &requestURL, const HttpRequest::Method method) {
+  if (active()) {
+    qDebug() << "HttpRequest is active";
+    return;
+  }
+  QString token;
+  if (create_jwt) {
+    token = CommaApi::create_jwt();
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   } else {
     QString token_json = QString::fromStdString(util::read_file(util::getenv("HOME") + "/.comma/auth.json"));
     QJsonDocument json_d = QJsonDocument::fromJson(token_json.toUtf8());
     token = json_d["access_token"].toString();
   }
 
+<<<<<<< HEAD
   request.setUrl(QUrl(requestURL));
   request.setRawHeader("User-Agent", GetUserAgent().toUtf8());
+=======
+  QNetworkRequest request;
+  request.setUrl(QUrl(requestURL));
+  request.setRawHeader("User-Agent", getUserAgent().toUtf8());
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   if (!token.isEmpty()) {
     request.setRawHeader(QByteArray("Authorization"), ("JWT " + token).toUtf8());
   }
+<<<<<<< HEAD
   return request;
 }
 
@@ -110,6 +128,12 @@ void HttpRequest::sendRequest(const QString &requestURL, const Method method) {
   if (method == Method::GET) {
     reply = nam()->get(request);
   } else if (method == Method::DELETE) {
+=======
+
+  if (method == HttpRequest::Method::GET) {
+    reply = nam()->get(request);
+  } else if (method == HttpRequest::Method::DELETE) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     reply = nam()->deleteResource(request);
   }
 

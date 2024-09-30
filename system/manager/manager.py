@@ -5,6 +5,7 @@ import signal
 import sys
 import traceback
 
+<<<<<<< HEAD
 from cereal import custom
 import cereal.messaging as messaging
 import openpilot.system.sentry as sentry
@@ -20,6 +21,21 @@ from openpilot.system.athena.registration import register, UNREGISTERED_DONGLE_I
 from openpilot.common.swaglog import cloudlog, add_file_handler
 from openpilot.system.hardware.hw import Paths
 from openpilot.system.version import get_build_metadata, terms_version, terms_version_sp, training_version
+=======
+from cereal import log
+import cereal.messaging as messaging
+import openpilot.system.sentry as sentry
+from openpilot.common.params import Params, ParamKeyType
+from openpilot.common.text_window import TextWindow
+from openpilot.system.hardware import HARDWARE
+from openpilot.system.manager.helpers import unblock_stdout, write_onroad_params, save_bootlog
+from openpilot.system.manager.process import ensure_running
+from openpilot.system.manager.process_config import managed_processes
+from openpilot.system.athena.registration import register, UNREGISTERED_DONGLE_ID
+from openpilot.common.swaglog import cloudlog, add_file_handler
+from openpilot.system.version import get_build_metadata, terms_version, training_version
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 
 def manager_init() -> None:
@@ -41,6 +57,7 @@ def manager_init() -> None:
     ("HasAcceptedTerms", "0"),
     ("LanguageSetting", "main_en"),
     ("OpenpilotEnabledToggle", "1"),
+<<<<<<< HEAD
     ("LongitudinalPersonality", str(custom.LongitudinalPersonalitySP.standard)),
 
     ("AccelPersonality", str(custom.AccelerationPersonality.stock)),
@@ -122,6 +139,10 @@ def manager_init() -> None:
   ]
   if not PC:
     default_params.append(("LastUpdateTime", datetime.datetime.now(datetime.UTC).replace(tzinfo=None).isoformat().encode('utf8')))
+=======
+    ("LongitudinalPersonality", str(log.LongitudinalPersonality.standard)),
+  ]
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   if params.get_bool("RecordFrontLock"):
     params.put_bool("RecordFront", True)
@@ -131,10 +152,13 @@ def manager_init() -> None:
     if params.get(k) is None:
       params.put(k, v)
 
+<<<<<<< HEAD
   # parameters set by Environment Variables
   if os.getenv("HANDSMONITORING") is not None:
     params.put_bool("HandsOnWheelMonitoring", bool(int(os.getenv("HANDSMONITORING", "0"))))
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   # Create folders needed for msgq
   try:
     os.mkdir("/dev/shm")
@@ -146,7 +170,10 @@ def manager_init() -> None:
   # set version params
   params.put("Version", build_metadata.openpilot.version)
   params.put("TermsVersion", terms_version)
+<<<<<<< HEAD
   params.put("TermsVersionSunnypilot", terms_version_sp)
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   params.put("TrainingVersion", training_version)
   params.put("GitCommit", build_metadata.openpilot.git_commit)
   params.put("GitCommitDate", build_metadata.openpilot.git_commit_date)
@@ -154,7 +181,10 @@ def manager_init() -> None:
   params.put("GitRemote", build_metadata.openpilot.git_origin)
   params.put_bool("IsTestedBranch", build_metadata.tested_channel)
   params.put_bool("IsReleaseBranch", build_metadata.release_channel)
+<<<<<<< HEAD
   params.put_bool("IsReleaseSPBranch", build_metadata.release_sp_channel)
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   # set dongle id
   reg_res = register(show_spinner=True)
@@ -163,12 +193,15 @@ def manager_init() -> None:
   else:
     serial = params.get("HardwareSerial")
     raise Exception(f"Registration failed for device {serial}")
+<<<<<<< HEAD
   if params.get("HardwareSerial") is None:
     try:
       serial = HARDWARE.get_serial()
       params.put("HardwareSerial", serial)
     except Exception:
       cloudlog.exception("Error getting serial for device")
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   os.environ['DONGLE_ID'] = dongle_id  # Needed for swaglog
   os.environ['GIT_ORIGIN'] = build_metadata.openpilot.git_normalized_origin # Needed for swaglog
   os.environ['GIT_BRANCH'] = build_metadata.channel # Needed for swaglog
@@ -187,6 +220,7 @@ def manager_init() -> None:
                        dirty=build_metadata.openpilot.is_dirty,
                        device=HARDWARE.get_device_type())
 
+<<<<<<< HEAD
   if os.path.isfile(os.path.join(sentry.CRASHES_DIR, 'error.txt')):
     os.remove(os.path.join(sentry.CRASHES_DIR, 'error.txt'))
 
@@ -194,6 +228,8 @@ def manager_init() -> None:
   if not os.path.exists(models_dir):
     os.makedirs(models_dir)
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   # preimport all processes
   for p in managed_processes.values():
     p.prepare()
@@ -224,8 +260,11 @@ def manager_thread() -> None:
   if os.getenv("NOBOARD") is not None:
     ignore.append("pandad")
   ignore += [x for x in os.getenv("BLOCK", "").split(",") if len(x) > 0]
+<<<<<<< HEAD
   if params.get("DriverCameraHardwareMissing") and not is_registered_device():
     ignore += ["dmonitoringd", "dmonitoringmodeld"]
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   sm = messaging.SubMaster(['deviceState', 'carParams'], poll='deviceState')
   pm = messaging.PubMaster(['managerState'])

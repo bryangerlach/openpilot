@@ -1,8 +1,14 @@
 #include <cassert>
+<<<<<<< HEAD
 
 #include "common/swaglog.h"
 #include "system/camerad/cameras/camera_common.h"
 #include "system/camerad/cameras/camera_qcom2.h"
+=======
+#include <cmath>
+
+#include "common/swaglog.h"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 #include "system/camerad/sensors/sensor.h"
 
 namespace {
@@ -17,7 +23,11 @@ const float sensor_analog_gains_AR0231[] = {
     5.0 / 4.0, 6.0 / 4.0, 6.0 / 3.0, 7.0 / 3.0,  // 8, 9, 10, 11
     7.0 / 2.0, 8.0 / 2.0, 8.0 / 1.0};            // 12, 13, 14, 15 = bypass
 
+<<<<<<< HEAD
 std::map<uint16_t, std::pair<int, int>> ar0231_build_register_lut(CameraState *c, uint8_t *data) {
+=======
+std::map<uint16_t, std::pair<int, int>> ar0231_build_register_lut(const AR0231 *s, uint8_t *data) {
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   // This function builds a lookup table from register address, to a pair of indices in the
   // buffer where to read this address. The buffer contains padding bytes,
   // as well as markers to indicate the type of the next byte.
@@ -33,7 +43,11 @@ std::map<uint16_t, std::pair<int, int>> ar0231_build_register_lut(CameraState *c
 
   std::map<uint16_t, std::pair<int, int>> registers;
   for (int register_row = 0; register_row < 2; register_row++) {
+<<<<<<< HEAD
     uint8_t *registers_raw = data + c->ci->frame_stride * register_row;
+=======
+    uint8_t *registers_raw = data + s->frame_stride * register_row;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     assert(registers_raw[0] == 0x0a);  // Start of line
 
     int value_tag_count = 0;
@@ -58,7 +72,11 @@ std::map<uint16_t, std::pair<int, int>> ar0231_build_register_lut(CameraState *c
           cur_addr += 2;
           first_val_idx = val_idx;
         } else {
+<<<<<<< HEAD
           registers[cur_addr] = std::make_pair(first_val_idx + c->ci->frame_stride * register_row, val_idx + c->ci->frame_stride * register_row);
+=======
+          registers[cur_addr] = std::make_pair(first_val_idx + s->frame_stride * register_row, val_idx + s->frame_stride * register_row);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         }
 
         value_tag_count++;
@@ -119,9 +137,15 @@ AR0231::AR0231() {
   target_grey_factor = 1.0;
 }
 
+<<<<<<< HEAD
 void AR0231::processRegisters(CameraState *c, cereal::FrameData::Builder &framed) const {
   const uint8_t expected_preamble[] = {0x0a, 0xaa, 0x55, 0x20, 0xa5, 0x55};
   uint8_t *data = (uint8_t *)c->buf.cur_camera_buf->addr + c->ci->registers_offset;
+=======
+void AR0231::processRegisters(uint8_t *cur_buf, cereal::FrameData::Builder &framed) const {
+  const uint8_t expected_preamble[] = {0x0a, 0xaa, 0x55, 0x20, 0xa5, 0x55};
+  uint8_t *data = cur_buf + registers_offset;
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   if (memcmp(data, expected_preamble, std::size(expected_preamble)) != 0) {
     LOGE("unexpected register data found");
@@ -129,7 +153,11 @@ void AR0231::processRegisters(CameraState *c, cereal::FrameData::Builder &framed
   }
 
   if (ar0231_register_lut.empty()) {
+<<<<<<< HEAD
     ar0231_register_lut = ar0231_build_register_lut(c, data);
+=======
+    ar0231_register_lut = ar0231_build_register_lut(this, data);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   }
   std::map<uint16_t, uint16_t> registers;
   for (uint16_t addr : {0x2000, 0x2002, 0x20b0, 0x20b2, 0x30c6, 0x30c8, 0x30ca, 0x30cc}) {

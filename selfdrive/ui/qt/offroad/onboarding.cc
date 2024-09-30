@@ -4,8 +4,12 @@
 
 #include <QLabel>
 #include <QPainter>
+<<<<<<< HEAD
 #include <QQmlContext>
 #include <QQuickWidget>
+=======
+#include <QScrollBar>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 #include <QTransform>
 #include <QVBoxLayout>
 
@@ -13,6 +17,10 @@
 #include "common/params.h"
 #include "selfdrive/ui/qt/util.h"
 #include "selfdrive/ui/qt/widgets/input.h"
+<<<<<<< HEAD
+=======
+#include "selfdrive/ui/qt/widgets/scrollview.h"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 TrainingGuide::TrainingGuide(QWidget *parent) : QFrame(parent) {
   setAttribute(Qt::WA_OpaquePaintEvent);
@@ -98,6 +106,7 @@ void TermsPage::showEvent(QShowEvent *event) {
   title->setStyleSheet("font-size: 90px; font-weight: 600;");
   main_layout->addWidget(title);
 
+<<<<<<< HEAD
   main_layout->addSpacing(30);
 
   QQuickWidget *text = new QQuickWidget(this);
@@ -117,6 +126,19 @@ void TermsPage::showEvent(QShowEvent *event) {
   QObject *obj = (QObject*)text->rootObject();
   QObject::connect(obj, SIGNAL(scroll()), SLOT(enableAccept()));
 
+=======
+  QLabel *text = new QLabel(this);
+  text->setTextFormat(Qt::RichText);
+  text->setWordWrap(true);
+  text->setText(QString::fromStdString(util::read_file("../assets/offroad/tc.html")));
+  text->setStyleSheet("font-size:50px; font-weight: 200; color: #C9C9C9; background-color:#1B1B1B; padding:50px 50px;");
+  ScrollView *scroll = new ScrollView(text, this);
+
+  main_layout->addSpacing(30);
+  main_layout->addWidget(scroll);
+  main_layout->addSpacing(50);
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   QHBoxLayout* buttons = new QHBoxLayout;
   buttons->setMargin(0);
   buttons->setSpacing(45);
@@ -141,6 +163,15 @@ void TermsPage::showEvent(QShowEvent *event) {
   )");
   buttons->addWidget(accept_btn);
   QObject::connect(accept_btn, &QPushButton::clicked, this, &TermsPage::acceptedTerms);
+<<<<<<< HEAD
+=======
+  QScrollBar *scroll_bar = scroll->verticalScrollBar();
+  connect(scroll_bar, &QScrollBar::valueChanged, this, [this, scroll_bar](int value) {
+    if (value == scroll_bar->maximum()) {
+      enableAccept();
+    }
+  });
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }
 
 void TermsPage::enableAccept() {
@@ -158,7 +189,11 @@ void DeclinePage::showEvent(QShowEvent *event) {
   main_layout->setSpacing(40);
 
   QLabel *text = new QLabel(this);
+<<<<<<< HEAD
   text->setText(tr("You must accept the Terms and Conditions in order to use sunnypilot."));
+=======
+  text->setText(tr("You must accept the Terms and Conditions in order to use openpilot."));
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   text->setStyleSheet(R"(font-size: 80px; font-weight: 300; margin: 200px;)");
   text->setWordWrap(true);
   main_layout->addWidget(text, 0, Qt::AlignCenter);
@@ -231,4 +266,8 @@ OnboardingWindow::OnboardingWindow(QWidget *parent) : QStackedWidget(parent) {
     }
   )");
   updateActiveScreen();
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

@@ -16,8 +16,11 @@
 #include "selfdrive/modeld/transforms/loadyuv.h"
 #include "selfdrive/modeld/transforms/transform.h"
 
+<<<<<<< HEAD
 float sigmoid(float input);
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 class ModelFrame {
 public:
   ModelFrame(cl_device_id device_id, cl_context context);

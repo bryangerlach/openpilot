@@ -7,7 +7,11 @@ from collections.abc import Iterable
 
 from tqdm import tqdm
 
+<<<<<<< HEAD
 from openpilot.selfdrive.car.tests.routes import routes as test_car_models_routes
+=======
+from opendbc.car.tests.routes import routes as test_car_models_routes
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.selfdrive.test.process_replay.test_processes import source_segments as replay_segments
 from openpilot.tools.lib.azure_container import AzureContainer
 from openpilot.tools.lib.openpilotcontainers import DataCIContainer, DataProdContainer, OpenpilotCIContainer

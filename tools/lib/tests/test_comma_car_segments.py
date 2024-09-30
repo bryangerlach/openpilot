@@ -1,6 +1,10 @@
 import pytest
 import requests
+<<<<<<< HEAD
 from openpilot.selfdrive.car.fingerprints import MIGRATION
+=======
+from opendbc.car.fingerprints import MIGRATION
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.tools.lib.comma_car_segments import get_comma_car_segments_database, get_url
 from openpilot.tools.lib.logreader import LogReader
 from openpilot.tools.lib.route import SegmentRange

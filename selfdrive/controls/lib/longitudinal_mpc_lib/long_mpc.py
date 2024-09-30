@@ -2,13 +2,21 @@
 import os
 import time
 import numpy as np
+<<<<<<< HEAD
 from cereal import custom
+=======
+from cereal import log
+from opendbc.car.interfaces import ACCEL_MIN
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.common.numpy_fast import clip
 from openpilot.common.realtime import DT_MDL
 from openpilot.common.swaglog import cloudlog
 # WARNING: imports outside of constants will not trigger a rebuild
 from openpilot.selfdrive.modeld.constants import index_function
+<<<<<<< HEAD
 from openpilot.selfdrive.car.interfaces import ACCEL_MIN
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.selfdrive.controls.radard import _LEAD_ACCEL_TAU
 
 if __name__ == '__main__':  # generating code
@@ -57,6 +65,7 @@ T_DIFFS = np.diff(T_IDXS, prepend=[0.])
 COMFORT_BRAKE = 2.5
 STOP_DISTANCE = 6.0
 
+<<<<<<< HEAD
 def get_jerk_factor(personality=custom.LongitudinalPersonalitySP.standard):
   if personality==custom.LongitudinalPersonalitySP.relaxed:
     return 1.0
@@ -66,10 +75,20 @@ def get_jerk_factor(personality=custom.LongitudinalPersonalitySP.standard):
     return 0.8
   elif personality==custom.LongitudinalPersonalitySP.aggressive:
     return 0.6
+=======
+def get_jerk_factor(personality=log.LongitudinalPersonality.standard):
+  if personality==log.LongitudinalPersonality.relaxed:
+    return 1.0
+  elif personality==log.LongitudinalPersonality.standard:
+    return 1.0
+  elif personality==log.LongitudinalPersonality.aggressive:
+    return 0.5
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   else:
     raise NotImplementedError("Longitudinal personality not supported")
 
 
+<<<<<<< HEAD
 def get_T_FOLLOW(personality=custom.LongitudinalPersonalitySP.standard):
   if personality==custom.LongitudinalPersonalitySP.relaxed:
     return 1.75
@@ -102,6 +121,18 @@ def get_dynamic_personality(v_ego, personality=custom.LongitudinalPersonalitySP.
   return np.interp(v_ego, x_vel, y_dist)
 
 
+=======
+def get_T_FOLLOW(personality=log.LongitudinalPersonality.standard):
+  if personality==log.LongitudinalPersonality.relaxed:
+    return 1.75
+  elif personality==log.LongitudinalPersonality.standard:
+    return 1.45
+  elif personality==log.LongitudinalPersonality.aggressive:
+    return 1.25
+  else:
+    raise NotImplementedError("Longitudinal personality not supported")
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 def get_stopped_equivalence_factor(v_lead):
   return (v_lead**2) / (2 * COMFORT_BRAKE)
 
@@ -252,8 +283,11 @@ class LongitudinalMpc:
     self.reset()
     self.source = SOURCES[2]
 
+<<<<<<< HEAD
     self.e2e_x = np.zeros(13, dtype=np.float64)
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   def reset(self):
     # self.solver = AcadosOcpSolverCython(MODEL_NAME, ACADOS_SOLVER_TYPE, N)
     self.solver.reset()
@@ -299,7 +333,11 @@ class LongitudinalMpc:
     for i in range(N):
       self.solver.cost_set(i, 'Zl', Zl)
 
+<<<<<<< HEAD
   def set_weights(self, prev_accel_constraint=True, personality=custom.LongitudinalPersonalitySP.standard):
+=======
+  def set_weights(self, prev_accel_constraint=True, personality=log.LongitudinalPersonality.standard):
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     jerk_factor = get_jerk_factor(personality)
     if self.mode == 'acc':
       a_change_cost = A_CHANGE_COST if prev_accel_constraint else 0
@@ -358,9 +396,15 @@ class LongitudinalMpc:
     self.cruise_min_a = min_a
     self.max_a = max_a
 
+<<<<<<< HEAD
   def update(self, radarstate, v_cruise, x, v, a, j, personality=custom.LongitudinalPersonalitySP.standard, dynamic_personality=False):
     v_ego = self.x0[1]
     t_follow = get_dynamic_personality(v_ego, personality) if dynamic_personality else get_T_FOLLOW(personality)
+=======
+  def update(self, radarstate, v_cruise, x, v, a, j, personality=log.LongitudinalPersonality.standard):
+    t_follow = get_T_FOLLOW(personality)
+    v_ego = self.x0[1]
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self.status = radarstate.leadOne.status or radarstate.leadTwo.status
 
     lead_xv_0 = self.process_lead(radarstate.leadOne)
@@ -372,6 +416,7 @@ class LongitudinalMpc:
     lead_0_obstacle = lead_xv_0[:,0] + get_stopped_equivalence_factor(lead_xv_0[:,1])
     lead_1_obstacle = lead_xv_1[:,0] + get_stopped_equivalence_factor(lead_xv_1[:,1])
 
+<<<<<<< HEAD
     cruise_target_e2ex = T_IDXS * np.clip(v_cruise, v_ego - 2.0, 1e3) + x[0]
     e2e_xforward = ((v[1:] + v[:-1]) / 2) * (T_IDXS[1:] - T_IDXS[:-1])
     e2e_x = np.cumsum(np.insert(e2e_xforward, 0, x[0]))
@@ -379,6 +424,8 @@ class LongitudinalMpc:
     x_and_cruise_e2ex = np.column_stack([e2e_x, cruise_target_e2ex])
     e2e_x = np.min(x_and_cruise_e2ex, axis=1)
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self.params[:,0] = ACCEL_MIN
     self.params[:,1] = self.max_a
 
@@ -417,8 +464,11 @@ class LongitudinalMpc:
     else:
       raise NotImplementedError(f'Planner mode {self.mode} not recognized in planner update')
 
+<<<<<<< HEAD
     self.e2e_x = e2e_x[:]
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self.yref[:,1] = x
     self.yref[:,2] = v
     self.yref[:,3] = a

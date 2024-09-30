@@ -39,6 +39,7 @@ jobs:
         ${{ env.RUN }} "scons -j$(nproc)"
     - name: Run bridge test
       run: |
+<<<<<<< HEAD
         ${{ env.RUN }} "export MAPBOX_TOKEN='pk.eyJ1Ijoiam5ld2IiLCJhIjoiY2xxNW8zZXprMGw1ZzJwbzZneHd2NHljbSJ9.gV7VPRfbXFetD-1OVF0XZg' && \
                         source selfdrive/test/setup_xvfb.sh && \
                         source selfdrive/test/setup_vsound.sh && \
@@ -78,6 +79,16 @@ jobs:
   devcontainer:
     name: devcontainer
     runs-on: ubuntu-latest
+=======
+        ${{ env.RUN }} "source selfdrive/test/setup_xvfb.sh && \
+                        source selfdrive/test/setup_vsound.sh && \
+                        CI=1 pytest tools/sim/tests/test_metadrive_bridge.py"
+
+  devcontainer:
+    name: devcontainer
+    runs-on: ubuntu-latest
+    if: false  # we can re-enable once this is faster
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     steps:
     - uses: actions/checkout@v4
       with:

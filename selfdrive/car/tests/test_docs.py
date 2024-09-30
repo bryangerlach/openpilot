@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from collections import defaultdict
 import os
 import pytest
@@ -11,6 +12,15 @@ from openpilot.selfdrive.car.honda.values import CAR as HONDA
 from openpilot.selfdrive.car.values import PLATFORMS
 from openpilot.selfdrive.debug.dump_car_docs import dump_car_docs
 from openpilot.selfdrive.debug.print_docs_diff import print_car_docs_diff
+=======
+import os
+
+from openpilot.common.basedir import BASEDIR
+from opendbc.car.docs import generate_cars_md, get_all_car_docs
+from openpilot.selfdrive.debug.dump_car_docs import dump_car_docs
+from openpilot.selfdrive.debug.print_docs_diff import print_car_docs_diff
+from openpilot.selfdrive.car.docs import CARS_MD_OUT, CARS_MD_TEMPLATE
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 
 class TestCarDocs:
@@ -23,13 +33,18 @@ class TestCarDocs:
     with open(CARS_MD_OUT) as f:
       current_cars_md = f.read()
 
+<<<<<<< HEAD
     assert generated_cars_md == current_cars_md, "Run selfdrive/car/docs.py to update the compatibility documentation"
+=======
+    assert generated_cars_md == current_cars_md, "Run selfdrive/opcar/docs.py to update the compatibility documentation"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   def test_docs_diff(self):
     dump_path = os.path.join(BASEDIR, "selfdrive", "car", "tests", "cars_dump")
     dump_car_docs(dump_path)
     print_car_docs_diff(dump_path)
     os.remove(dump_path)
+<<<<<<< HEAD
 
   def test_duplicate_years(self, subtests):
     make_model_years = defaultdict(list)
@@ -89,3 +104,5 @@ class TestCarDocs:
         assert car_part_type.count(PartType.connector) == 1, f"Need to specify one harness connector: {car.name}"
         assert car_part_type.count(PartType.mount) == 1, f"Need to specify one mount: {car.name}"
         assert Cable.right_angle_obd_c_cable_1_5ft in car_parts, f"Need to specify a right angle OBD-C cable (1.5ft): {car.name}"
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

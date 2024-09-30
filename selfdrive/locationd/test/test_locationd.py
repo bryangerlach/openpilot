@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import pytest
 import json
 import random
@@ -8,6 +9,12 @@ import cereal.messaging as messaging
 from cereal.services import SERVICE_LIST
 from openpilot.common.params import Params
 from openpilot.common.transformations.coordinates import ecef2geodetic
+=======
+import capnp
+
+import cereal.messaging as messaging
+from openpilot.common.params import Params
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 from openpilot.system.manager.process_config import managed_processes
 
@@ -60,6 +67,7 @@ class TestLocationdProc:
     msg.logMonoTime = t
     msg.valid = True
     return msg
+<<<<<<< HEAD
 
   def test_params_gps(self):
     random.seed(123489234)
@@ -87,3 +95,5 @@ class TestLocationdProc:
     assert lastGPS['latitude'] == pytest.approx(self.lat, abs=0.001)
     assert lastGPS['longitude'] == pytest.approx(self.lon, abs=0.001)
     assert lastGPS['altitude'] == pytest.approx(self.alt, abs=0.001)
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

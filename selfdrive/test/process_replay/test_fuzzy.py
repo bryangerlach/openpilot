@@ -4,14 +4,22 @@ import hypothesis.strategies as st
 from parameterized import parameterized
 
 from cereal import log
+<<<<<<< HEAD
 from openpilot.selfdrive.car.toyota.values import CAR as TOYOTA
+=======
+from opendbc.car.toyota.values import CAR as TOYOTA
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.selfdrive.test.fuzzy_generation import FuzzyGenerator
 import openpilot.selfdrive.test.process_replay.process_replay as pr
 
 # These processes currently fail because of unrealistic data breaking assumptions
 # that openpilot makes causing error with NaN, inf, int size, array indexing ...
 # TODO: Make each one testable
+<<<<<<< HEAD
 NOT_TESTED = ['controlsd', 'card', 'plannerd', 'calibrationd', 'dmonitoringd', 'paramsd', 'dmonitoringmodeld', 'modeld']
+=======
+NOT_TESTED = ['selfdrived', 'controlsd', 'card', 'plannerd', 'calibrationd', 'dmonitoringd', 'paramsd', 'dmonitoringmodeld', 'modeld']
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 TEST_CASES = [(cfg.proc_name, copy.deepcopy(cfg)) for cfg in pr.CONFIGS if cfg.proc_name not in NOT_TESTED]
 

@@ -1,5 +1,6 @@
 # Replay
 
+<<<<<<< HEAD
 ## Replay driving data
 
 `replay` replays all the messages logged while running openpilot.
@@ -9,10 +10,29 @@
 python tools/lib/auth.py
 
 # Start a replay
+=======
+`replay` allows you to simulate a driving session by replaying all messages logged during the use of openpilot. This provides a way to analyze and visualize system behavior as if it were live.
+
+## Setup
+
+Before starting a replay, you need to authenticate with your comma account using `auth.py`. This will allow you to access your routes from the server.
+
+```bash
+# Authenticate to access routes from your comma account:
+python3 tools/lib/auth.py
+```
+
+## Replay a Remote Route
+You can replay a route from your comma account by specifying the route name.
+
+```bash
+# Start a replay with a specific route:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 tools/replay/replay <route-name>
 
 # Example:
 tools/replay/replay 'a2a0ccea32023010|2023-07-27--13-01-19'
+<<<<<<< HEAD
 # or use --demo to replay the default demo route:
 tools/replay/replay --demo
 
@@ -26,6 +46,38 @@ python replay/rp_visualization.py
 ```
 
 ## usage
+=======
+
+# Replay the default demo route:
+tools/replay/replay --demo
+```
+
+## Replay a Local Route
+To replay a route stored locally on your machine, specify the route name and provide the path to the directory where the route files are stored.
+
+```bash
+# Replay a local route
+tools/replay/replay <route-name> --data_dir="/path_to/route"
+
+# Example:
+# If you have a local route stored at /path_to_routes with segments like:
+# a2a0ccea32023010|2023-07-27--13-01-19--0
+# a2a0ccea32023010|2023-07-27--13-01-19--1
+# You can replay it like this:
+tools/replay/replay "a2a0ccea32023010|2023-07-27--13-01-19" --data-dir="/path_to_routes"
+```
+
+## Send Messages via ZMQ
+By default, replay sends messages via MSGQ. To switch to ZMQ, set the ZMQ environment variable.
+
+```bash
+# Start replay and send messages via ZMQ:
+ZMQ=1 tools/replay/replay <route-name>
+```
+
+## Usage
+For more information on available options and arguments, use the help command:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 ``` bash
 $ tools/replay/replay -h
@@ -57,6 +109,33 @@ Arguments:
                          connect.comma.ai
 ```
 
+<<<<<<< HEAD
+=======
+## Visualize the Replay in the Openpilot UI
+To visualize the replay within the openpilot UI, run the following commands:
+
+```bash
+tools/replay/replay <route-name>
+cd selfdrive/ui && ./ui
+```
+
+## Try Radar Point Visualization with Rerun
+To visualize radar points, run rp_visualization.py while tools/replay/replay is active.
+
+```bash
+tools/replay/replay <route-name>
+python3 replay/rp_visualization.py
+```
+
+## Work with plotjuggler
+If you want to use replay with plotjuggler, you can stream messages by running:
+
+```bash
+tools/replay/replay <route-name>
+tools/plotjuggler/juggle.py --stream
+```
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 ## watch3
 
 watch all three cameras simultaneously from your comma three routes with watch3

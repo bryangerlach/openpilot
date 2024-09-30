@@ -8,12 +8,20 @@ import functools
 import threading
 from cereal.messaging import PubMaster
 from cereal.services import SERVICE_LIST
+<<<<<<< HEAD
 from openpilot.common.mock.generators import generate_liveLocationKalman
+=======
+from openpilot.common.mock.generators import generate_livePose
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.common.realtime import Ratekeeper
 
 
 MOCK_GENERATOR = {
+<<<<<<< HEAD
   "liveLocationKalman": generate_liveLocationKalman
+=======
+  "livePose": generate_livePose
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 }
 
 

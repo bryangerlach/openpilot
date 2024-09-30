@@ -6,16 +6,22 @@
 #include <QScrollBar>
 #include <QStyle>
 
+<<<<<<< HEAD
 #ifdef SUNNYPILOT
 #include "selfdrive/ui/sunnypilot/ui.h"
 #else
 #include "selfdrive/ui/ui.h"
 #endif
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 #include "selfdrive/ui/qt/qt_window.h"
 #include "selfdrive/ui/qt/util.h"
 #include "selfdrive/ui/qt/widgets/controls.h"
 #include "selfdrive/ui/qt/widgets/scrollview.h"
+<<<<<<< HEAD
 #include "selfdrive/ui/qt/home.h"
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 static const int ICON_WIDTH = 49;
 
@@ -78,6 +84,14 @@ Networking::Networking(QWidget* parent, bool show_advanced) : QFrame(parent) {
   main_layout->setCurrentWidget(wifiScreen);
 }
 
+<<<<<<< HEAD
+=======
+void Networking::setPrimeType(PrimeState::Type type) {
+  an->setGsmVisible(type == PrimeState::PRIME_TYPE_NONE || type == PrimeState::PRIME_TYPE_LITE);
+  wifi->ipv4_forward = (type == PrimeState::PRIME_TYPE_NONE || type == PrimeState::PRIME_TYPE_LITE);
+}
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 void Networking::refresh() {
   wifiWidget->refresh();
   an->refresh();
@@ -209,6 +223,7 @@ AdvancedNetworking::AdvancedNetworking(QWidget* parent, WifiManager* wifi): QWid
   // Set initial config
   wifi->updateGsmSettings(roamingEnabled, QString::fromStdString(params.get("GsmApn")), metered);
 
+<<<<<<< HEAD
   connect(uiState(), &UIState::primeTypeChanged, this, [=](PrimeType prime_type) {
     bool gsmVisible = prime_type == PrimeType::NONE || prime_type == PrimeType::LITE;
     roamingToggle->setVisible(gsmVisible);
@@ -216,10 +231,21 @@ AdvancedNetworking::AdvancedNetworking(QWidget* parent, WifiManager* wifi): QWid
     meteredToggle->setVisible(gsmVisible);
   });
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   main_layout->addWidget(new ScrollView(list, this));
   main_layout->addStretch(1);
 }
 
+<<<<<<< HEAD
+=======
+void AdvancedNetworking::setGsmVisible(bool visible) {
+  roamingToggle->setVisible(visible);
+  editApnButton->setVisible(visible);
+  meteredToggle->setVisible(visible);
+}
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 void AdvancedNetworking::refresh() {
   ipLabel->setText(wifi->ipv4_address);
   tetheringToggle->setEnabled(true);
@@ -380,4 +406,8 @@ void WifiItem::setItem(const Network &n, const QPixmap &status_icon, bool show_f
 
   iconLabel->setPixmap(status_icon);
   strengthLabel->setPixmap(strength_icon);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

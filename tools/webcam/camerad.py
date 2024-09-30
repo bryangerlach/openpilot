@@ -26,7 +26,10 @@ class Camerad:
     self.cameras = []
     for c in CAMERAS:
       cam = Camera(c.msg_name, c.stream_type, c.cam_id)
+<<<<<<< HEAD
       assert cam.cap.isOpened(), f"Can't find camera {c}"
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       self.cameras.append(cam)
       self.vipc_server.create_buffers(c.stream_type, 20, False, cam.W, cam.H)
 
@@ -47,11 +50,18 @@ class Camerad:
 
   def camera_runner(self, cam):
     rk = Ratekeeper(20, None)
+<<<<<<< HEAD
     while cam.cap.isOpened():
       for yuv in cam.read_frames():
         self._send_yuv(yuv, cam.cur_frame_id, cam.cam_type_state, cam.stream_type)
         cam.cur_frame_id += 1
         rk.keep_time()
+=======
+    for yuv in cam.read_frames():
+      self._send_yuv(yuv, cam.cur_frame_id, cam.cam_type_state, cam.stream_type)
+      cam.cur_frame_id += 1
+      rk.keep_time()
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   def run(self):
     threads = []

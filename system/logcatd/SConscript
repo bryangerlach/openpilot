@@ -1,3 +1,7 @@
 Import('env', 'messaging', 'common')
 
+<<<<<<< HEAD
 env.Program('logcatd', 'logcatd_systemd.cc', LIBS=[messaging, common, 'systemd', 'json11'])
+=======
+env.Program('logcatd', 'logcatd_systemd.cc', LIBS=[messaging, common, 'systemd'])
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

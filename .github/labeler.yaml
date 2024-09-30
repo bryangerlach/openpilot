@@ -4,6 +4,7 @@ CI / testing:
 
 car:
   - changed-files:
+<<<<<<< HEAD
     - any-glob-to-all-files: 'selfdrive/car/**'
 
 body:
@@ -57,6 +58,9 @@ volkswagen:
 fingerprint:
   - changed-files:
     - any-glob-to-all-files: 'selfdrive/car/*/fingerprints.py'
+=======
+    - any-glob-to-all-files: '{selfdrive/car/**,opendbc_repo}'
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 simulation:
   - changed-files:
@@ -74,6 +78,10 @@ multilanguage:
   - changed-files:
     - any-glob-to-all-files: 'selfdrive/ui/translations/**'
 
+<<<<<<< HEAD
 research:
+=======
+autonomy:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   - changed-files:
     - any-glob-to-all-files: "{selfdrive/modeld/models/**,selfdrive/test/process_replay/model_replay_ref_commit}"

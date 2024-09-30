@@ -6,7 +6,10 @@
 #include <QTimer>
 
 #include "common/util.h"
+<<<<<<< HEAD
 #include "selfdrive/ui/qt/util.h"
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 namespace CommaApi {
 
@@ -24,11 +27,18 @@ class HttpRequest : public QObject {
   Q_OBJECT
 
 public:
+<<<<<<< HEAD
   enum class Method {GET, DELETE, POST, PUT};
 
   explicit HttpRequest(QObject* parent, bool create_jwt = true, int timeout = 20000);
   virtual void sendRequest(const QString &requestURL, Method method);
   void sendRequest(const QString &requestURL) { sendRequest(requestURL, Method::GET);}
+=======
+  enum class Method {GET, DELETE};
+
+  explicit HttpRequest(QObject* parent, bool create_jwt = true, int timeout = 20000);
+  void sendRequest(const QString &requestURL, const Method method = Method::GET);
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   bool active() const;
   bool timeout() const;
 
@@ -37,6 +47,7 @@ signals:
 
 protected:
   QNetworkReply *reply = nullptr;
+<<<<<<< HEAD
   static QNetworkAccessManager *nam();
   QTimer *networkTimer = nullptr;
   bool create_jwt;
@@ -45,6 +56,15 @@ protected:
   virtual QString GetUserAgent() const { return getUserAgent(); }
 
 protected slots:
+=======
+
+private:
+  static QNetworkAccessManager *nam();
+  QTimer *networkTimer = nullptr;
+  bool create_jwt;
+
+private slots:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   void requestTimeout();
   void requestFinished();
 };

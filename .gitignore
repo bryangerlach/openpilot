@@ -56,7 +56,10 @@ selfdrive/car/tests/cars_dump
 system/camerad/camerad
 system/camerad/test/ae_gray_test
 selfdrive/modeld/_modeld
+<<<<<<< HEAD
 selfdrive/modeld/_navmodeld
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 selfdrive/modeld/_dmonitoringmodeld
 /src/
 

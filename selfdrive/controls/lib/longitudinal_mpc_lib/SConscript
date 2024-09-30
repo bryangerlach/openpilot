@@ -73,6 +73,11 @@ lenv["CXXFLAGS"].append("-DACADOS_WITH_QPOASES")
 lenv["CCFLAGS"].append("-Wno-unused")
 if arch != "Darwin":
   lenv["LINKFLAGS"].append("-Wl,--disable-new-dtags")
+<<<<<<< HEAD
+=======
+else:
+  lenv["LINKFLAGS"].append("-Wl,-install_name,@loader_path/libacados_ocp_solver_long.dylib")
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 lib_solver = lenv.SharedLibrary(f"{gen}/acados_ocp_solver_long",
                                 build_files,
                                 LIBS=['m', 'acados', 'hpipm', 'blasfeo', 'qpOASES_e'])

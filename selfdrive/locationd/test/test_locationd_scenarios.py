@@ -7,12 +7,21 @@ from openpilot.tools.lib.logreader import LogReader
 from openpilot.selfdrive.test.process_replay.migration import migrate_all
 from openpilot.selfdrive.test.process_replay.process_replay import replay_process_with_name
 
+<<<<<<< HEAD
 TEST_ROUTE = "ff2bd20623fcaeaa|2023-09-05--10-14-54/4"
 GPS_MESSAGES = ['gpsLocationExternal', 'gpsLocation']
 SELECT_COMPARE_FIELDS = {
   'yaw_rate': ['angularVelocityCalibrated', 'value', 2],
   'roll': ['orientationNED', 'value', 0],
   'gps_flag': ['gpsOK'],
+=======
+# TODO find a new segment to test
+TEST_ROUTE = "4019fff6e54cf1c7|00000123--4bc0d95ef6/5"
+GPS_MESSAGES = ['gpsLocationExternal', 'gpsLocation']
+SELECT_COMPARE_FIELDS = {
+  'yaw_rate': ['angularVelocityDevice', 'z'],
+  'roll': ['orientationNED', 'x'],
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   'inputs_flag': ['inputsOK'],
   'sensors_flag': ['sensorsOK'],
 }
@@ -21,10 +30,13 @@ JUNK_IDX = 100
 
 class Scenario(Enum):
   BASE = 'base'
+<<<<<<< HEAD
   GPS_OFF = 'gps_off'
   GPS_OFF_MIDWAY = 'gps_off_midway'
   GPS_ON_MIDWAY = 'gps_on_midway'
   GPS_TUNNEL = 'gps_tunnel'
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   GYRO_OFF = 'gyro_off'
   GYRO_SPIKE_MIDWAY = 'gyro_spike_midway'
   ACCEL_OFF = 'accel_off'
@@ -37,9 +49,15 @@ def get_select_fields_data(logs):
     for key in keys:
       val = getattr(msg if val is None else val, key) if isinstance(key, str) else val[key]
     return val
+<<<<<<< HEAD
   llk = [x.liveLocationKalman for x in logs if x.which() == 'liveLocationKalman']
   data = defaultdict(list)
   for msg in llk:
+=======
+  lp = [x.livePose for x in logs if x.which() == 'livePose']
+  data = defaultdict(list)
+  for msg in lp:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     for key, fields in SELECT_COMPARE_FIELDS.items():
       data[key].append(get_nested_keys(msg, fields))
   for key in data:
@@ -51,6 +69,7 @@ def run_scenarios(scenario, logs):
   if scenario == Scenario.BASE:
     pass
 
+<<<<<<< HEAD
   elif scenario == Scenario.GPS_OFF:
     logs = sorted([x for x in logs if x.which() not in GPS_MESSAGES], key=lambda x: x.logMonoTime)
 
@@ -69,6 +88,8 @@ def run_scenarios(scenario, logs):
     gps = [x for x in logs if x.which() in GPS_MESSAGES]
     logs = sorted(non_gps + gps[:len(gps) // 4] + gps[-len(gps) // 4:], key=lambda x: x.logMonoTime)
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   elif scenario == Scenario.GYRO_OFF:
     logs = sorted([x for x in logs if x.which() != 'gyroscope'], key=lambda x: x.logMonoTime)
 
@@ -116,6 +137,7 @@ class TestLocationdScenarios:
       - roll: unchanged
     """
     orig_data, replayed_data = run_scenarios(Scenario.BASE, self.logs)
+<<<<<<< HEAD
     assert np.allclose(orig_data['yaw_rate'], replayed_data['yaw_rate'], atol=np.radians(0.2))
     assert np.allclose(orig_data['roll'], replayed_data['roll'], atol=np.radians(0.5))
 
@@ -171,6 +193,10 @@ class TestLocationdScenarios:
     assert np.allclose(orig_data['roll'], replayed_data['roll'], atol=np.radians(0.5))
     assert np.diff(replayed_data['gps_flag'])[213] == -1.0
     assert np.diff(replayed_data['gps_flag'])[805] == 1.0
+=======
+    assert np.allclose(orig_data['yaw_rate'], replayed_data['yaw_rate'], atol=np.radians(0.35))
+    assert np.allclose(orig_data['roll'], replayed_data['roll'], atol=np.radians(0.55))
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   def test_gyro_off(self):
     """
@@ -194,10 +220,17 @@ class TestLocationdScenarios:
       - inputsOK: False for some time after the spike, True for the rest
     """
     orig_data, replayed_data = run_scenarios(Scenario.GYRO_SPIKE_MIDWAY, self.logs)
+<<<<<<< HEAD
     assert np.allclose(orig_data['yaw_rate'], replayed_data['yaw_rate'], atol=np.radians(0.2))
     assert np.allclose(orig_data['roll'], replayed_data['roll'], atol=np.radians(0.5))
     assert np.diff(replayed_data['inputs_flag'])[500] == -1.0
     assert np.diff(replayed_data['inputs_flag'])[694] == 1.0
+=======
+    assert np.allclose(orig_data['yaw_rate'], replayed_data['yaw_rate'], atol=np.radians(0.35))
+    assert np.allclose(orig_data['roll'], replayed_data['roll'], atol=np.radians(0.55))
+    assert np.diff(replayed_data['inputs_flag'])[499] == -1.0
+    assert np.diff(replayed_data['inputs_flag'])[696] == 1.0
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   def test_accel_off(self):
     """
@@ -219,5 +252,10 @@ class TestLocationdScenarios:
     Expected Result: Right now, the kalman filter is not robust to small spikes like it is to gyroscope spikes.
     """
     orig_data, replayed_data = run_scenarios(Scenario.ACCEL_SPIKE_MIDWAY, self.logs)
+<<<<<<< HEAD
     assert np.allclose(orig_data['yaw_rate'], replayed_data['yaw_rate'], atol=np.radians(0.2))
     assert np.allclose(orig_data['roll'], replayed_data['roll'], atol=np.radians(0.5))
+=======
+    assert np.allclose(orig_data['yaw_rate'], replayed_data['yaw_rate'], atol=np.radians(0.35))
+    assert np.allclose(orig_data['roll'], replayed_data['roll'], atol=np.radians(0.55))
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

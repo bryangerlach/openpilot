@@ -88,6 +88,7 @@
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>AdvancedNetworkingSP</name>
     <message>
         <source>Back</source>
@@ -302,6 +303,8 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>ConfirmationDialog</name>
     <message>
         <source>Ok</source>
@@ -313,6 +316,7 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>CustomOffsetsSettings</name>
     <message>
         <source>Back</source>
@@ -324,6 +328,12 @@ Please use caution when using this feature. Only use the blinker when traffic an
     <message>
         <source>You must accept the Terms and Conditions in order to use openpilot.</source>
         <translation type="vanished">openpilot을 사용하려면 이용약관에 동의해야 합니다.</translation>
+=======
+    <name>DeclinePage</name>
+    <message>
+        <source>You must accept the Terms and Conditions in order to use openpilot.</source>
+        <translation>openpilot을 사용하려면 이용약관에 동의해야 합니다.</translation>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     </message>
     <message>
         <source>Back</source>
@@ -333,6 +343,7 @@ Please use caution when using this feature. Only use the blinker when traffic an
         <source>Decline, uninstall %1</source>
         <translation>거절, %1 제거</translation>
     </message>
+<<<<<<< HEAD
     <message>
         <source>You must accept the Terms and Conditions in order to use sunnypilot.</source>
         <translation type="unfinished"></translation>
@@ -364,6 +375,8 @@ Please use caution when using this feature. Only use the blinker when traffic an
         <source>work</source>
         <translation>회사</translation>
     </message>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 </context>
 <context>
     <name>DevicePanel</name>
@@ -449,7 +462,11 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
     <message>
         <source>openpilot requires the device to be mounted within 4° left or right and within 5° up or 9° down. openpilot is continuously calibrating, resetting is rarely required.</source>
+<<<<<<< HEAD
         <translation type="vanished">openpilot 장치는 좌우 4°, 위로 5°, 아래로 9° 이내 각도로 장착되어야 합니다. openpilot은 지속적으로 자동 보정되며 재설정은 거의 필요하지 않습니다.</translation>
+=======
+        <translation>openpilot 장치는 좌우 4°, 위로 5°, 아래로 9° 이내 각도로 장착되어야 합니다. openpilot은 지속적으로 자동 보정되며 재설정은 거의 필요하지 않습니다.</translation>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     </message>
     <message>
         <source> Your device is pointed %1° %2 and %3° %4.</source>
@@ -507,6 +524,7 @@ Please use caution when using this feature. Only use the blinker when traffic an
         <source>PAIR</source>
         <translation>동기화</translation>
     </message>
+<<<<<<< HEAD
     <message>
         <source>sunnypilot requires the device to be mounted within 4° left or right and within 5° up or 9° down. sunnypilot is continuously calibrating, resetting is rarely required.</source>
         <translation type="unfinished"></translation>
@@ -656,6 +674,8 @@ Please use caution when using this feature. Only use the blinker when traffic an
         <source>Miles</source>
         <translation type="unfinished"></translation>
     </message>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 </context>
 <context>
     <name>DriverViewWindow</name>
@@ -676,6 +696,24 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
 </context>
 <context>
+<<<<<<< HEAD
+=======
+    <name>HudRenderer</name>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>MAX</source>
+        <translation>MAX</translation>
+    </message>
+</context>
+<context>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>InputDialog</name>
     <message>
         <source>Cancel</source>
@@ -696,6 +734,7 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>LaneChangeSettings</name>
     <message>
         <source>Back</source>
@@ -867,6 +906,8 @@ Pause Steering: ALC will be paused after the brake pedal is manually pressed.</s
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>MultiOptionDialog</name>
     <message>
         <source>Select</source>
@@ -897,6 +938,7 @@ Pause Steering: ALC will be paused after the brake pedal is manually pressed.</s
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>NetworkingSP</name>
     <message>
         <source>Scan</source>
@@ -924,6 +966,8 @@ Pause Steering: ALC will be paused after the brake pedal is manually pressed.</s
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>OffroadAlert</name>
     <message>
         <source>Immediately connect to the internet to check for updates. If you do not connect to the internet, openpilot won&apos;t engage in %1</source>
@@ -964,10 +1008,13 @@ Pause Steering: ALC will be paused after the brake pedal is manually pressed.</s
         <translation>openpilot이 차량을 식별할 수 없었습니다. 지원되지 않는 차량이거나 ECU가 인식되지 않습니다. 해당 차량에 맞는 펌웨어 버전을 추가하려면 PR을 제출하세요. 도움이 필요하시면 discord.comma.ai에 가입하세요.</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>openpilot was unable to identify your car. Check integrity of cables and ensure all connections are secure, particularly that the comma power is fully inserted in the OBD-II port of the vehicle. Need help? Join discord.comma.ai.</source>
         <translation>openpilot이 차량을 식별할 수 없었습니다. 케이블의 무결성을 점검하고 모든 연결부, 특히 comma power가 차량의 OBD-II 포트에 제대로 삽입되었는지 확인하세요. 도움이 필요하시면 discord.comma.ai에 가입하세요.</translation>
     </message>
     <message>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         <source>openpilot detected a change in the device&apos;s mounting position. Ensure the device is fully seated in the mount and the mount is firmly secured to the windshield.</source>
         <translation>openpilot 장치의 장착 위치가 변경되었습니다. 장치가 마운트에 완전히 장착되고 마운트가 앞유리에 단단히 고정되었는지 확인하세요. </translation>
     </message>
@@ -975,6 +1022,7 @@ Pause Steering: ALC will be paused after the brake pedal is manually pressed.</s
         <source>Device temperature too high. System cooling down before starting. Current internal component temperature: %1</source>
         <translation>장치 온도가 너무 높습니다. 시작하기 전에 온도를 낮춰주세요. 현재 내부 부품 온도: %1</translation>
     </message>
+<<<<<<< HEAD
     <message>
         <source>OpenStreetMap database is out of date. New maps must be downloaded if you wish to continue using OpenStreetMap data for Enhanced Speed Control and road name display.
 
@@ -985,6 +1033,8 @@ Pause Steering: ALC will be paused after the brake pedal is manually pressed.</s
         <source>sunnypilot is now in Forced Offroad mode. sunnypilot won&apos;t start until Forced Offroad mode is disabled. Go to &quot;Settings&quot; -&gt; &quot;Device&quot; -&gt; &quot;Unforce Offroad&quot; to exit Force Offroad mode.</source>
         <translation type="unfinished"></translation>
     </message>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 </context>
 <context>
     <name>OffroadHome</name>
@@ -1008,14 +1058,18 @@ Pause Steering: ALC will be paused after the brake pedal is manually pressed.</s
         <translation>오픈파일럿을 사용할수없습니다</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>Waiting for controls to start</source>
         <translation>프로세스가 준비중입니다</translation>
     </message>
     <message>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         <source>TAKE CONTROL IMMEDIATELY</source>
         <translation>핸들을 잡아주세요</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>Controls Unresponsive</source>
         <translation>프로세스가 응답하지않습니다</translation>
     </message>
@@ -1202,6 +1256,18 @@ Warning: You are on a metered connection!</source>
     <message>
         <source>Time remaining: </source>
         <translation type="unfinished"></translation>
+=======
+        <source>Reboot Device</source>
+        <translation>장치를 재부팅하세요</translation>
+    </message>
+    <message>
+        <source>Waiting to start</source>
+        <translation>시작을 기다리는중</translation>
+    </message>
+    <message>
+        <source>System Unresponsive</source>
+        <translation>시스템이 응답하지않습니다</translation>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     </message>
 </context>
 <context>
@@ -1235,6 +1301,7 @@ Warning: You are on a metered connection!</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>ParamControlSP</name>
     <message>
         <source>Enable</source>
@@ -1280,6 +1347,8 @@ Warning: You are on a metered connection!</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>PrimeAdWidget</name>
     <message>
         <source>Upgrade Now</source>
@@ -1302,6 +1371,7 @@ Warning: You are on a metered connection!</source>
         <translation>항상 LTE 연결</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>Turn-by-turn navigation</source>
         <translation>내비게이션 경로안내</translation>
     </message>
@@ -1309,6 +1379,15 @@ Warning: You are on a metered connection!</source>
         <source>1 year of drive storage</source>
         <translation>1년간 드라이브 로그 저장</translation>
     </message>
+=======
+        <source>1 year of drive storage</source>
+        <translation>1년간 드라이브 로그 저장</translation>
+    </message>
+    <message>
+        <source>Remote snapshots</source>
+        <translation>원격 스냅샷</translation>
+    </message>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 </context>
 <context>
     <name>PrimeUserWidget</name>
@@ -1333,7 +1412,11 @@ Warning: You are on a metered connection!</source>
     </message>
     <message>
         <source>openpilot</source>
+<<<<<<< HEAD
         <translation type="vanished">openpilot</translation>
+=======
+        <translation>openpilot</translation>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     </message>
     <message numerus="yes">
         <source>%n minute(s) ago</source>
@@ -1354,6 +1437,7 @@ Warning: You are on a metered connection!</source>
         </translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>km</source>
         <translation>km</translation>
     </message>
@@ -1397,6 +1481,11 @@ Warning: You are on a metered connection!</source>
         <source>Updating...</source>
         <translation type="unfinished"></translation>
     </message>
+=======
+        <source>now</source>
+        <translation>now</translation>
+    </message>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 </context>
 <context>
     <name>Reset</name>
@@ -1440,6 +1529,7 @@ This may take up to a minute.</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>SPVehiclesTogglesPanel</name>
     <message>
         <source>Hyundai/Kia/Genesis</source>
@@ -1577,6 +1667,8 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>SettingsWindow</name>
     <message>
         <source>×</source>
@@ -1600,6 +1692,7 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>SettingsWindowSP</name>
     <message>
         <source>×</source>
@@ -1655,6 +1748,8 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>Setup</name>
     <message>
         <source>WARNING: Low Voltage</source>
@@ -1811,6 +1906,7 @@ Reboot Required.</source>
         <translation>PANDA</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>GPS</source>
         <translation>GPS</translation>
     </message>
@@ -1819,6 +1915,8 @@ Reboot Required.</source>
         <translation>검색중</translation>
     </message>
     <message>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         <source>--</source>
         <translation>--</translation>
     </message>
@@ -1848,6 +1946,7 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>SidebarSP</name>
     <message>
         <source>TEMP</source>
@@ -1942,6 +2041,8 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>SoftwarePanel</name>
     <message>
         <source>Updates are only downloaded while the car is off.</source>
@@ -2017,6 +2118,7 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>SoftwarePanelSP</name>
     <message>
         <source>Driving Model</source>
@@ -2244,6 +2346,8 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>SshControl</name>
     <message>
         <source>SSH Keys</source>
@@ -2290,6 +2394,7 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>SunnylinkPanel</name>
     <message>
         <source>Enable sunnylink</source>
@@ -2683,6 +2788,8 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>TermsPage</name>
     <message>
         <source>Terms &amp; Conditions</source>
@@ -2702,6 +2809,7 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>TermsPageSP</name>
     <message>
         <source>Terms &amp; Conditions</source>
@@ -2725,6 +2833,16 @@ Reboot Required.</source>
     <message>
         <source>Use the openpilot system for adaptive cruise control and lane keep driver assistance. Your attention is required at all times to use this feature. Changing this setting takes effect when the car is powered off.</source>
         <translation type="vanished">어댑티브 크루즈 컨트롤 및 차로 유지 보조를 위해 openpilot 시스템을 사용할 수 있습니다. 이 기능을 사용할 때에는 언제나 주의를 기울여야 합니다. 설정을 변경하면 차량 시동이 꺼졌을 때 적용됩니다.</translation>
+=======
+    <name>TogglesPanel</name>
+    <message>
+        <source>Enable openpilot</source>
+        <translation>openpilot 사용</translation>
+    </message>
+    <message>
+        <source>Use the openpilot system for adaptive cruise control and lane keep driver assistance. Your attention is required at all times to use this feature. Changing this setting takes effect when the car is powered off.</source>
+        <translation>어댑티브 크루즈 컨트롤 및 차로 유지 보조를 위해 openpilot 시스템을 사용할 수 있습니다. 이 기능을 사용할 때에는 언제나 주의를 기울여야 합니다. 설정을 변경하면 차량 시동이 꺼졌을 때 적용됩니다.</translation>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     </message>
     <message>
         <source>Enable Lane Departure Warnings</source>
@@ -2759,6 +2877,7 @@ Reboot Required.</source>
         <translation>활성화된 경우 가속 페달을 밟으면 openpilot이 해제됩니다.</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>Show ETA in 24h Format</source>
         <translation type="vanished">24시간 형식으로 도착 예정 시간 표시</translation>
     </message>
@@ -2775,6 +2894,8 @@ Reboot Required.</source>
         <translation type="vanished">분할 화면 보기에서 지도를 왼쪽에 표시합니다.</translation>
     </message>
     <message>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         <source>Experimental Mode</source>
         <translation>실험 모드</translation>
     </message>
@@ -2844,6 +2965,7 @@ Reboot Required.</source>
     </message>
     <message>
         <source>The driving visualization will transition to the road-facing wide-angle camera at low speeds to better show some turns. The Experimental mode logo will also be shown in the top right corner.</source>
+<<<<<<< HEAD
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3099,6 +3221,17 @@ This feature must be used along with SLC, and/or V-TSC, and/or M-TSC.</source>
     <message>
         <source>Offline Only</source>
         <translation type="unfinished"></translation>
+=======
+        <translation>운전 시각화는 일부 회전을 더 잘 보여주기 위해 저속에서 도로를 향한 광각 카메라로 전환됩니다. 실험 모드 로고도 우측 상단에 표시됩니다.</translation>
+    </message>
+    <message>
+        <source>Always-On Driver Monitoring</source>
+        <translation>상시 운전자 모니터링</translation>
+    </message>
+    <message>
+        <source>Enable driver monitoring even when openpilot is not engaged.</source>
+        <translation>Openpilot이 활성화되지 않은 경우에도 드라이버 모니터링을 활성화합니다.</translation>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     </message>
 </context>
 <context>
@@ -3137,6 +3270,7 @@ This feature must be used along with SLC, and/or V-TSC, and/or M-TSC.</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>VehiclePanel</name>
     <message>
         <source>Updating this setting takes effect when the car is powered off.</source>
@@ -3299,6 +3433,8 @@ This feature must be used along with SLC, and/or V-TSC, and/or M-TSC.</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>WiFiPromptWidget</name>
     <message>
         <source>Setup Wi-Fi</source>
@@ -3344,6 +3480,7 @@ This feature must be used along with SLC, and/or V-TSC, and/or M-TSC.</source>
         <translation>삭제</translation>
     </message>
 </context>
+<<<<<<< HEAD
 <context>
     <name>WifiUISP</name>
     <message>
@@ -3367,4 +3504,6 @@ This feature must be used along with SLC, and/or V-TSC, and/or M-TSC.</source>
         <translation type="unfinished">삭제</translation>
     </message>
 </context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 </TS>

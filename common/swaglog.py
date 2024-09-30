@@ -104,6 +104,18 @@ class UnixDomainSocketHandler(logging.Handler):
       pass
 
 
+<<<<<<< HEAD
+=======
+class ForwardingHandler(logging.Handler):
+  def __init__(self, target_logger):
+    super().__init__()
+    self.target_logger = target_logger
+
+  def emit(self, record):
+    self.target_logger.handle(record)
+
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 def add_file_handler(log):
   """
   Function to add the file log handler to swaglog.

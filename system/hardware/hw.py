@@ -56,6 +56,7 @@ class Paths:
       return Paths.comma_home()
     else:
       return "/tmp/.comma"
+<<<<<<< HEAD
 
   @staticmethod
   def community_crash_root() -> str:
@@ -77,3 +78,5 @@ class Paths:
       return str(Path(Paths.comma_home()) / "media" / "0" / "osm")
     else:
       return "/data/media/0/osm"
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

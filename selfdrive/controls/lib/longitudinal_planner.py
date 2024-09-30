@@ -2,14 +2,21 @@
 import math
 import numpy as np
 from openpilot.common.numpy_fast import clip, interp
+<<<<<<< HEAD
 from openpilot.common.params import Params
 from cereal import car
 
 import cereal.messaging as messaging
+=======
+
+import cereal.messaging as messaging
+from opendbc.car.interfaces import ACCEL_MIN, ACCEL_MAX
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.common.conversions import Conversions as CV
 from openpilot.common.filter_simple import FirstOrderFilter
 from openpilot.common.realtime import DT_MDL
 from openpilot.selfdrive.modeld.constants import ModelConstants
+<<<<<<< HEAD
 from openpilot.selfdrive.controls.lib.sunnypilot.common import Source
 from openpilot.selfdrive.controls.lib.sunnypilot.speed_limit_controller import SpeedLimitController
 from openpilot.selfdrive.car.interfaces import ACCEL_MIN, ACCEL_MAX
@@ -22,6 +29,13 @@ from openpilot.selfdrive.controls.lib.turn_speed_controller import TurnSpeedCont
 from openpilot.selfdrive.controls.lib.sunnypilot.accel_controller import AccelController
 from openpilot.selfdrive.controls.lib.sunnypilot.dynamic_experimental_controller import DynamicExperimentalController
 from openpilot.selfdrive.controls.lib.events import Events
+=======
+from openpilot.selfdrive.controls.lib.longcontrol import LongCtrlState
+from openpilot.selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc import LongitudinalMpc
+from openpilot.selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc import T_IDXS as T_IDXS_MPC
+from openpilot.selfdrive.controls.lib.drive_helpers import CONTROL_N, get_speed_error
+from openpilot.selfdrive.car.cruise import V_CRUISE_MAX, V_CRUISE_UNSET
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.common.swaglog import cloudlog
 
 LON_MPC_STEP = 0.2  # first step is 0.2s
@@ -35,9 +49,12 @@ _A_TOTAL_MAX_V = [1.7, 3.2]
 _A_TOTAL_MAX_BP = [20., 40.]
 
 
+<<<<<<< HEAD
 EventName = car.CarEvent.EventName
 
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 def get_max_accel(v_ego):
   return interp(v_ego, A_CRUISE_MAX_BP, A_CRUISE_MAX_VALS)
 
@@ -89,6 +106,7 @@ class LongitudinalPlanner:
     self.a_desired_trajectory = np.zeros(CONTROL_N)
     self.j_desired_trajectory = np.zeros(CONTROL_N)
     self.solverExecutionTime = 0.0
+<<<<<<< HEAD
     self.params = Params()
     self.param_read_counter = 0
     self.read_param()
@@ -107,6 +125,8 @@ class LongitudinalPlanner:
     except AttributeError:
       self.dynamic_experimental_controller = DynamicExperimentalController()
       self.accel_controller = AccelController()
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
   @staticmethod
   def parse_model(model_msg, model_error):
@@ -125,6 +145,7 @@ class LongitudinalPlanner:
     return x, v, a, j
 
   def update(self, sm):
+<<<<<<< HEAD
     if self.param_read_counter % 50 == 0:
       self.read_param()
     self.param_read_counter += 1
@@ -136,12 +157,26 @@ class LongitudinalPlanner:
     v_ego = sm['carState'].vEgo
     v_cruise_kph = min(sm['controlsState'].vCruise, V_CRUISE_MAX)
     v_cruise = v_cruise_kph * CV.KPH_TO_MS
+=======
+    self.mpc.mode = 'blended' if sm['selfdriveState'].experimentalMode else 'acc'
+
+    v_ego = sm['carState'].vEgo
+    v_cruise_kph = min(sm['carState'].vCruise, V_CRUISE_MAX)
+    v_cruise = v_cruise_kph * CV.KPH_TO_MS
+    v_cruise_initialized = sm['carState'].vCruise != V_CRUISE_UNSET
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
     long_control_off = sm['controlsState'].longControlState == LongCtrlState.off
     force_slow_decel = sm['controlsState'].forceDecel
 
     # Reset current state when not engaged, or user is controlling the speed
+<<<<<<< HEAD
     reset_state = long_control_off if self.CP.openpilotLongitudinalControl else not sm['carControl'].hudControl.speedVisible
+=======
+    reset_state = long_control_off if self.CP.openpilotLongitudinalControl else not sm['selfdriveState'].enabled
+    # PCM cruise speed may be updated a few cycles later, check if initialized
+    reset_state = reset_state or not v_cruise_initialized
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
     # No change cost when user is controlling the speed, or when standstill
     prev_accel_constraint = not (reset_state or sm['carState'].standstill)
@@ -153,6 +188,7 @@ class LongitudinalPlanner:
       accel_limits = [ACCEL_MIN, ACCEL_MAX]
       accel_limits_turns = [ACCEL_MIN, ACCEL_MAX]
 
+<<<<<<< HEAD
     # override accel using Accel Controller
     if self.accel_controller.is_enabled(accel_personality=sm['controlsStateSP'].accelPersonality):
       # get min, max from accel controller
@@ -167,6 +203,8 @@ class LongitudinalPlanner:
         accel_limits = [ACCEL_MIN, ACCEL_MAX]
         accel_limits_turns = [ACCEL_MIN, ACCEL_MAX]
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     if reset_state:
       self.v_desired_filter.x = v_ego
       # Clip aEgo to cruise limits to prevent large accelerations when becoming active
@@ -179,21 +217,32 @@ class LongitudinalPlanner:
 
     if force_slow_decel:
       v_cruise = 0.0
+<<<<<<< HEAD
 
     # Get active solutions for custom long mpc.
     v_cruise = self.cruise_solutions(
       not reset_state and (self.CP.openpilotLongitudinalControl or not self.CP.pcmCruiseSpeed),
       self.v_desired_filter.x, self.a_desired, v_cruise, sm)
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     # clip limits, cannot init MPC outside of bounds
     accel_limits_turns[0] = min(accel_limits_turns[0], self.a_desired + 0.05)
     accel_limits_turns[1] = max(accel_limits_turns[1], self.a_desired - 0.05)
 
+<<<<<<< HEAD
     self.mpc.set_weights(prev_accel_constraint, personality=sm['controlsStateSP'].personality)
     self.mpc.set_accel_limits(accel_limits_turns[0], accel_limits_turns[1])
     self.mpc.set_cur_state(self.v_desired_filter.x, self.a_desired)
     x, v, a, j = self.parse_model(sm['modelV2'], self.v_model_error)
     self.mpc.update(sm['radarState'], v_cruise, x, v, a, j, personality=sm['controlsStateSP'].personality, dynamic_personality=sm['controlsStateSP'].dynamicPersonality)
+=======
+    self.mpc.set_weights(prev_accel_constraint, personality=sm['selfdriveState'].personality)
+    self.mpc.set_accel_limits(accel_limits_turns[0], accel_limits_turns[1])
+    self.mpc.set_cur_state(self.v_desired_filter.x, self.a_desired)
+    x, v, a, j = self.parse_model(sm['modelV2'], self.v_model_error)
+    self.mpc.update(sm['radarState'], v_cruise, x, v, a, j, personality=sm['selfdriveState'].personality)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
     self.v_desired_trajectory = np.interp(CONTROL_N_T_IDX, T_IDXS_MPC, self.mpc.v_solution)
     self.a_desired_trajectory = np.interp(CONTROL_N_T_IDX, T_IDXS_MPC, self.mpc.a_solution)
@@ -209,12 +258,19 @@ class LongitudinalPlanner:
     self.a_desired = float(interp(self.dt, CONTROL_N_T_IDX, self.a_desired_trajectory))
     self.v_desired_filter.x = self.v_desired_filter.x + self.dt * (self.a_desired + a_prev) / 2.0
 
+<<<<<<< HEAD
     self.e2e_events(sm)
 
   def publish(self, sm, pm):
     plan_send = messaging.new_message('longitudinalPlan')
 
     plan_send.valid = sm.all_checks(service_list=['carState', 'controlsState'])
+=======
+  def publish(self, sm, pm):
+    plan_send = messaging.new_message('longitudinalPlan')
+
+    plan_send.valid = sm.all_checks(service_list=['carState', 'controlsState', 'selfdriveState'])
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
     longitudinalPlan = plan_send.longitudinalPlan
     longitudinalPlan.modelMonoTime = sm.logMonoTime['modelV2']
@@ -236,6 +292,7 @@ class LongitudinalPlanner:
     longitudinalPlan.allowThrottle = True
 
     pm.send('longitudinalPlan', plan_send)
+<<<<<<< HEAD
 
     plan_sp_send = messaging.new_message('longitudinalPlanSP')
 
@@ -287,3 +344,5 @@ class LongitudinalPlanner:
 
     if e2e_long_status in (1, 2):
       self.events.add(EventName.e2eLongStart)
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

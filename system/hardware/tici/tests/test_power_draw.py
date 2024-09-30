@@ -7,8 +7,15 @@ from tabulate import tabulate
 
 import cereal.messaging as messaging
 from cereal.services import SERVICE_LIST
+<<<<<<< HEAD
 from openpilot.common.mock import mock_messages
 from openpilot.selfdrive.car.car_helpers import write_car_param
+=======
+from opendbc.car.car_helpers import get_demo_car_params
+from openpilot.common.mock import mock_messages
+from openpilot.common.params import Params
+from openpilot.selfdrive.car.card import convert_to_capnp
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.system.hardware.tici.power_monitor import get_power
 from openpilot.system.manager.process_config import managed_processes
 from openpilot.system.manager.manager import manager_cleanup
@@ -32,7 +39,11 @@ class Proc:
 PROCS = [
   Proc(['camerad'], 2.1, msgs=['roadCameraState', 'wideRoadCameraState', 'driverCameraState']),
   Proc(['modeld'], 1.12, atol=0.2, msgs=['modelV2']),
+<<<<<<< HEAD
   Proc(['dmonitoringmodeld'], 0.4, msgs=['driverStateV2']),
+=======
+  Proc(['dmonitoringmodeld'], 0.5, msgs=['driverStateV2']),
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   Proc(['encoderd'], 0.23, msgs=[]),
 ]
 
@@ -41,7 +52,11 @@ PROCS = [
 class TestPowerDraw:
 
   def setup_method(self):
+<<<<<<< HEAD
     write_car_param()
+=======
+    Params().put("CarParams", convert_to_capnp(get_demo_car_params()).to_bytes())
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
     # wait a bit for power save to disable
     time.sleep(5)
@@ -94,7 +109,11 @@ class TestPowerDraw:
 
     return now, msg_counts, time.monotonic() - start_time - SAMPLE_TIME
 
+<<<<<<< HEAD
   @mock_messages(['liveLocationKalman'])
+=======
+  @mock_messages(['livePose'])
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   def test_camera_procs(self, subtests):
     baseline = get_power()
 

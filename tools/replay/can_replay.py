@@ -44,10 +44,17 @@ def send_thread(j: PandaJungle, flock):
       i = (rk.frame*DT_CTRL) % (IGN_ON + IGN_OFF) < IGN_ON
       j.set_ignition(i)
 
+<<<<<<< HEAD
     snd = CAN_MSGS[rk.frame % len(CAN_MSGS)]
     snd = list(filter(lambda x: x[-1] <= 2, snd))
     try:
       j.can_send_many(snd)
+=======
+    send = CAN_MSGS[rk.frame % len(CAN_MSGS)]
+    send = list(filter(lambda x: x[-1] <= 2, send))
+    try:
+      j.can_send_many(send)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     except usb1.USBErrorTimeout:
       # timeout is fine, just means the CAN TX buffer is full
       pass

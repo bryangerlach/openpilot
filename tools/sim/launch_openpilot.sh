@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/bin/bash
+=======
+#!/usr/bin/env bash
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 export PASSIVE="0"
 export NOBOARD="1"
@@ -12,7 +16,11 @@ if [[ "$CI" ]]; then
   export BLOCK="${BLOCK},ui"
 fi
 
+<<<<<<< HEAD
 python -c "from openpilot.selfdrive.test.helpers import set_params_enabled; set_params_enabled()"
+=======
+python3 -c "from openpilot.selfdrive.test.helpers import set_params_enabled; set_params_enabled()"
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 SCRIPT_DIR=$(dirname "$0")
 OPENPILOT_DIR=$SCRIPT_DIR/../../

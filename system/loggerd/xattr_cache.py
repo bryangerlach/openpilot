@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import errno
 import platform
 
@@ -9,6 +10,10 @@ if _DARWIN:  # macOS
 else:
   from os import getxattr as _getxattr
   from os import setxattr as _setxattr
+=======
+import os
+import errno
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 _cached_attributes: dict[tuple, bytes | None] = {}
 
@@ -16,10 +21,17 @@ def getxattr(path: str, attr_name: str) -> bytes | None:
   key = (path, attr_name)
   if key not in _cached_attributes:
     try:
+<<<<<<< HEAD
       response = _getxattr(path, attr_name)
     except OSError as e:
       # ENODATA means attribute hasn't been set
       if e.errno == errno.ENODATA or (_DARWIN and e.errno == errno.ENOATTR):
+=======
+      response = os.getxattr(path, attr_name)
+    except OSError as e:
+      # ENODATA means attribute hasn't been set
+      if e.errno == errno.ENODATA:
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         response = None
       else:
         raise
@@ -28,4 +40,8 @@ def getxattr(path: str, attr_name: str) -> bytes | None:
 
 def setxattr(path: str, attr_name: str, attr_value: bytes) -> None:
   _cached_attributes.pop((path, attr_name), None)
+<<<<<<< HEAD
   return _setxattr(path, attr_name, attr_value)
+=======
+  return os.setxattr(path, attr_name, attr_value)
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

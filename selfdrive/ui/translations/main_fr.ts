@@ -88,6 +88,7 @@
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>AdvancedNetworkingSP</name>
     <message>
         <source>Back</source>
@@ -302,6 +303,8 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>ConfirmationDialog</name>
     <message>
         <source>Ok</source>
@@ -313,6 +316,7 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>CustomOffsetsSettings</name>
     <message>
         <source>Back</source>
@@ -324,6 +328,12 @@ Please use caution when using this feature. Only use the blinker when traffic an
     <message>
         <source>You must accept the Terms and Conditions in order to use openpilot.</source>
         <translation type="vanished">Vous devez accepter les conditions générales pour utiliser openpilot.</translation>
+=======
+    <name>DeclinePage</name>
+    <message>
+        <source>You must accept the Terms and Conditions in order to use openpilot.</source>
+        <translation>Vous devez accepter les conditions générales pour utiliser openpilot.</translation>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     </message>
     <message>
         <source>Back</source>
@@ -333,6 +343,7 @@ Please use caution when using this feature. Only use the blinker when traffic an
         <source>Decline, uninstall %1</source>
         <translation>Refuser, désinstaller %1</translation>
     </message>
+<<<<<<< HEAD
     <message>
         <source>You must accept the Terms and Conditions in order to use sunnypilot.</source>
         <translation type="unfinished"></translation>
@@ -364,6 +375,8 @@ Please use caution when using this feature. Only use the blinker when traffic an
         <source>No %1 location set</source>
         <translation>Aucun lieu %1 défini</translation>
     </message>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 </context>
 <context>
     <name>DevicePanel</name>
@@ -457,7 +470,11 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
     <message>
         <source>openpilot requires the device to be mounted within 4° left or right and within 5° up or 9° down. openpilot is continuously calibrating, resetting is rarely required.</source>
+<<<<<<< HEAD
         <translation type="vanished">openpilot nécessite que l&apos;appareil soit monté à 4° à gauche ou à droite et à 5° vers le haut ou 9° vers le bas. openpilot se calibre en continu, la réinitialisation est rarement nécessaire.</translation>
+=======
+        <translation>openpilot nécessite que l&apos;appareil soit monté à 4° à gauche ou à droite et à 5° vers le haut ou 9° vers le bas. openpilot se calibre en continu, la réinitialisation est rarement nécessaire.</translation>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     </message>
     <message>
         <source> Your device is pointed %1° %2 and %3° %4.</source>
@@ -507,6 +524,7 @@ Please use caution when using this feature. Only use the blinker when traffic an
         <source>PAIR</source>
         <translation type="unfinished"></translation>
     </message>
+<<<<<<< HEAD
     <message>
         <source>sunnypilot requires the device to be mounted within 4° left or right and within 5° up or 9° down. sunnypilot is continuously calibrating, resetting is rarely required.</source>
         <translation type="unfinished"></translation>
@@ -656,6 +674,8 @@ Please use caution when using this feature. Only use the blinker when traffic an
         <source>Miles</source>
         <translation type="unfinished"></translation>
     </message>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 </context>
 <context>
     <name>DriverViewWindow</name>
@@ -676,6 +696,24 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
 </context>
 <context>
+<<<<<<< HEAD
+=======
+    <name>HudRenderer</name>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mi/h</translation>
+    </message>
+    <message>
+        <source>MAX</source>
+        <translation>MAX</translation>
+    </message>
+</context>
+<context>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>InputDialog</name>
     <message>
         <source>Cancel</source>
@@ -697,6 +735,7 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>LaneChangeSettings</name>
     <message>
         <source>Back</source>
@@ -868,6 +907,8 @@ Pause Steering: ALC will be paused after the brake pedal is manually pressed.</s
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>MultiOptionDialog</name>
     <message>
         <source>Select</source>
@@ -898,6 +939,7 @@ Pause Steering: ALC will be paused after the brake pedal is manually pressed.</s
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>NetworkingSP</name>
     <message>
         <source>Scan</source>
@@ -925,6 +967,8 @@ Pause Steering: ALC will be paused after the brake pedal is manually pressed.</s
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>OffroadAlert</name>
     <message>
         <source>Device temperature too high. System cooling down before starting. Current internal component temperature: %1</source>
@@ -969,6 +1013,7 @@ Pause Steering: ALC will be paused after the brake pedal is manually pressed.</s
         <translation>openpilot n&apos;a pas pu identifier votre voiture. Votre voiture n&apos;est pas supportée ou ses ECUs ne sont pas reconnues. Veuillez soumettre un pull request pour ajouter les versions de firmware au véhicule approprié. Besoin d&apos;aide ? Rejoignez discord.comma.ai.</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>openpilot was unable to identify your car. Check integrity of cables and ensure all connections are secure, particularly that the comma power is fully inserted in the OBD-II port of the vehicle. Need help? Join discord.comma.ai.</source>
         <translation>openpilot n&apos;a pas pu identifier votre voiture. Vérifiez l&apos;intégrité des câbles et assurez-vous que toutes les connexions sont correctes, en particulier l&apos;alimentation du comma est totalement insérée dans le port OBD-II du véhicule. Besoin d&apos;aide ? Rejoignez discord.comma.ai.</translation>
     </message>
@@ -986,6 +1031,11 @@ Pause Steering: ALC will be paused after the brake pedal is manually pressed.</s
         <source>sunnypilot is now in Forced Offroad mode. sunnypilot won&apos;t start until Forced Offroad mode is disabled. Go to &quot;Settings&quot; -&gt; &quot;Device&quot; -&gt; &quot;Unforce Offroad&quot; to exit Force Offroad mode.</source>
         <translation type="unfinished"></translation>
     </message>
+=======
+        <source>openpilot detected a change in the device&apos;s mounting position. Ensure the device is fully seated in the mount and the mount is firmly secured to the windshield.</source>
+        <translation>openpilot a détecté un changement dans la position de montage de l&apos;appareil. Assurez-vous que l&apos;appareil est totalement inséré dans le support et que le support est fermement fixé au pare-brise.</translation>
+    </message>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 </context>
 <context>
     <name>OffroadHome</name>
@@ -1009,14 +1059,18 @@ Pause Steering: ALC will be paused after the brake pedal is manually pressed.</s
         <translation type="unfinished"></translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>Waiting for controls to start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         <source>TAKE CONTROL IMMEDIATELY</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>Controls Unresponsive</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1202,6 +1256,17 @@ Warning: You are on a metered connection!</source>
     </message>
     <message>
         <source>Time remaining: </source>
+=======
+        <source>Reboot Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waiting to start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System Unresponsive</source>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1236,6 +1301,7 @@ Warning: You are on a metered connection!</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>ParamControlSP</name>
     <message>
         <source>Enable</source>
@@ -1281,6 +1347,8 @@ Warning: You are on a metered connection!</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>PrimeAdWidget</name>
     <message>
         <source>Upgrade Now</source>
@@ -1307,8 +1375,13 @@ Warning: You are on a metered connection!</source>
         <translation>1 an de stockage de trajets</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>Turn-by-turn navigation</source>
         <translation>Navigation étape par étape</translation>
+=======
+        <source>Remote snapshots</source>
+        <translation type="unfinished"></translation>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     </message>
 </context>
 <context>
@@ -1334,7 +1407,11 @@ Warning: You are on a metered connection!</source>
     </message>
     <message>
         <source>openpilot</source>
+<<<<<<< HEAD
         <translation type="vanished">openpilot</translation>
+=======
+        <translation>openpilot</translation>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     </message>
     <message numerus="yes">
         <source>%n minute(s) ago</source>
@@ -1358,6 +1435,7 @@ Warning: You are on a metered connection!</source>
         </translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>km</source>
         <translation>km</translation>
     </message>
@@ -1401,6 +1479,11 @@ Warning: You are on a metered connection!</source>
         <source>Updating...</source>
         <translation type="unfinished"></translation>
     </message>
+=======
+        <source>now</source>
+        <translation type="unfinished"></translation>
+    </message>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 </context>
 <context>
     <name>Reset</name>
@@ -1444,6 +1527,7 @@ Cela peut prendre jusqu&apos;à une minute.</translation>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>SPVehiclesTogglesPanel</name>
     <message>
         <source>Hyundai/Kia/Genesis</source>
@@ -1581,6 +1665,8 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>SettingsWindow</name>
     <message>
         <source>×</source>
@@ -1604,6 +1690,7 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>SettingsWindowSP</name>
     <message>
         <source>×</source>
@@ -1659,6 +1746,8 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>Setup</name>
     <message>
         <source>Something went wrong. Reboot the device.</source>
@@ -1815,6 +1904,7 @@ Reboot Required.</source>
         <translation>PANDA</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>GPS</source>
         <translation>GPS</translation>
     </message>
@@ -1823,6 +1913,8 @@ Reboot Required.</source>
         <translation>RECHERCHE</translation>
     </message>
     <message>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         <source>--</source>
         <translation>--</translation>
     </message>
@@ -1852,6 +1944,7 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>SidebarSP</name>
     <message>
         <source>TEMP</source>
@@ -1946,6 +2039,8 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>SoftwarePanel</name>
     <message>
         <source>Updates are only downloaded while the car is off.</source>
@@ -2021,6 +2116,7 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>SoftwarePanelSP</name>
     <message>
         <source>Driving Model</source>
@@ -2248,6 +2344,8 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>SshControl</name>
     <message>
         <source>SSH Keys</source>
@@ -2294,6 +2392,7 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>SunnylinkPanel</name>
     <message>
         <source>Enable sunnylink</source>
@@ -2687,6 +2786,8 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>TermsPage</name>
     <message>
         <source>Terms &amp; Conditions</source>
@@ -2706,6 +2807,7 @@ Reboot Required.</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>TermsPageSP</name>
     <message>
         <source>Terms &amp; Conditions</source>
@@ -2729,6 +2831,16 @@ Reboot Required.</source>
     <message>
         <source>Use the openpilot system for adaptive cruise control and lane keep driver assistance. Your attention is required at all times to use this feature. Changing this setting takes effect when the car is powered off.</source>
         <translation type="vanished">Utilisez le système openpilot pour le régulateur de vitesse adaptatif et l&apos;assistance au maintien de voie. Votre attention est requise en permanence pour utiliser cette fonctionnalité. La modification de ce paramètre prend effet lorsque la voiture est éteinte.</translation>
+=======
+    <name>TogglesPanel</name>
+    <message>
+        <source>Enable openpilot</source>
+        <translation>Activer openpilot</translation>
+    </message>
+    <message>
+        <source>Use the openpilot system for adaptive cruise control and lane keep driver assistance. Your attention is required at all times to use this feature. Changing this setting takes effect when the car is powered off.</source>
+        <translation>Utilisez le système openpilot pour le régulateur de vitesse adaptatif et l&apos;assistance au maintien de voie. Votre attention est requise en permanence pour utiliser cette fonctionnalité. La modification de ce paramètre prend effet lorsque la voiture est éteinte.</translation>
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     </message>
     <message>
         <source>openpilot Longitudinal Control (Alpha)</source>
@@ -2779,6 +2891,7 @@ Reboot Required.</source>
         <translation>Afficher la vitesse en km/h au lieu de mph.</translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>Show ETA in 24h Format</source>
         <translation type="vanished">Afficher l&apos;heure d&apos;arrivée en format 24h</translation>
     </message>
@@ -2795,6 +2908,8 @@ Reboot Required.</source>
         <translation type="vanished">Afficher la carte à gauche en mode écran scindé.</translation>
     </message>
     <message>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
         <source>Aggressive</source>
         <translation>Aggressif</translation>
     </message>
@@ -2858,6 +2973,7 @@ Reboot Required.</source>
         <source>Enable driver monitoring even when openpilot is not engaged.</source>
         <translation type="unfinished"></translation>
     </message>
+<<<<<<< HEAD
     <message>
         <source>Enable sunnypilot</source>
         <translation type="unfinished"></translation>
@@ -3104,6 +3220,8 @@ This feature must be used along with SLC, and/or V-TSC, and/or M-TSC.</source>
         <source>Offline Only</source>
         <translation type="unfinished"></translation>
     </message>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 </context>
 <context>
     <name>Updater</name>
@@ -3141,6 +3259,7 @@ This feature must be used along with SLC, and/or V-TSC, and/or M-TSC.</source>
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>VehiclePanel</name>
     <message>
         <source>Updating this setting takes effect when the car is powered off.</source>
@@ -3303,6 +3422,8 @@ This feature must be used along with SLC, and/or V-TSC, and/or M-TSC.</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     <name>WiFiPromptWidget</name>
     <message>
         <source>Setup Wi-Fi</source>
@@ -3348,6 +3469,7 @@ This feature must be used along with SLC, and/or V-TSC, and/or M-TSC.</source>
         <translation>Oublier</translation>
     </message>
 </context>
+<<<<<<< HEAD
 <context>
     <name>WifiUISP</name>
     <message>
@@ -3371,4 +3493,6 @@ This feature must be used along with SLC, and/or V-TSC, and/or M-TSC.</source>
         <translation type="unfinished">Oublier</translation>
     </message>
 </context>
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 </TS>

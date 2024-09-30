@@ -32,9 +32,14 @@ fi
 echo "updating uv..."
 update_uv
 
+<<<<<<< HEAD
 # TODO: remove --no-cache once this is fixed: https://github.com/astral-sh/uv/issues/4378
 echo "installing python packages..."
 uv --no-cache sync --frozen --all-extras
+=======
+echo "installing python packages..."
+uv sync --frozen --all-extras
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 source .venv/bin/activate
 
 echo "PYTHONPATH=${PWD}" > $ROOT/.env

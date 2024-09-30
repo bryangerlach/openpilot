@@ -4,7 +4,11 @@ from abc import ABC, abstractmethod
 from openpilot.common.realtime import DT_HW
 from openpilot.common.numpy_fast import interp
 from openpilot.common.swaglog import cloudlog
+<<<<<<< HEAD
 from openpilot.selfdrive.controls.lib.pid import PIDController
+=======
+from openpilot.common.pid import PIDController
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 class BaseFanController(ABC):
   @abstractmethod

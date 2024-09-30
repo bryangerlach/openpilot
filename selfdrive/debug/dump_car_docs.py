@@ -2,7 +2,11 @@
 import argparse
 import pickle
 
+<<<<<<< HEAD
 from openpilot.selfdrive.car.docs import get_all_car_docs
+=======
+from opendbc.car.docs import get_all_car_docs
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 
 def dump_car_docs(path):

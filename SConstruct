@@ -14,8 +14,11 @@ SCons.Warnings.warningAsException(True)
 
 TICI = os.path.isfile('/TICI')
 AGNOS = TICI
+<<<<<<< HEAD
 UBUNTU_FOCAL = int(subprocess.check_output('[ -f /etc/os-release ] && . /etc/os-release && [ "$ID" = "ubuntu" ] && [ "$VERSION_ID" = "20.04" ] && echo 1 || echo 0', shell=True, encoding='utf-8').rstrip())
 Export('UBUNTU_FOCAL')
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 Decider('MD5-timestamp')
 
@@ -72,12 +75,15 @@ AddOption('--minimal',
           default=os.path.exists(File('#.lfsconfig').abspath), # minimal by default on release branch (where there's no LFS)
           help='the minimum build to run openpilot. no tests, tools, etc.')
 
+<<<<<<< HEAD
 AddOption('--stock-ui',
           action='store_true',
           dest='stock_ui',
           default=False,
           help='Build stock UI instead of sunnypilot UI')
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 ## Architecture name breakdown (arch)
 ## - larch64: linux tici aarch64
 ## - aarch64: linux pc aarch64
@@ -176,6 +182,7 @@ else:
 if arch != "Darwin":
   ldflags += ["-Wl,--as-needed", "-Wl,--no-undefined"]
 
+<<<<<<< HEAD
 # Enable swaglog include in submodules
 cxxflags += ['-DSWAGLOG="\\"common/swaglog.h\\""']
 
@@ -183,6 +190,8 @@ if not GetOption('stock_ui'):
   cflags += ["-DSUNNYPILOT"]
   cxxflags += ["-DSUNNYPILOT"]
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 ccflags_option = GetOption('ccflags')
 if ccflags_option:
   ccflags += ccflags_option.split(' ')
@@ -197,12 +206,18 @@ env = Environment(
     "-Werror",
     "-Wshadow",
     "-Wno-unknown-warning-option",
+<<<<<<< HEAD
     "-Wno-deprecated-register",
     "-Wno-register",
     "-Wno-inconsistent-missing-override",
     "-Wno-c99-designator",
     "-Wno-reorder-init-list",
     "-Wno-error=unused-but-set-variable",
+=======
+    "-Wno-inconsistent-missing-override",
+    "-Wno-c99-designator",
+    "-Wno-reorder-init-list",
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     "-Wno-vla-cxx-extension",
   ] + cflags + ccflags,
 
@@ -217,11 +232,15 @@ env = Environment(
     "#third_party/linux/include",
     "#third_party/snpe/include",
     "#third_party",
+<<<<<<< HEAD
     "#cereal",
     "#msgq",
     "#opendbc/can",
     "#third_party/maplibre-native-qt/include",
     f"#third_party/maplibre-native-qt/{arch}/include"
+=======
+    "#msgq",
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   ],
 
   CC='clang',
@@ -255,8 +274,12 @@ if GetOption('compile_db'):
   env.CompilationDatabase('compile_commands.json')
 
 # Setup cache dir
+<<<<<<< HEAD
 default_cache_dir = '/data/scons_cache' if AGNOS else '/tmp/scons_cache'
 cache_dir = ARGUMENTS.get('cache_dir', default_cache_dir)
+=======
+cache_dir = '/data/scons_cache' if AGNOS else '/tmp/scons_cache'
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 CacheDir(cache_dir)
 Clean(["."], cache_dir)
 
@@ -288,7 +311,11 @@ Export('envCython', 'np_version')
 
 # Qt build environment
 qt_env = env.Clone()
+<<<<<<< HEAD
 qt_modules = ["Widgets", "Gui", "Core", "Network", "Concurrent", "Multimedia", "Quick", "Qml", "QuickWidgets", "Location", "Positioning", "DBus", "Xml"]
+=======
+qt_modules = ["Widgets", "Gui", "Core", "Network", "Concurrent", "DBus", "Xml"]
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 qt_libs = []
 if arch == "Darwin":
@@ -334,15 +361,22 @@ qt_flags = [
   "-DQT_NO_DEBUG",
   "-DQT_WIDGETS_LIB",
   "-DQT_GUI_LIB",
+<<<<<<< HEAD
   "-DQT_QUICK_LIB",
   "-DQT_QUICKWIDGETS_LIB",
   "-DQT_QML_LIB",
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   "-DQT_CORE_LIB",
   "-DQT_MESSAGELOGCONTEXT",
 ]
 qt_env['CXXFLAGS'] += qt_flags
+<<<<<<< HEAD
 qt_env['LIBPATH'] += ['#selfdrive/ui', f"#third_party/maplibre-native-qt/{arch}/lib"]
 qt_env['RPATH'] += [Dir(f"#third_party/maplibre-native-qt/{arch}/lib").srcnode().abspath]
+=======
+qt_env['LIBPATH'] += ['#selfdrive/ui', ]
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 qt_env['LIBS'] = qt_libs
 
 if GetOption("clazy"):
@@ -362,24 +396,43 @@ Export('env', 'qt_env', 'arch', 'real_arch')
 SConscript(['common/SConscript'])
 Import('_common', '_gpucommon')
 
+<<<<<<< HEAD
 common = [_common, 'json11']
+=======
+common = [_common, 'json11', 'zmq']
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 gpucommon = [_gpucommon]
 
 Export('common', 'gpucommon')
 
 # Build messaging (cereal + msgq + socketmaster + their dependencies)
+<<<<<<< HEAD
 SConscript(['msgq_repo/SConscript'])
 SConscript(['cereal/SConscript'])
+=======
+# Enable swaglog include in submodules
+env_swaglog = env.Clone()
+env_swaglog['CXXFLAGS'].append('-DSWAGLOG="\\"common/swaglog.h\\""')
+SConscript(['msgq_repo/SConscript'], exports={'env': env_swaglog})
+SConscript(['opendbc/can/SConscript'], exports={'env': env_swaglog})
+
+SConscript(['cereal/SConscript'])
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 Import('socketmaster', 'msgq')
 messaging = [socketmaster, msgq, 'zmq', 'capnp', 'kj',]
 Export('messaging')
 
 
 # Build other submodules
+<<<<<<< HEAD
 SConscript([
   'opendbc/can/SConscript',
   'panda/SConscript',
 ])
+=======
+SConscript(['panda/SConscript'])
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 # Build rednose library
 SConscript(['rednose/SConscript'])

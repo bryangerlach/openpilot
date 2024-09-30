@@ -11,6 +11,7 @@
 #include "common/util.h"
 #include "selfdrive/ui/ui.h"
 #include "selfdrive/ui/qt/util.h"
+<<<<<<< HEAD
 #ifdef SUNNYPILOT
 #include "selfdrive/ui/sunnypilot/qt/widgets/controls.h"
 #else
@@ -24,6 +25,12 @@
 #define ButtonControl ButtonControlSP
 #endif
 
+=======
+#include "selfdrive/ui/qt/widgets/controls.h"
+#include "selfdrive/ui/qt/widgets/input.h"
+#include "system/hardware/hw.h"
+
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 void SoftwarePanel::checkForUpdates() {
   std::system("pkill -SIGUSR1 -f system.updated.updated");

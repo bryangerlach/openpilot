@@ -21,7 +21,11 @@ Given a route and platform, automatically inserts FW fingerprints from the platf
 
 Example:
 ```bash
+<<<<<<< HEAD
 > python tools/car_porting/auto_fingerprint.py '1bbe6bf2d62f58a8|2022-07-14--17-11-43' 'OUTBACK'
+=======
+> python3 tools/car_porting/auto_fingerprint.py '1bbe6bf2d62f58a8|2022-07-14--17-11-43' 'OUTBACK'
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 Attempting to add fw version for:  OUTBACK
 ```
 
@@ -45,7 +49,11 @@ Given a route, runs most of the car interface to check for common errors like mi
 
 #### Example: panda safety mismatch for gasPressed
 ```bash
+<<<<<<< HEAD
 > python tools/car_porting/test_car_model.py '4822a427b188122a|2023-08-14--16-22-21'
+=======
+> python3 tools/car_porting/test_car_model.py '4822a427b188122a|2023-08-14--16-22-21'
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 
 =====================================================================
 FAIL: test_panda_safety_carstate (__main__.CarModelTestCase.test_panda_safety_carstate)
@@ -93,4 +101,8 @@ vin: 1FM5K8GC7NGXXXXXX real platform: FORD EXPLORER 6TH GEN              determi
 vin: 5LM5J7XC8MGXXXXXX real platform: FORD EXPLORER 6TH GEN              determined platform: mock                              correct: False
 vin: 3FTTW8E31PRXXXXXX real platform: FORD MAVERICK 1ST GEN              determined platform: mock                              correct: False
 vin: 3FTTW8E99NRXXXXXX real platform: FORD MAVERICK 1ST GEN              determined platform: mock                              correct: False
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e

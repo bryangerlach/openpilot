@@ -12,8 +12,11 @@ cdef extern from "common/clutil.h":
   cl_context cl_create_context(cl_device_id)
 
 cdef extern from "selfdrive/modeld/models/commonmodel.h":
+<<<<<<< HEAD
   float sigmoid(float)
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   cppclass ModelFrame:
     int buf_size
     ModelFrame(cl_device_id, cl_context)

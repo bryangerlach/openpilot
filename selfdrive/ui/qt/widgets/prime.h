@@ -66,8 +66,11 @@ signals:
 private:
   PairingPopup *popup;
   QStackedWidget *mainLayout;
+<<<<<<< HEAD
   PrimeUserWidget *primeUser;
 
 private slots:
   void replyFinished(const QString &response, bool success);
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 };

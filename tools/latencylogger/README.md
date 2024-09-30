@@ -5,7 +5,11 @@ LatencyLogger is a tool to track the time from first pixel to actuation. Timesta
 ## Usage
 
 ```
+<<<<<<< HEAD
 $ python latency_logger.py -h
+=======
+$ python3 latency_logger.py -h
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 usage: latency_logger.py [-h] [--relative] [--demo] [--plot] [route_or_segment_name]
 
 A tool for analyzing openpilot's end-to-end latency
@@ -51,7 +55,11 @@ Frame ID: 1202
     Execution finished                                   63.002552
     modelV2 published                                    63.148747
     modelV2.modelExecutionTime                           23.62649142742157
+<<<<<<< HEAD
     modelV2.gpuExecutionTime                             0.0
+=======
+    modelV2.gpuExecutionTimeDEPRECATED                   0.0
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   plannerd
     longitudinalPlan published                           69.715999
     longitudinalPlan.solverExecutionTime                 0.5619999719783664

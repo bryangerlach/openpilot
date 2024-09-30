@@ -4,7 +4,10 @@ from opendbc.can.packer import CANPacker
 from opendbc.can.parser import CANParser
 from openpilot.common.params import Params
 from openpilot.selfdrive.pandad.pandad_api_impl import can_list_to_can_capnp
+<<<<<<< HEAD
 from openpilot.selfdrive.car import crc8_pedal
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.tools.sim.lib.common import SimulatorState
 from panda.python import Panda
 
@@ -15,7 +18,11 @@ class SimulatedCar:
 
   def __init__(self):
     self.pm = messaging.PubMaster(['can', 'pandaStates'])
+<<<<<<< HEAD
     self.sm = messaging.SubMaster(['carControl', 'controlsState', 'carParams'])
+=======
+    self.sm = messaging.SubMaster(['carControl', 'controlsState', 'carParams', 'selfdriveState'])
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     self.cp = self.get_car_can_parser()
     self.idx = 0
     self.params = Params()
@@ -24,8 +31,12 @@ class SimulatedCar:
   @staticmethod
   def get_car_can_parser():
     dbc_f = 'honda_civic_ex_2022_can_generated'
+<<<<<<< HEAD
     checks = [
     ]
+=======
+    checks = []
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     return CANParser(dbc_f, checks, 0)
 
   def send_can_messages(self, simulator_state: SimulatorState):
@@ -47,6 +58,7 @@ class SimulatedCar:
 
     msg.append(self.packer.make_can_msg("SCM_BUTTONS", 0, {"CRUISE_BUTTONS": simulator_state.cruise_button}))
 
+<<<<<<< HEAD
     values = {
       "COUNTER_PEDAL": self.idx & 0xF,
       "INTERCEPTOR_GAS": simulator_state.user_gas * 2**12,
@@ -56,6 +68,8 @@ class SimulatedCar:
     values["CHECKSUM_PEDAL"] = checksum
     msg.append(self.packer.make_can_msg("GAS_SENSOR", 0, values))
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
     msg.append(self.packer.make_can_msg("GEARBOX", 0, {"GEAR": 4, "GEAR_SHIFTER": 8}))
     msg.append(self.packer.make_can_msg("GAS_PEDAL_2", 0, {}))
     msg.append(self.packer.make_can_msg("SEATBELT_STATUS", 0, {"SEATBELT_DRIVER_LATCHED": 1}))

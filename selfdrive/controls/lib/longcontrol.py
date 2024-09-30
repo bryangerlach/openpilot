@@ -2,7 +2,11 @@ from cereal import car
 from openpilot.common.numpy_fast import clip
 from openpilot.common.realtime import DT_CTRL
 from openpilot.selfdrive.controls.lib.drive_helpers import CONTROL_N
+<<<<<<< HEAD
 from openpilot.selfdrive.controls.lib.pid import PIDController
+=======
+from openpilot.common.pid import PIDController
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 from openpilot.selfdrive.modeld.constants import ModelConstants
 
 CONTROL_N_T_IDX = ModelConstants.T_IDXS[:CONTROL_N]
@@ -12,8 +16,11 @@ LongCtrlState = car.CarControl.Actuators.LongControlState
 
 def long_control_state_trans(CP, active, long_control_state, v_ego,
                              should_stop, brake_pressed, cruise_standstill):
+<<<<<<< HEAD
   # Ignore cruise standstill if car has a gas interceptor
   cruise_standstill = cruise_standstill and not CP.enableGasInterceptorDEPRECATED
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   stopping_condition = should_stop
   starting_condition = (not should_stop and
                         not cruise_standstill and

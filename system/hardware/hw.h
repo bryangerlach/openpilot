@@ -37,10 +37,13 @@ namespace Path {
     return Hardware::PC() ? Path::comma_home() + "/persist/comma/id_rsa" : "/persist/comma/id_rsa";
   }
 
+<<<<<<< HEAD
   inline std::string rsa_pub_file() {
     return Hardware::PC() ? Path::comma_home() + "/persist/comma/id_rsa.pub" : "/persist/comma/id_rsa.pub";
   }
 
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
   inline std::string swaglog_ipc() {
     return "ipc:///tmp/logmessage" + Path::openpilot_prefix();
   }

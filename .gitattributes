@@ -2,7 +2,10 @@
 
 # to move existing files into LFS:
 # git add --renormalize .
+<<<<<<< HEAD
 *.dlc filter=lfs diff=lfs merge=lfs -text
+=======
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
 *.onnx filter=lfs diff=lfs merge=lfs -text
 *.svg filter=lfs diff=lfs merge=lfs -text
 *.png filter=lfs diff=lfs merge=lfs -text

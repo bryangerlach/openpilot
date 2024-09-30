@@ -33,8 +33,13 @@ if __name__ == "__main__":
       if len(events) == 0 or ae != events[-1][1]:
         events.append((t, ae))
 
+<<<<<<< HEAD
     elif msg.which() == 'controlsState':
       at = msg.controlsState.alertType
+=======
+    elif msg.which() == 'selfdriveState':
+      at = msg.selfdriveState.alertType
+>>>>>>> 21af6b508f6e06d6f0fcb1b191cbc42514ecf01e
       if "/override" not in at or "lanechange" in at.lower():
         if len(alerts) == 0 or alerts[-1][1] != at:
           alerts.append((t, at))
