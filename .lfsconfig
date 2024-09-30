@@ -1,5 +1,5 @@
 [lfs]
-    url = "http://localhost:8080"
+    url = "http://crayoneater.org:8080"
 		locksverify = false
 [http]
     sslverify = false
