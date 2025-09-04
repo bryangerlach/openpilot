@@ -84,8 +84,6 @@ class HudRenderer(Widget):
     controls_state = sm['controlsState']
     car_state = sm['carState']
 
-    #self.daw_status = car_state.dawStatus
-
     v_cruise_cluster = car_state.vCruiseCluster
     self.set_speed = (
       controls_state.vCruiseDEPRECATED if v_cruise_cluster == 0.0 else v_cruise_cluster

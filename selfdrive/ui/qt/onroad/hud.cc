@@ -17,7 +17,6 @@ void HudRenderer::updateState(const UIState &s) {
     is_cruise_set = false;
     set_speed = SET_SPEED_NA;
     speed = 0.0;
-    daw = 5;
     return;
   }
 
@@ -32,8 +31,6 @@ void HudRenderer::updateState(const UIState &s) {
   if (is_cruise_set && !is_metric) {
     set_speed *= KM_TO_MILE;
   }
-
-  daw = car_state.getDawStatus();
 
   // Handle older routes where vEgoCluster is not set
   v_ego_cluster_seen = v_ego_cluster_seen || car_state.getVEgoCluster() != 0.0;
@@ -55,53 +52,7 @@ void HudRenderer::draw(QPainter &p, const QRect &surface_rect) {
     drawSetSpeed(p, surface_rect);
   }
   drawCurrentSpeed(p, surface_rect);
-  drawDAWStatus(p, surface_rect);
-
   p.restore();
-}
-
-void HudRenderer::drawDAWStatus(QPainter &p, const QRect &surface_rect) {
-  // Match the size of the set speed box
-  const QSize default_size = {172, 204};
-  QSize daw_box_size = is_metric ? QSize(200, 204) : default_size;
-
-  // Position below the set speed box
-  int x = 60 + (default_size.width() - daw_box_size.width()) / 2;
-  int y = 45 + daw_box_size.height() + 20;  // 20 px below set speed
-
-  QRect daw_rect(QPoint(x, y), daw_box_size);
-
-  // Determine box color
-  QColor box_color;
-  if (daw == 5) {
-    box_color = QColor(0x80, 0xd8, 0xa6, 204);  // green
-  } else if (daw >= 2 && daw <= 4) {
-    box_color = QColor(255, 204, 0, 204);       // yellow
-  } else if (daw == 1) {
-    box_color = QColor(255, 0, 0, 204);         // red
-  } else {
-    return;  // Invalid or unsupported level
-  }
-
-  // Border color (translucent white)
-  QColor border_color = QColor(255, 255, 255, 75);
-
-  // Draw rounded background box
-  p.setPen(QPen(border_color, 6));
-  p.setBrush(box_color);
-  p.drawRoundedRect(daw_rect, 32, 32);
-
-  // Label text: "DAW"
-  QRect label_rect = daw_rect.adjusted(0, 15, 0, -140);
-  p.setFont(InterFont(35, QFont::DemiBold));
-  p.setPen(Qt::white);
-  p.drawText(label_rect, Qt::AlignHCenter | Qt::AlignTop, "DAW");
-
-  // Draw DAW level number
-  QString daw_str = QString::number(daw);
-  p.setFont(InterFont(90, QFont::Bold));
-  p.setPen(Qt::white);
-  p.drawText(daw_rect.adjusted(0, 77, 0, 0), Qt::AlignTop | Qt::AlignHCenter, daw_str);
 }
 
 void HudRenderer::drawSetSpeed(QPainter &p, const QRect &surface_rect) {

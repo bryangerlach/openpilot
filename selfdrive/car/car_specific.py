@@ -214,10 +214,4 @@ class CarSpecificEvents:
       elif not CS.cruiseState.enabled:
         events.add(EventName.pcmDisable)
 
-    # if CS.dawStatus in [1,2] and CS.dawStatus != CS_prev.dawStatus:
-    #   if CS.dawStatus == 2:
-    #     events.add(EventName.dawLevel2)
-    #   elif CS.dawStatus == 1:
-    #     events.add(EventName.dawLevel1)
-
     return events

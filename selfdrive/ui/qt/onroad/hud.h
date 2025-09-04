@@ -21,10 +21,8 @@ protected:
   void drawSetSpeed(QPainter &p, const QRect &surface_rect);
   void drawCurrentSpeed(QPainter &p, const QRect &surface_rect);
   void drawText(QPainter &p, int x, int y, const QString &text, int alpha = 255);
-  void drawDAWStatus(QPainter &p, const QRect &surface_rect);
 
   float speed = 0;
-  int daw = 5;
   float set_speed = 0;
   bool is_cruise_set = false;
   bool is_cruise_available = true;
