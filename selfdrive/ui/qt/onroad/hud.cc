@@ -7,6 +7,7 @@
 #include "common/params_keys.h"
 
 static bool enable_attention_visual = false;
+static bool enable_attention_alert = false;
 static uint64_t last_param_check = 0;
 
 constexpr int SET_SPEED_NA = 255;
