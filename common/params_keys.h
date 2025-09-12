@@ -195,6 +195,13 @@ inline static std::unordered_map<std::string, ParamKeyAttributes> keys = {
     {"DynamicExperimentalControl", {PERSISTENT | BACKUP, BOOL, "0"}},
     {"BlindSpot", {PERSISTENT | BACKUP, BOOL, "0"}},
 
+    // Driver Attention Warning (DAW) visibility and audible controls
+    {"DAWVisible", {PERSISTENT | BACKUP, BOOL, "1"}},
+    {"DAWAudible", {PERSISTENT | BACKUP, BOOL, "1"}},
+
+    // Driver Monitoring prompt audible ("Pay Attention")
+    {"DMPromptAudible", {PERSISTENT | BACKUP, BOOL, "1"}},
+
     // sunnypilot model params
     {"LagdToggle", {PERSISTENT | BACKUP, BOOL, "1"}},
     {"LagdToggleDelay", {PERSISTENT | BACKUP, FLOAT, "0.2"}},

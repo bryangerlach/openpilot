@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include "selfdrive/ui/qt/util.h"
+#include "common/params.h"
 
 constexpr int SET_SPEED_NA = 255;
 
@@ -61,6 +62,10 @@ void HudRenderer::draw(QPainter &p, const QRect &surface_rect) {
 }
 
 void HudRenderer::drawDAWStatus(QPainter &p, const QRect &surface_rect) {
+  // Allow toggling DAW visibility from sunnypilot settings
+  static Params params;
+  if (!params.getBool("DAWVisible")) return;
+
   // Determine box color
   QColor box_color;
   if (daw == 5) {

@@ -29,6 +29,27 @@ VisualsPanel::VisualsPanel(QWidget *parent) : QWidget(parent) {
       false,
     },
     {
+      "DAWVisible",
+      tr("Driver Attention Warning (DAW) Visible"),
+      tr("Show the Driver Attention Warning (DAW) status box and on-screen DAW alerts when your vehicle reports DAW levels."),
+      "../assets/offroad/icon_monitoring.png",
+      false,
+    },
+    {
+      "DAWAudible",
+      tr("DAW Audible Alert"),
+      tr("Play an audible chime when DAW reaches Level 1."),
+      "../assets/offroad/icon_warning.png",
+      false,
+    },
+    {
+      "DMPromptAudible",
+      tr("Driver Monitoring Prompt Audible"),
+      tr("Play an audible chime when Driver Monitoring prompts you to pay attention."),
+      "../assets/offroad/icon_warning.png",
+      false,
+    },
+    {
       "RainbowMode",
       tr("Enable Tesla Rainbow Mode"),
       RainbowizeWords(tr("A beautiful rainbow effect on the path the model wants to take.")) + "<br/><i>" + tr("It")+ " <b>" + tr("does not") + "</b> " + tr("affect driving in any way.") + "</i>",

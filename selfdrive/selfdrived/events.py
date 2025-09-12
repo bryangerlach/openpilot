@@ -8,6 +8,7 @@ from openpilot.common.constants import CV
 from openpilot.common.git import get_short_branch
 from openpilot.common.realtime import DT_CTRL
 from openpilot.selfdrive.locationd.calibrationd import MIN_SPEED_FILTER
+from openpilot.common.params import Params
 from openpilot.system.micd import SAMPLE_RATE, SAMPLE_BUFFER
 from openpilot.selfdrive.ui.feedback.feedbackd import FEEDBACK_MAX_DURATION
 
@@ -202,6 +203,55 @@ def personality_changed_alert(CP: car.CarParams, CS: car.CarState, sm: messaging
   personality = str(personality).title()
   return NormalPermanentAlert(f"Driving Personality: {personality}", duration=1.5)
 
+def _daw_visible() -> bool:
+  try:
+    return Params().get_bool("DAWVisible")
+  except Exception:
+    return True
+
+def _daw_audible() -> bool:
+  try:
+    return Params().get_bool("DAWAudible")
+  except Exception:
+    return True
+
+def _dm_prompt_audible() -> bool:
+  try:
+    return Params().get_bool("DMPromptAudible")
+  except Exception:
+    return True
+
+def daw_level2_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int, personality) -> Alert:
+  if not _daw_visible():
+    # Return a no-op alert so nothing is shown or sounded
+    return Alert("", "", AlertStatus.normal, AlertSize.none, Priority.LOWEST, VisualAlert.none, AudibleAlert.none, 0.)
+  return Alert(
+    "Driver Attention Level 2",
+    "",
+    AlertStatus.normal,
+    AlertSize.small,
+    Priority.MID,
+    VisualAlert.none,
+    AudibleAlert.none,
+    2.0,
+  )
+
+def daw_level1_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int, personality) -> Alert:
+  if not _daw_visible():
+    # Return a no-op alert so nothing is shown or sounded
+    return Alert("", "", AlertStatus.normal, AlertSize.none, Priority.LOWEST, VisualAlert.none, AudibleAlert.none, 0.)
+  audible = AudibleAlert.warningImmediate if _daw_audible() else AudibleAlert.none
+  return Alert(
+    "Driver Attention Level 1",
+    "Attention Level Critical",
+    AlertStatus.critical,
+    AlertSize.mid,
+    Priority.HIGH,
+    VisualAlert.none,
+    audible,
+    3.0,
+  )
+
 
 def invalid_lkas_setting_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int, personality) -> Alert:
   text = "Toggle stock LKAS on or off to engage"
@@ -337,11 +387,11 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
   },
 
   EventName.promptDriverDistracted: {
-    ET.PERMANENT: Alert(
+    ET.PERMANENT: (lambda CP, CS, sm, metric, soft_disable_time, personality: Alert(
       "Pay Attention",
       "Driver Distracted",
       AlertStatus.userPrompt, AlertSize.mid,
-      Priority.MID, VisualAlert.steerRequired, AudibleAlert.promptDistracted, .1),
+      Priority.MID, VisualAlert.steerRequired, AudibleAlert.promptDistracted if _dm_prompt_audible() else AudibleAlert.none, .1)),
   },
 
   EventName.driverDistracted: {
@@ -841,29 +891,11 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
   },
 
   EventName.dawLevel2: {
-    ET.WARNING: Alert(
-      "Driver Attention Level 2",
-      "",
-      AlertStatus.normal,
-      AlertSize.small,
-      Priority.MID,
-      VisualAlert.none,
-      AudibleAlert.none,
-      2.0,
-    ),
+    ET.WARNING: daw_level2_alert,
   },
 
   EventName.dawLevel1: {
-    ET.WARNING: Alert(
-      "Driver Attention Level 1",
-      "Attention Level Critical",
-      AlertStatus.critical,
-      AlertSize.mid,
-      Priority.HIGH,
-      VisualAlert.none,
-      AudibleAlert.warningImmediate,
-      3.0,
-    ),
+    ET.WARNING: daw_level1_alert,
   },
 
   EventName.audioFeedback: {
