@@ -107,6 +107,7 @@ void HudRendererSP::updateState(const UIState &s) {
 
   standstillTimer = s.scene.standstill_timer;
   isStandstill = car_state.getStandstill();
+  if (not s.scene.started) standstillElapsedTime = 0.0;
   longOverride = car_control.getCruiseControl().getOverride();
   smartCruiseControlVisionEnabled = lp_sp.getSmartCruiseControl().getVision().getEnabled();
   smartCruiseControlVisionActive = lp_sp.getSmartCruiseControl().getVision().getActive();
@@ -126,6 +127,9 @@ void HudRendererSP::updateState(const UIState &s) {
   leftBlindspot = car_state.getLeftBlindspot();
   rightBlindspot = car_state.getRightBlindspot();
   showTurnSignals = s.scene.turn_signals;
+
+  carControlEnabled = car_control.getEnabled();
+  speedCluster = car_state.getCruiseState().getSpeedCluster() * speedConv;
 }
 
 void HudRendererSP::draw(QPainter &p, const QRect &surface_rect) {
@@ -250,6 +254,7 @@ void HudRendererSP::draw(QPainter &p, const QRect &surface_rect) {
     // No Alerts displayed
     else {
       e2eAlertFrame = 0;
+      if (not isStandstill) standstillElapsedTime = 0.0;
     }
 
     // Blinker
@@ -683,10 +688,21 @@ void HudRendererSP::drawSetSpeedSP(QPainter &p, const QRect &surface_rect) {
     }
   }
 
-  // Draw "MAX" text
+  // Draw "MAX" or carState.cruiseState.speedCluster (when ICBM is active) text
+  if (carControlEnabled) {
+    if (std::nearbyint(set_speed) != std::nearbyint(speedCluster)) {
+      icbm_active_counter = 3 * UI_FREQ;
+    } else if (icbm_active_counter > 0) {
+      icbm_active_counter--;
+    }
+  } else {
+    icbm_active_counter = 0;
+  }
+  QString max_str = (icbm_active_counter != 0) ? QString::number(std::nearbyint(speedCluster)) : tr("MAX");
+
   p.setFont(InterFont(40, QFont::DemiBold));
   p.setPen(max_color);
-  p.drawText(set_speed_rect.adjusted(0, 27, 0, 0), Qt::AlignTop | Qt::AlignHCenter, tr("MAX"));
+  p.drawText(set_speed_rect.adjusted(0, 27, 0, 0), Qt::AlignTop | Qt::AlignHCenter, max_str);
 
   // Draw set speed
   QString setSpeedStr = is_cruise_set ? QString::number(std::nearbyint(set_speed)) : "–";
@@ -698,9 +714,8 @@ void HudRendererSP::drawSetSpeedSP(QPainter &p, const QRect &surface_rect) {
 void HudRendererSP::drawE2eAlert(QPainter &p, const QRect &surface_rect, const QString &alert_alt_text) {
   int size = devUiInfo > 0 ? e2e_alert_small : e2e_alert_large;
   int x = surface_rect.center().x() + surface_rect.width() / 4;
-  int y = surface_rect.center().y() + 40;
+  int y = surface_rect.center().y() + 20;
   x += devUiInfo > 0 ? 0 : 50;
-  y += devUiInfo > 0 ? 0 : 80;
   QRect alertRect(x - size, y - size, size * 2, size * 2);
 
   // Alert Circle
@@ -761,19 +776,33 @@ void HudRendererSP::drawCurrentSpeedSP(QPainter &p, const QRect &surface_rect) {
 }
 
 void HudRendererSP::drawBlinker(QPainter &p, const QRect &surface_rect) {
+  const bool hazard = leftBlinkerOn && rightBlinkerOn;
+  int blinkerStatus = hazard ? 2 : (leftBlinkerOn or rightBlinkerOn) ? 1 : 0;
+
   if (!leftBlinkerOn && !rightBlinkerOn) {
     blinkerFrameCounter = 0;
+    lastBlinkerStatus = 0;
     return;
   }
+
+  if (blinkerStatus != lastBlinkerStatus) {
+    blinkerFrameCounter = 0;
+    lastBlinkerStatus = blinkerStatus;
+  }
+
   ++blinkerFrameCounter;
 
-  const int circleRadius = 44;
-  const int arrowLength = 44;
-  const int x_gap = 180;
+  const int BLINKER_COOLDOWN_FRAMES = UI_FREQ / 10;
+  if (blinkerFrameCounter < BLINKER_COOLDOWN_FRAMES) {
+    return;
+  }
+
+  const int circleRadius = 60;
+  const int arrowLength = 60;
+  const int x_gap = 160;
   const int y_offset = 272;
 
   const int centerX = surface_rect.center().x();
-  const bool hazard = leftBlinkerOn && rightBlinkerOn;
 
   const QPen bgBorder(Qt::white, 5);
   const QPen arrowPen(Qt::NoPen);
