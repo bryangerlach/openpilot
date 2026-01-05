@@ -65,7 +65,6 @@ class HudRenderer(Widget):
     self.set_speed: float = SET_SPEED_NA
     self.speed: float = 0.0
     self.v_ego_cluster_seen: bool = False
-    self.daw_status: int = 5
 
     self._font_semi_bold: rl.Font = gui_app.font(FontWeight.SEMI_BOLD)
     self._font_bold: rl.Font = gui_app.font(FontWeight.BOLD)
@@ -117,7 +116,6 @@ class HudRenderer(Widget):
       self._draw_set_speed(rect)
 
     self._draw_current_speed(rect)
-    self._draw_daw_status(rect)
 
     button_x = rect.x + rect.width - UI_CONFIG.border_size - UI_CONFIG.button_size
     button_y = rect.y + UI_CONFIG.border_size
@@ -125,13 +123,6 @@ class HudRenderer(Widget):
 
   def user_interacting(self) -> bool:
     return self._exp_button.is_pressed
-
-  def _draw_daw_status(self, rect: rl.Rectangle) -> None:
-    """Draw the current daw level."""
-    daw_text = str(round(self.daw_status))
-    daw_text_size = measure_text_cached(self._font_bold, daw_text, FONT_SIZES.current_speed)
-    daw_pos = rl.Vector2(rect.x + rect.width / 2 - daw_text_size.x / 2, rect.y + rect.height / 2 - daw_text_size.y / 2)
-    rl.draw_text_ex(self._font_bold, daw_text, daw_pos, FONT_SIZES.current_speed, 0, COLORS.WHITE)
 
   def _draw_set_speed(self, rect: rl.Rectangle) -> None:
     """Draw the MAX speed indicator box."""

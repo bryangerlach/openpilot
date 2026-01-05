@@ -841,32 +841,6 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
     ET.PERMANENT: NormalPermanentAlert("Bookmark Saved", duration=1.5),
   },
 
-  EventName.dawLevel2: {
-    ET.WARNING: Alert(
-      "Attention Decreasing",
-      "Driver Attention Level 2",
-      AlertStatus.normal,
-      AlertSize.small,
-      Priority.MID,
-      VisualAlert.none,
-      AudibleAlert.warningSoft,
-      2.0,
-    ),
-  },
-
-  EventName.dawLevel1: {
-    ET.WARNING: Alert(
-      "Driver Inattentive",
-      "Attention Level Critical",
-      AlertStatus.critical,
-      AlertSize.mid,
-      Priority.HIGH,
-      VisualAlert.none,
-      AudibleAlert.warningImmediate,
-      3.0,
-    ),
-  },
-
   EventName.audioFeedback: {
     ET.PERMANENT: audio_feedback_alert,
   },
