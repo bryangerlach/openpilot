@@ -131,7 +131,7 @@ class HudRenderer(Widget):
     daw_text = str(round(self.daw_status))
     daw_text_size = measure_text_cached(self._font_bold, daw_text, FONT_SIZES.current_speed)
     daw_pos = rl.Vector2(rect.x + rect.width / 2 - daw_text_size.x / 2, rect.y + rect.height / 2 - daw_text_size.y / 2)
-    rl.draw_text_ex(self._font_bold, daw_text, daw_pos, FONT_SIZES.current_speed, 0, COLORS.white)
+    rl.draw_text_ex(self._font_bold, daw_text, daw_pos, FONT_SIZES.current_speed, 0, COLORS.WHITE)
 
   def _draw_set_speed(self, rect: rl.Rectangle) -> None:
     """Draw the MAX speed indicator box."""
