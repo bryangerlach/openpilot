@@ -115,6 +115,7 @@ if __name__ == "__main__":
   parser.add_argument("--layout", nargs='?', help="Run PlotJuggler with a pre-defined layout")
   parser.add_argument("--install", action="store_true", help="Install or update PlotJuggler + plugins")
   parser.add_argument("--dbc", help="Set the DBC name to load for parsing CAN data. If not set, the DBC will be automatically inferred from the logs.")
+  parser.add_argument("--data_dir", help="local data directory")
   parser.add_argument("route_or_segment_name", nargs='?', help="The route or segment name to plot (cabana share URL accepted)")
 
   if len(sys.argv) == 1:
@@ -138,4 +139,28 @@ if __name__ == "__main__":
     start_juggler(layout=args.layout)
   else:
     route_or_segment_name = DEMO_ROUTE if args.demo else args.route_or_segment_name.strip()
+
+    if args.data_dir:
+      abs_data_dir = os.path.abspath(args.data_dir)
+      segments = []
+
+      if not os.path.isdir(abs_data_dir):
+        print(f"Error: {abs_data_dir} is not a directory")
+      else:
+        all_folders = [f for f in os.listdir(abs_data_dir) if os.path.isdir(os.path.join(abs_data_dir, f))]
+
+        for f in all_folders:
+          if route_or_segment_name in f:
+            folder_path = os.path.join(abs_data_dir, f)
+            for root, _, files in os.walk(folder_path):
+              for file in files:
+                if 'rlog' in file or 'qlog' in file:
+                  segments.append(os.path.join(root, file))
+                  break
+
+      if segments:
+        segments.sort(key=lambda x: [int(c) if c.isdigit() else c for c in x.split('-')])
+        route_or_segment_name = segments
+      else:
+        print(f"Warning: No log files found matching '{route_or_segment_name}'")
     juggle_route(route_or_segment_name, args.can, args.layout, args.dbc, not args.no_migration)
