@@ -1391,5 +1391,25 @@
   "Version": {
     "title": "openpilot Version",
     "description": ""
+  },
+  "CustomSteerMax": {
+    "title": "steering max (384)",
+    "desription": ""
+  },
+  "CustomAllowance": {
+    "title": "steering driver allowance (250)",
+    "desription": ""
+  },
+  "CustomThreshold": {
+    "title": "steering threshold (250)",
+    "desription": ""
+  },
+  "CustomDeltaUp": {
+    "title": "steering delta up (4)",
+    "desription": ""
+  },
+  "CustomDeltaDown": {
+    "title": "steering delta down (7)",
+    "desription": ""
   }
 }
