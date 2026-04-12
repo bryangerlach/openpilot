@@ -23,31 +23,31 @@ class HyundaiSettings(BrandSettings):
 
     self.steer_max_item = option_item_sp(
       title=lambda: tr("Max Steering Torque"),
-      min_val=100, max_val=400, value_chagne_step=5,
+      min_value=100, max_value=400, value_chagne_step=5,
       param="CustomSteerMax",
       unit=""
     )
     self.steer_allowance_item = option_item_sp(
       title=lambda: tr("CustomAllowance"),
-      min_val=50, max_val=250, value_chagne_step=50,
+      min_value=50, max_value=250, value_chagne_step=50,
       param="CustomAllowance",
       unit=""
     )
     self.steer_threshold_item = option_item_sp(
       title=lambda: tr("Steering Threshold"),
-      min_val=50, max_val=250, value_chagne_step=50,
+      min_value=50, max_value=250, value_chagne_step=50,
       param="CustomThreshold",
       unit=""
     )
     self.steer_delta_up_item = option_item_sp(
       title=lambda: tr("Steer Delta Up"),
-      min_val=1, max_val=4, value_chagne_step=1,
+      min_value=1, max_value=4, value_chagne_step=1,
       param="CustomDeltaUp",
       unit=""
     )
     self.steer_delta_down_item = option_item_sp(
       title=lambda: tr("Steer Delta Down"),
-      min_val=2, max_val=7, value_chagne_step=1,
+      min_value=2, max_value=7, value_chagne_step=1,
       param="CustomDeltaDown",
       unit=""
     )
