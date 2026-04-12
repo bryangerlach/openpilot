@@ -1394,22 +1394,37 @@
   },
   "CustomSteerMax": {
     "title": "steering max (384)",
-    "desription": ""
+    "desription": "",
+    "min": 270,
+    "max": 420,
+    "step": 5
   },
   "CustomAllowance": {
     "title": "steering driver allowance (250)",
-    "desription": ""
+    "desription": "",
+    "min": 50,
+    "max": 250,
+    "step": 50
   },
   "CustomThreshold": {
     "title": "steering threshold (250)",
-    "desription": ""
+    "desription": "",
+    "min": 50,
+    "max": 250,
+    "step": 50
   },
   "CustomDeltaUp": {
     "title": "steering delta up (4)",
-    "desription": ""
+    "desription": "",
+    "min": 1,
+    "max": 4,
+    "step": 1
   },
   "CustomDeltaDown": {
     "title": "steering delta down (7)",
-    "desription": ""
+    "desription": "",
+    "min": 2,
+    "max": 7,
+    "step": 1
   }
 }
