@@ -21,13 +21,18 @@ class HyundaiSettings(BrandSettings):
                                                             button_width=300, callback=self._on_tuning_selected,
                                                             param="HyundaiLongitudinalTuning", inline=False)
 
+    self.stopping_decel_rate_item = option_item_sp(
+      title=lambda: tr("Stopping Decel Rate"),
+      min_value=0.1, max_value=2.0, value_change_step=0.1,
+      param="CustomStoppingDecelrate",
+    )
     self.steer_max_item = option_item_sp(
       title=lambda: tr("Max Steering Torque"),
       min_value=100, max_value=400, value_change_step=5,
       param="CustomSteerMax",
     )
     self.steer_allowance_item = option_item_sp(
-      title=lambda: tr("CustomAllowance"),
+      title=lambda: tr("Driver Steering Allowance"),
       min_value=50, max_value=250, value_change_step=50,
       param="CustomAllowance",
     )
@@ -47,7 +52,7 @@ class HyundaiSettings(BrandSettings):
       param="CustomDeltaDown",
     )
     self.items = [self.longitudinal_tuning_item, self.steer_max_item, self.steer_allowance_item,
-                  self.steer_delta_down_item, self.steer_delta_up_item, self.steer_threshold_item]
+                  self.steer_delta_down_item, self.steer_delta_up_item, self.steer_threshold_item, self.stopping_decel_rate_item]
 
   @staticmethod
   def _on_tuning_selected(index):

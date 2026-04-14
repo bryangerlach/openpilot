@@ -283,4 +283,5 @@ inline static std::unordered_map<std::string, ParamKeyAttributes> keys = {
     {"CustomThreshold", {PERSISTENT, INT}},
     {"CustomDeltaUp", {PERSISTENT, INT}},
     {"CustomDeltaDown", {PERSISTENT, INT}},
+    {"CustomStoppingDecelrate",{PERSISTENT, FLOAT}}
 };

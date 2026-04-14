@@ -1426,5 +1426,12 @@
     "min": 2,
     "max": 7,
     "step": 1
+  },
+  "CustomStoppingDecelrate": {
+    "title": "steering decel rate (0.8)",
+    "desription": "",
+    "min": 0.1,
+    "max": 2.0,
+    "step": 0.1
   }
 }
