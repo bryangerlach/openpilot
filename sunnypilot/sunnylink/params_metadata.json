@@ -1387,5 +1387,61 @@
   "Version": {
     "title": "openpilot Version",
     "description": ""
+  },
+  "CustomSteerMax": {
+    "title": "steering max (384)",
+    "desription": "",
+    "min": 270,
+    "max": 420,
+    "step": 5
+  },
+  "CustomAllowance": {
+    "title": "steering driver allowance (250)",
+    "desription": "",
+    "min": 50,
+    "max": 250,
+    "step": 50
+  },
+  "CustomThreshold": {
+    "title": "steering threshold (250)",
+    "desription": "",
+    "min": 50,
+    "max": 250,
+    "step": 50
+  },
+  "CustomDeltaUp": {
+    "title": "steering delta up (4)",
+    "desription": "",
+    "min": 1,
+    "max": 4,
+    "step": 1
+  },
+  "CustomDeltaDown": {
+    "title": "steering delta down (7)",
+    "desription": "",
+    "min": 2,
+    "max": 7,
+    "step": 1
+  },
+  "CustomLowDamp": {
+    "title": "damp factor for low speed",
+    "desription": "",
+    "min": 0,
+    "max": 200,
+    "step": 5
+  },
+  "CustomLowSpeedMS": {
+    "title": "speed limit in m/s for low speed damp factor",
+    "desription": "",
+    "min": 1.0,
+    "max": 100.0,
+    "step": 0.5
+  },
+  "CustomHighDamp": {
+    "title": "damp factor for high speed",
+    "desription": "",
+    "min": 0,
+    "max": 200,
+    "step": 5
   }
 }
