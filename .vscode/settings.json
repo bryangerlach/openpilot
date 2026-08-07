@@ -17,18 +17,5 @@
     "**/.git",
     "**/.venv",
     "**/__pycache__",
-    // exclude directories that should be using the symlinked version
-    "common/**",
-    "selfdrive/**",
-    "system/**",
-    "tools/**",
-  ],
-  "files.associations": {
-    "array": "c",
-    "ranges": "c",
-    "span": "c",
-    "vector": "c",
-    "xstring": "c",
-    "xutility": "c"
-  }
+  ]
 }
