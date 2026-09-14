@@ -131,8 +131,8 @@ struct OnroadEvent @0xc4fa6047f024e718 {
     excessiveActuation @96;
     bigModelLoading @100;
     bigModelFailed @102;
-    dawLevel2 @103;
-    dawLevel1 @104;
+    dawLevel2 @104;
+    dawLevel1 @105;
 
     lowBatteryDEPRECATED @40;
     soundsUnavailableDEPRECATED @47;
