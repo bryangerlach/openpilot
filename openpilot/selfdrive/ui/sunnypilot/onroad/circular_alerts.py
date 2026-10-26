@@ -28,6 +28,10 @@ class CircularAlertsRenderer:
     self._alert_text = ""
     self._alert_img = None
     self._allow_e2e_alerts = False
+    # True when the active selfdriveState alert is a lane turn desire alert
+    # ("Turning Left"/"Turning Right"), so the standstill timer can take
+    # priority over those on-screen messages.
+    self._lane_turn_alert_active = False
 
   def update(self) -> None:
     sm = ui_state.sm
@@ -42,6 +46,10 @@ class CircularAlertsRenderer:
 
     self._allow_e2e_alerts = sm['selfdriveState'].alertSize == log.SelfdriveState.AlertSize.none and \
                              sm.recv_frame['driverStateV2'] > ui_state.started_frame
+
+    # Remember whether the active alert is a lane turn desire alert so the
+    # standstill timer is not hidden by those low-priority messages.
+    self._lane_turn_alert_active = sm['selfdriveState'].alertText1 in ("Turning Left", "Turning Right")
 
     if self._green_light_alert or self._lead_depart_alert:
       self._e2e_alert_display_timer = 3 * gui_app.target_fps
@@ -73,7 +81,17 @@ class CircularAlertsRenderer:
         self._standstill_elapsed_time = 0.0
 
   def render(self, rect: rl.Rectangle) -> None:
-    if not self._allow_e2e_alerts or (self._e2e_alert_display_timer <= 0 and not (ui_state.standstill_timer and self._is_standstill)):
+    show_standstill = ui_state.standstill_timer and self._is_standstill
+
+    # Nothing to render when there is no alert and the standstill timer is off.
+    if self._e2e_alert_display_timer <= 0 and not show_standstill:
+      return
+
+    # Allow the standstill timer to remain visible when a low-priority lane
+    # turn desire alert ("Turning Left"/"Turning Right") is active, so the
+    # standstill timer takes priority over those on-screen messages. Other
+    # alerts still suppress the standstill timer.
+    if not self._allow_e2e_alerts and not (show_standstill and self._lane_turn_alert_active):
       return
 
     e2e_alert_size = 250
